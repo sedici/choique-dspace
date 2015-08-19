@@ -1,0 +1,10 @@
+all:
+  propel:
+    class:      sfPropelDatabase
+    param:
+      phptype:  mysql
+      port:     3306
+      hostspec: 163.10.34.214
+      database: virtual
+      username: virtual
+      password: virtual

@@ -1,0 +1,406 @@
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/sitemap_index" (".xml" suffix)
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/mobile"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/no_mobile"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/sitemap_articles" (".xml" suffix)
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/sitemap_sections" (".xml" suffix)
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/Eventos/*"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/section_css/:name"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/ARTICLE_PREVIEW"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/PREVIEW"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/articulo/:year/:month/:day/:name"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/articulo/:id"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/articulo/popup/:id"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/Contacto"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/TodasLasNoticias/:page/*"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/Galeria/:gallery_id/:article_id"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/Buscar"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/search-xml"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/MapaDelSitio"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/rss/:section"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/rss/list/:template"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/article/:articleId"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/:name"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/RssVerMas/:nombre/:id/:section"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/:module/:action/*"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/captcha"
+Aug 19 15:25:32 symfony [info] {sfRouting} connect "/js/:target_module/:target_action/*" (".pjs" suffix)
+Aug 19 15:25:32 symfony [info] {sfContext} initialization
+Aug 19 15:25:32 symfony [info] {sfController} initialization
+Aug 19 15:25:32 symfony [info] {sfRouting} match route [homepage] "/"
+Aug 19 15:25:32 symfony [info] {sfRequest} request parameters array (  'module' => 'default',  'action' => 'index',)
+Aug 19 15:25:32 symfony [info] {sfController} dispatch request
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfRenderingFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfWebDebugFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "choiqueMobileFilter"
+Aug 19 15:25:32 symfony [info] {sfCreole} connect(): DSN: array (   'compat_assoc_lower' => NULL,   'compat_rtrim_string' => NULL,   'database' => 'virtual',   'encoding' => NULL,   'hostspec' => '163.10.34.214',   'password' => 'virtual',   'persistent' => NULL,   'phptype' => 'mysql',   'port' => 3306,   'protocol' => NULL,   'socket' => NULL,   'username' => 'virtual', ), FLAGS: 0
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=?
+Aug 19 15:25:32 symfony [info] {sfCreole} applyLimit(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9, offset: 0, limit: 1
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.75 ms] SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9 LIMIT 1
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfLuceneHighlightFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfCSRFFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfCommonFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfFlashFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfExecutionFilter"
+Aug 19 15:25:32 symfony [info] {sfAction} call "defaultActions->executeIndex()"
+Aug 19 15:25:32 symfony [info] {sfAction} forward to action "section/templateByName"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfRenderingFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfWebDebugFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "choiqueMobileFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfLuceneHighlightFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfCSRFFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfCommonFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfFlashFilter"
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfExecutionFilter"
+Aug 19 15:25:32 symfony [info] {sfAction} call "sectionActions->executeTemplateByName()"
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:25:32 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='custom_section_home', offset: 0, limit: 1
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.81 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='custom_section_home' LIMIT 1
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME=?
+Aug 19 15:25:32 symfony [info] {sfCreole} applyLimit(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME='home', offset: 0, limit: 1
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.70 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME='home' LIMIT 1
+Aug 19 15:25:32 symfony [info] {sfCreole} beginning transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} beginning transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): INSERT INTO section (NAME,TITLE,IS_PUBLISHED) VALUES (?,?,?)
+Aug 19 15:25:32 symfony [info] {sfCreole} executeUpdate(): INSERT INTO section (NAME,TITLE,IS_PUBLISHED) VALUES ('home','home',1)
+Aug 19 15:25:32 symfony [info] {sfCreole} committing transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} committing transaction.
+Aug 19 15:25:32 symfony [info] {sfLucene} deleting model "Section" with PK = "1"
+Aug 19 15:25:32 symfony [info] {sfLucene} constructed new instance of index "CMSIndex" and culture "es_AR"
+Aug 19 15:25:32 symfony [info] {sfLucene} saving model "Section" with PK = "1"
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:25:32 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='custom_section_home', offset: 0, limit: 1
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.46 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='custom_section_home' LIMIT 1
+Aug 19 15:25:32 symfony [info] {sfCreole} beginning transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} beginning transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): INSERT INTO cms_configuration (NAME,CONFIGURATION_KEY,CONFIGURATION_VALUE) VALUES (?,?,?)
+Aug 19 15:25:32 symfony [info] {sfCreole} executeUpdate(): INSERT INTO cms_configuration (NAME,CONFIGURATION_KEY,CONFIGURATION_VALUE) VALUES ('Sección \'Inicio\' (HOME del sitio)','custom_section_home','1')
+Aug 19 15:25:32 symfony [info] {sfCreole} committing transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} committing transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=? AND article.IS_PUBLISHED=? ORDER BY article.PUBLISHED_AT DESC
+Aug 19 15:25:32 symfony [info] {sfCreole} applyLimit(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC, offset: 0, limit: 1
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.80 ms] SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC LIMIT 1
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.IS_PUBLISHED=? AND section.SECTION_ID=? ORDER BY section.PRIORITY DESC
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.65 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.IS_PUBLISHED=1 AND section.SECTION_ID=1 ORDER BY section.PRIORITY DESC
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=? AND article.IS_PUBLISHED=? ORDER BY article.PUBLISHED_AT DESC
+Aug 19 15:25:32 symfony [info] {sfCreole} applyLimit(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC, offset: 0, limit: 1
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.65 ms] SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC LIMIT 1
+Aug 19 15:25:32 symfony [info] {sfView} initialize view for "section/templateByName"
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:25:32 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='site_metas', offset: 0, limit: 1
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.63 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='site_metas' LIMIT 1
+Aug 19 15:25:32 symfony [info] {sfCreole} beginning transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} beginning transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): INSERT INTO cms_configuration (NAME,CONFIGURATION_KEY,CONFIGURATION_VALUE) VALUES (?,?,?)
+Aug 19 15:25:32 symfony [info] {sfCreole} executeUpdate(): INSERT INTO cms_configuration (NAME,CONFIGURATION_KEY,CONFIGURATION_VALUE) VALUES ('Información para buscadores','site_metas','CMS')
+Aug 19 15:25:32 symfony [info] {sfCreole} committing transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} committing transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.IS_PUBLISHED=?
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.50 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.IS_PUBLISHED=1
+Aug 19 15:25:32 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/flavors/default/modules/section/templates/templateByNameSuccess.php"
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:25:32 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_show_show_all', offset: 0, limit: 1
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.80 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_show_show_all' LIMIT 1
+Aug 19 15:25:32 symfony [info] {sfCreole} beginning transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} beginning transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): INSERT INTO cms_configuration (NAME,CONFIGURATION_KEY,CONFIGURATION_VALUE) VALUES (?,?,?)
+Aug 19 15:25:32 symfony [info] {sfCreole} executeUpdate(): INSERT INTO cms_configuration (NAME,CONFIGURATION_KEY,CONFIGURATION_VALUE) VALUES ('Mostrar vínculo todas las noticias en el inicio','check_show_show_all','1')
+Aug 19 15:25:32 symfony [info] {sfCreole} committing transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} committing transaction.
+Aug 19 15:25:32 symfony [info] {sfView} decorate content with "/home/virtual/choique/choique-2.6.2/flavors/default/templates/layout.php"
+Aug 19 15:25:32 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/flavors/default/templates/layout.php"
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:25:32 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_use_layout_per_section', offset: 0, limit: 1
+Aug 19 15:25:32 symfony [info] {sfCreole} executeQuery(): [0.61 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_use_layout_per_section' LIMIT 1
+Aug 19 15:25:32 symfony [info] {sfCreole} beginning transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} beginning transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} prepareStatement(): INSERT INTO cms_configuration (NAME,CONFIGURATION_KEY,CONFIGURATION_VALUE) VALUES (?,?,?)
+Aug 19 15:25:32 symfony [info] {sfCreole} executeUpdate(): INSERT INTO cms_configuration (NAME,CONFIGURATION_KEY,CONFIGURATION_VALUE) VALUES ('Utilizar distribuciones por sección','check_use_layout_per_section','0')
+Aug 19 15:25:32 symfony [info] {sfCreole} committing transaction.
+Aug 19 15:25:32 symfony [info] {sfCreole} committing transaction.
+Aug 19 15:25:32 symfony [info] {sfFilter} executing filter "sfUJSFilter"
+Aug 19 15:25:33 symfony [info] {sfFilter} render to client
+Aug 19 15:25:33 symfony [info] {sfResponse} send status "HTTP/1.0 200 OK"
+Aug 19 15:25:33 symfony [info] {sfResponse} send header "Content-Type": "text/html; charset=utf-8"
+Aug 19 15:25:33 symfony [info] {sfResponse} send content (79239 o)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Configuration 190.78 ms (17)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Database 7.31 ms (11)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Action "default/index" 436.70 ms (1)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Action "section/templateByName" 182.86 ms (1)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Zend Search Lucene Find 0.04 ms (1)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Zend Search Lucene Commit 0.21 ms (1)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Zend Search Lucene 1.15 ms (1)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} View "Success" for "section/templateByName" 224.80 ms (1)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Highlight Filter 0.08 ms (1)
+Aug 19 15:25:33 symfony [info] {sfRouting} connect "/captcha"
+Aug 19 15:25:33 symfony [info] {sfRouting} connect "/js/:target_module/:target_action/*" (".pjs" suffix)
+Aug 19 15:25:33 symfony [info] {sfContext} initialization
+Aug 19 15:25:33 symfony [info] {sfController} initialization
+Aug 19 15:25:33 symfony [info] {sfRouting} match route [section_css] "/section_css/:name"
+Aug 19 15:25:33 symfony [info] {sfRequest} request parameters array (  'name' => 'home',  'module' => 'section',  'action' => 'stylesheet',  'sf_format' => 'css',)
+Aug 19 15:25:33 symfony [info] {sfController} dispatch request
+Aug 19 15:25:33 symfony [info] {sfFilter} executing filter "sfRenderingFilter"
+Aug 19 15:25:33 symfony [info] {sfFilter} executing filter "sfWebDebugFilter"
+Aug 19 15:25:33 symfony [info] {sfFilter} executing filter "choiqueMobileFilter"
+Aug 19 15:25:33 symfony [info] {sfCreole} connect(): DSN: array (   'compat_assoc_lower' => NULL,   'compat_rtrim_string' => NULL,   'database' => 'virtual',   'encoding' => NULL,   'hostspec' => '163.10.34.214',   'password' => 'virtual',   'persistent' => NULL,   'phptype' => 'mysql',   'port' => 3306,   'protocol' => NULL,   'socket' => NULL,   'username' => 'virtual', ), FLAGS: 0
+Aug 19 15:25:33 symfony [info] {sfCreole} prepareStatement(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=?
+Aug 19 15:25:33 symfony [info] {sfCreole} applyLimit(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9, offset: 0, limit: 1
+Aug 19 15:25:33 symfony [info] {sfCreole} executeQuery(): [0.53 ms] SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9 LIMIT 1
+Aug 19 15:25:33 symfony [info] {sfFilter} executing filter "sfLuceneHighlightFilter"
+Aug 19 15:25:33 symfony [info] {sfFilter} executing filter "sfCSRFFilter"
+Aug 19 15:25:33 symfony [info] {sfFilter} executing filter "sfCommonFilter"
+Aug 19 15:25:33 symfony [info] {sfFilter} executing filter "sfFlashFilter"
+Aug 19 15:25:33 symfony [info] {sfFilter} executing filter "sfExecutionFilter"
+Aug 19 15:25:33 symfony [info] {sfAction} call "sectionActions->executeStylesheet()"
+Aug 19 15:25:33 symfony [info] {sfAction} change layout to ""
+Aug 19 15:25:33 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME=?
+Aug 19 15:25:33 symfony [info] {sfCreole} applyLimit(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME='home', offset: 0, limit: 1
+Aug 19 15:25:33 symfony [info] {sfCreole} executeQuery(): [0.64 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME='home' LIMIT 1
+Aug 19 15:25:33 symfony [info] {sfView} initialize view for "section/stylesheet"
+Aug 19 15:25:33 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/apps/frontend/modules/section/templates/stylesheetSuccess.php"
+Aug 19 15:25:33 symfony [info] {sfView} initialize view for "section/_extra_stylesheet"
+Aug 19 15:25:33 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/flavors/default/modules/section/templates/_extra_stylesheet.php"
+Aug 19 15:25:33 symfony [info] {sfFilter} executing filter "sfUJSFilter"
+Aug 19 15:25:33 symfony [info] {sfFilter} render to client
+Aug 19 15:25:33 symfony [info] {sfResponse} send status "HTTP/1.0 200 OK"
+Aug 19 15:25:33 symfony [info] {sfResponse} send header "Content-Type": "text/css; charset=utf-8"
+Aug 19 15:25:33 symfony [info] {sfResponse} send content (1218 o)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Configuration 3.40 ms (13)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Database 1.16 ms (2)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Action "section/stylesheet" 14.28 ms (1)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} View "Success" for "section/stylesheet" 74.11 ms (1)
+Aug 19 15:25:33 symfony [info] {sfTimerManager} Partial "section/_extra_stylesheet" 28.78 ms (1)
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/sitemap_index" (".xml" suffix)
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/mobile"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/no_mobile"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/sitemap_articles" (".xml" suffix)
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/sitemap_sections" (".xml" suffix)
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/Eventos/*"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/section_css/:name"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/ARTICLE_PREVIEW"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/PREVIEW"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/articulo/:year/:month/:day/:name"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/articulo/:id"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/articulo/popup/:id"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/Contacto"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/TodasLasNoticias/:page/*"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/Galeria/:gallery_id/:article_id"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/Buscar"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/search-xml"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/MapaDelSitio"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/rss/:section"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/rss/list/:template"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/article/:articleId"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/:name"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/RssVerMas/:nombre/:id/:section"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/:module/:action/*"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/captcha"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/js/:target_module/:target_action/*" (".pjs" suffix)
+Aug 19 15:52:47 symfony [info] {sfContext} initialization
+Aug 19 15:52:47 symfony [info] {sfController} initialization
+Aug 19 15:52:47 symfony [info] {sfRouting} match route [homepage] "/"
+Aug 19 15:52:47 symfony [info] {sfRequest} request parameters array (  'module' => 'default',  'action' => 'index',)
+Aug 19 15:52:47 symfony [info] {sfController} dispatch request
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfRenderingFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfWebDebugFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "choiqueMobileFilter"
+Aug 19 15:52:47 symfony [info] {sfCreole} connect(): DSN: array (   'compat_assoc_lower' => NULL,   'compat_rtrim_string' => NULL,   'database' => 'virtual',   'encoding' => NULL,   'hostspec' => '163.10.34.214',   'password' => 'virtual',   'persistent' => NULL,   'phptype' => 'mysql',   'port' => 3306,   'protocol' => NULL,   'socket' => NULL,   'username' => 'virtual', ), FLAGS: 0
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=?
+Aug 19 15:52:47 symfony [info] {sfCreole} applyLimit(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9, offset: 0, limit: 1
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.44 ms] SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9 LIMIT 1
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfLuceneHighlightFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfCSRFFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfCommonFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfFlashFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfExecutionFilter"
+Aug 19 15:52:47 symfony [info] {sfAction} call "defaultActions->executeIndex()"
+Aug 19 15:52:47 symfony [info] {sfAction} forward to action "section/templateByName"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfRenderingFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfWebDebugFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "choiqueMobileFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfLuceneHighlightFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfCSRFFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfCommonFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfFlashFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfExecutionFilter"
+Aug 19 15:52:47 symfony [info] {sfAction} call "sectionActions->executeTemplateByName()"
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:52:47 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='custom_section_home', offset: 0, limit: 1
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.65 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='custom_section_home' LIMIT 1
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.ID=?
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.46 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.ID=1
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=? AND article.IS_PUBLISHED=? ORDER BY article.PUBLISHED_AT DESC
+Aug 19 15:52:47 symfony [info] {sfCreole} applyLimit(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC, offset: 0, limit: 1
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.47 ms] SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC LIMIT 1
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.IS_PUBLISHED=? AND section.SECTION_ID=? ORDER BY section.PRIORITY DESC
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.41 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.IS_PUBLISHED=1 AND section.SECTION_ID=1 ORDER BY section.PRIORITY DESC
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=? AND article.IS_PUBLISHED=? ORDER BY article.PUBLISHED_AT DESC
+Aug 19 15:52:47 symfony [info] {sfCreole} applyLimit(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC, offset: 0, limit: 1
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.41 ms] SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC LIMIT 1
+Aug 19 15:52:47 symfony [info] {sfView} initialize view for "section/templateByName"
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:52:47 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='site_metas', offset: 0, limit: 1
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.59 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='site_metas' LIMIT 1
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.IS_PUBLISHED=?
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.44 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.IS_PUBLISHED=1
+Aug 19 15:52:47 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/flavors/default/modules/section/templates/templateByNameSuccess.php"
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:52:47 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_show_show_all', offset: 0, limit: 1
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.86 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_show_show_all' LIMIT 1
+Aug 19 15:52:47 symfony [info] {sfView} decorate content with "/home/virtual/choique/choique-2.6.2/flavors/default/templates/layout.php"
+Aug 19 15:52:47 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/flavors/default/templates/layout.php"
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:52:47 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_use_layout_per_section', offset: 0, limit: 1
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.58 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_use_layout_per_section' LIMIT 1
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfUJSFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} render to client
+Aug 19 15:52:47 symfony [info] {sfResponse} send status "HTTP/1.0 200 OK"
+Aug 19 15:52:47 symfony [info] {sfResponse} send header "Content-Type": "text/html; charset=utf-8"
+Aug 19 15:52:47 symfony [info] {sfResponse} send content (63618 o)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} Configuration 52.72 ms (15)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} Database 5.30 ms (10)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} Action "default/index" 74.02 ms (1)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} Action "section/templateByName" 24.16 ms (1)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} View "Success" for "section/templateByName" 19.83 ms (1)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} Highlight Filter 0.11 ms (1)
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/captcha"
+Aug 19 15:52:47 symfony [info] {sfRouting} connect "/js/:target_module/:target_action/*" (".pjs" suffix)
+Aug 19 15:52:47 symfony [info] {sfContext} initialization
+Aug 19 15:52:47 symfony [info] {sfController} initialization
+Aug 19 15:52:47 symfony [info] {sfRouting} match route [section_css] "/section_css/:name"
+Aug 19 15:52:47 symfony [info] {sfRequest} request parameters array (  'name' => 'home',  'module' => 'section',  'action' => 'stylesheet',  'sf_format' => 'css',)
+Aug 19 15:52:47 symfony [info] {sfController} dispatch request
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfRenderingFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfWebDebugFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "choiqueMobileFilter"
+Aug 19 15:52:47 symfony [info] {sfCreole} connect(): DSN: array (   'compat_assoc_lower' => NULL,   'compat_rtrim_string' => NULL,   'database' => 'virtual',   'encoding' => NULL,   'hostspec' => '163.10.34.214',   'password' => 'virtual',   'persistent' => NULL,   'phptype' => 'mysql',   'port' => 3306,   'protocol' => NULL,   'socket' => NULL,   'username' => 'virtual', ), FLAGS: 0
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=?
+Aug 19 15:52:47 symfony [info] {sfCreole} applyLimit(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9, offset: 0, limit: 1
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.49 ms] SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9 LIMIT 1
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfLuceneHighlightFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfCSRFFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfCommonFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfFlashFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfExecutionFilter"
+Aug 19 15:52:47 symfony [info] {sfAction} call "sectionActions->executeStylesheet()"
+Aug 19 15:52:47 symfony [info] {sfAction} change layout to ""
+Aug 19 15:52:47 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME=?
+Aug 19 15:52:47 symfony [info] {sfCreole} applyLimit(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME='home', offset: 0, limit: 1
+Aug 19 15:52:47 symfony [info] {sfCreole} executeQuery(): [0.50 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME='home' LIMIT 1
+Aug 19 15:52:47 symfony [info] {sfView} initialize view for "section/stylesheet"
+Aug 19 15:52:47 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/apps/frontend/modules/section/templates/stylesheetSuccess.php"
+Aug 19 15:52:47 symfony [info] {sfView} initialize view for "section/_extra_stylesheet"
+Aug 19 15:52:47 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/flavors/default/modules/section/templates/_extra_stylesheet.php"
+Aug 19 15:52:47 symfony [info] {sfFilter} executing filter "sfUJSFilter"
+Aug 19 15:52:47 symfony [info] {sfFilter} render to client
+Aug 19 15:52:47 symfony [info] {sfResponse} send status "HTTP/1.0 200 OK"
+Aug 19 15:52:47 symfony [info] {sfResponse} send header "Content-Type": "text/css; charset=utf-8"
+Aug 19 15:52:47 symfony [info] {sfResponse} send content (1218 o)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} Configuration 4.76 ms (13)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} Database 0.98 ms (2)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} Action "section/stylesheet" 11.54 ms (1)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} View "Success" for "section/stylesheet" 10.93 ms (1)
+Aug 19 15:52:47 symfony [info] {sfTimerManager} Partial "section/_extra_stylesheet" 0.24 ms (1)
+Aug 19 15:52:59 symfony [info] {sfRouting} connect "/captcha"
+Aug 19 15:52:59 symfony [info] {sfRouting} connect "/js/:target_module/:target_action/*" (".pjs" suffix)
+Aug 19 15:52:59 symfony [info] {sfContext} initialization
+Aug 19 15:52:59 symfony [info] {sfController} initialization
+Aug 19 15:52:59 symfony [info] {sfRouting} match route [homepage] "/"
+Aug 19 15:52:59 symfony [info] {sfRequest} request parameters array (  'module' => 'default',  'action' => 'index',)
+Aug 19 15:52:59 symfony [info] {sfController} dispatch request
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfRenderingFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfWebDebugFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "choiqueMobileFilter"
+Aug 19 15:52:59 symfony [info] {sfCreole} connect(): DSN: array (   'compat_assoc_lower' => NULL,   'compat_rtrim_string' => NULL,   'database' => 'virtual',   'encoding' => NULL,   'hostspec' => '163.10.34.214',   'password' => 'virtual',   'persistent' => NULL,   'phptype' => 'mysql',   'port' => 3306,   'protocol' => NULL,   'socket' => NULL,   'username' => 'virtual', ), FLAGS: 0
+Aug 19 15:52:59 symfony [info] {sfCreole} prepareStatement(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=?
+Aug 19 15:52:59 symfony [info] {sfCreole} applyLimit(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9, offset: 0, limit: 1
+Aug 19 15:52:59 symfony [info] {sfCreole} executeQuery(): [0.50 ms] SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9 LIMIT 1
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfLuceneHighlightFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfCSRFFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfCommonFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfFlashFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfExecutionFilter"
+Aug 19 15:52:59 symfony [info] {sfAction} call "defaultActions->executeIndex()"
+Aug 19 15:52:59 symfony [info] {sfAction} forward to action "section/templateByName"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfRenderingFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfWebDebugFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "choiqueMobileFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfLuceneHighlightFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfCSRFFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfCommonFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfFlashFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfExecutionFilter"
+Aug 19 15:52:59 symfony [info] {sfAction} call "sectionActions->executeTemplateByName()"
+Aug 19 15:52:59 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:52:59 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='custom_section_home', offset: 0, limit: 1
+Aug 19 15:52:59 symfony [info] {sfCreole} executeQuery(): [0.43 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='custom_section_home' LIMIT 1
+Aug 19 15:52:59 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.ID=?
+Aug 19 15:52:59 symfony [info] {sfCreole} executeQuery(): [0.32 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.ID=1
+Aug 19 15:52:59 symfony [info] {sfCreole} prepareStatement(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=? AND article.IS_PUBLISHED=? ORDER BY article.PUBLISHED_AT DESC
+Aug 19 15:52:59 symfony [info] {sfCreole} applyLimit(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC, offset: 0, limit: 1
+Aug 19 15:52:59 symfony [info] {sfCreole} executeQuery(): [0.61 ms] SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC LIMIT 1
+Aug 19 15:52:59 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.IS_PUBLISHED=? AND section.SECTION_ID=? ORDER BY section.PRIORITY DESC
+Aug 19 15:52:59 symfony [info] {sfCreole} executeQuery(): [3.04 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.IS_PUBLISHED=1 AND section.SECTION_ID=1 ORDER BY section.PRIORITY DESC
+Aug 19 15:52:59 symfony [info] {sfCreole} prepareStatement(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=? AND article.IS_PUBLISHED=? ORDER BY article.PUBLISHED_AT DESC
+Aug 19 15:52:59 symfony [info] {sfCreole} applyLimit(): SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC, offset: 0, limit: 1
+Aug 19 15:52:59 symfony [info] {sfCreole} executeQuery(): [0.50 ms] SELECT article.ID, article.TYPE, article.NAME, article.TITLE, article.HEADING, article.COMMENT, article.DESCRIPTION, article.UPPER_DESCRIPTION, article.BODY, article.CREATED_AT, article.UPDATED_AT, article.CREATED_BY, article.UPDATED_BY, article.IS_PUBLISHED, article.IS_ARCHIVED, article.PUBLISHED_AT, article.ARCHIVED_AT, article.SIGNATURE, article.CONTACT, article.ZOOMABLE_MULTIMEDIA, article.MULTIMEDIA_ID, article.MAIN_GALLERY_ID, article.LINK_ID, article.SOURCE_ID, article.SECTION_ID, article.REFERENCE, article.REFERENCE_TYPE, article.OPEN_REFERENCE_NEW_WINDOW, article.TIMES_READ, article.RATING, article.OPEN_AS_POPUP, article.AUTO_PUBLISH_AT, article.AUTO_UNPUBLISH_AT FROM article WHERE article.SECTION_ID=1 AND article.IS_PUBLISHED=1 ORDER BY article.PUBLISHED_AT DESC LIMIT 1
+Aug 19 15:52:59 symfony [info] {sfView} initialize view for "section/templateByName"
+Aug 19 15:52:59 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/flavors/default/modules/section/templates/templateByNameSuccess.php"
+Aug 19 15:52:59 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:52:59 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_show_show_all', offset: 0, limit: 1
+Aug 19 15:52:59 symfony [info] {sfCreole} executeQuery(): [0.36 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_show_show_all' LIMIT 1
+Aug 19 15:52:59 symfony [info] {sfView} decorate content with "/home/virtual/choique/choique-2.6.2/flavors/default/templates/layout.php"
+Aug 19 15:52:59 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/flavors/default/templates/layout.php"
+Aug 19 15:52:59 symfony [info] {sfCreole} prepareStatement(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY=?
+Aug 19 15:52:59 symfony [info] {sfCreole} applyLimit(): SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_use_layout_per_section', offset: 0, limit: 1
+Aug 19 15:52:59 symfony [info] {sfCreole} executeQuery(): [0.40 ms] SELECT cms_configuration.ID, cms_configuration.NAME, cms_configuration.CONFIGURATION_KEY, cms_configuration.CONFIGURATION_VALUE FROM cms_configuration WHERE cms_configuration.CONFIGURATION_KEY='check_use_layout_per_section' LIMIT 1
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfUJSFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} render to client
+Aug 19 15:52:59 symfony [info] {sfResponse} send status "HTTP/1.0 200 OK"
+Aug 19 15:52:59 symfony [info] {sfResponse} send header "Content-Type": "text/html; charset=utf-8"
+Aug 19 15:52:59 symfony [info] {sfResponse} send content (52416 o)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} Configuration 7.06 ms (16)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} Database 6.14 ms (8)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} Action "default/index" 49.33 ms (1)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} Action "section/templateByName" 24.43 ms (1)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} View "Success" for "section/templateByName" 10.22 ms (1)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} Highlight Filter 0.08 ms (1)
+Aug 19 15:52:59 symfony [info] {sfRouting} connect "/captcha"
+Aug 19 15:52:59 symfony [info] {sfRouting} connect "/js/:target_module/:target_action/*" (".pjs" suffix)
+Aug 19 15:52:59 symfony [info] {sfContext} initialization
+Aug 19 15:52:59 symfony [info] {sfController} initialization
+Aug 19 15:52:59 symfony [info] {sfRouting} match route [section_css] "/section_css/:name"
+Aug 19 15:52:59 symfony [info] {sfRequest} request parameters array (  'name' => 'home',  'module' => 'section',  'action' => 'stylesheet',  'sf_format' => 'css',)
+Aug 19 15:52:59 symfony [info] {sfController} dispatch request
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfRenderingFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfWebDebugFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "choiqueMobileFilter"
+Aug 19 15:52:59 symfony [info] {sfCreole} connect(): DSN: array (   'compat_assoc_lower' => NULL,   'compat_rtrim_string' => NULL,   'database' => 'virtual',   'encoding' => NULL,   'hostspec' => '163.10.34.214',   'password' => 'virtual',   'persistent' => NULL,   'phptype' => 'mysql',   'port' => 3306,   'protocol' => NULL,   'socket' => NULL,   'username' => 'virtual', ), FLAGS: 0
+Aug 19 15:52:59 symfony [info] {sfCreole} prepareStatement(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=?
+Aug 19 15:52:59 symfony [info] {sfCreole} applyLimit(): SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9, offset: 0, limit: 1
+Aug 19 15:52:59 symfony [info] {sfCreole} executeQuery(): [0.69 ms] SELECT layout.ID, layout.NAME, layout.ARTICLE_LAYOUT, layout.TEMPLATE_LAYOUT, layout.IS_DEFAULT, layout.VIRTUAL_SECTION_ID, layout.CREATED_AT, layout.UPDATED_AT FROM layout WHERE layout.VIRTUAL_SECTION_ID=9 LIMIT 1
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfLuceneHighlightFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfCSRFFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfCommonFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfFlashFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfExecutionFilter"
+Aug 19 15:52:59 symfony [info] {sfAction} call "sectionActions->executeStylesheet()"
+Aug 19 15:52:59 symfony [info] {sfAction} change layout to ""
+Aug 19 15:52:59 symfony [info] {sfCreole} prepareStatement(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME=?
+Aug 19 15:52:59 symfony [info] {sfCreole} applyLimit(): SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME='home', offset: 0, limit: 1
+Aug 19 15:52:59 symfony [info] {sfCreole} executeQuery(): [0.46 ms] SELECT section.ID, section.NAME, section.TITLE, section.PRIORITY, section.DESCRIPTION, section.COMMENT, section.IS_PUBLISHED, section.MULTIMEDIA_ID, section.SECTION_ID, section.TEMPLATE_ID, section.ARTICLE_ID, section.LAYOUT_ID, section.COLOR, section.ARTICLE_GROUP_ID FROM section WHERE section.NAME='home' LIMIT 1
+Aug 19 15:52:59 symfony [info] {sfView} initialize view for "section/stylesheet"
+Aug 19 15:52:59 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/apps/frontend/modules/section/templates/stylesheetSuccess.php"
+Aug 19 15:52:59 symfony [info] {sfView} initialize view for "section/_extra_stylesheet"
+Aug 19 15:52:59 symfony [info] {sfView} render "/home/virtual/choique/choique-2.6.2/flavors/default/modules/section/templates/_extra_stylesheet.php"
+Aug 19 15:52:59 symfony [info] {sfFilter} executing filter "sfUJSFilter"
+Aug 19 15:52:59 symfony [info] {sfFilter} render to client
+Aug 19 15:52:59 symfony [info] {sfResponse} send status "HTTP/1.0 200 OK"
+Aug 19 15:52:59 symfony [info] {sfResponse} send header "Content-Type": "text/css; charset=utf-8"
+Aug 19 15:52:59 symfony [info] {sfResponse} send content (1218 o)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} Configuration 4.00 ms (13)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} Database 1.15 ms (2)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} Action "section/stylesheet" 13.95 ms (1)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} View "Success" for "section/stylesheet" 11.34 ms (1)
+Aug 19 15:52:59 symfony [info] {sfTimerManager} Partial "section/_extra_stylesheet" 0.32 ms (1)

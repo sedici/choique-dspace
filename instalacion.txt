@@ -1,0 +1,19 @@
+Repositorio de choique: https://github.com/Desarrollo-CeSPI/choique/blob/master/INSTALL.md
+Foro: https://github.com/Desarrollo-CeSPI/choique/issues/14
+
+
+Problematicas con la instalacion
+
+Choique esta hecho para php 5.2, pero se puede hacer andar para php 5.3
+Pasos:
+* Bajar la ultima version de choique en una maquina virtual (ubuntu server 10), e instalar php
+* Crear un virtualHost para elo para el frontend y otro para el backend
+* Compartir un schema de la bbdd desde el host a la virtual
+* Instalar php5-suhosin en el server y editar: /etc/php5/conf.d/suhosin.ini 
+	suhosin.memory_limit = 512M
+* Quitar las directivas magic_quotes* de /lib/vendor/symfony/data/config/php.yml
+* Cambiar '' por null en sfException.class (linea 106 - ob_start(sfConfig::get('sf_compressed') ? 'ob_gzhandler' : null);)
+* Cambiar mysql_escape_string por mysql_real_escape_string en MysqlPlatform.php (linea 95 - mysql_real_escape_string($text);)
+
+
+
