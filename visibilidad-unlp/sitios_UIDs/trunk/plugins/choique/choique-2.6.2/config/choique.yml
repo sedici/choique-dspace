@@ -1,0 +1,5 @@
+---
+choique: 
+  flavors: 
+    current: default
+    root_dir: flavors

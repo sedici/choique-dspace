@@ -1,0 +1,27 @@
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/symfony/:action/*"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/ajax/article/:type/:id"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/article/:year/:month/:day/:name"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/todasLasNoticias"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/:module"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/:module/:action/*"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/captcha"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/login"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/logout"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/request_password"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/change_password"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/must_change_password"
+Aug 19 15:18:20 symfony [info] {sfRouting} connect "/js/:target_module/:target_action/*" (".pjs" suffix)
+Aug 19 15:18:20 symfony [info] {sfContext} initialization
+Aug 19 15:18:20 symfony [info] {sfController} initialization
+Aug 19 15:18:20 symfony [info] {sfRouting} match route [homepage] "/"
+Aug 19 15:18:20 symfony [info] {sfRequest} request parameters array (  'module' => 'article',  'action' => 'index',)
+Aug 19 15:18:20 symfony [info] {sfLucene} created index "/home/virtual/choique/choique-2.6.2/data/index/CMSIndex/es_AR"
+Aug 19 15:18:20 symfony [info] {sfLucene} constructed new instance of index "CMSIndex" and culture "es_AR"
+Aug 19 15:18:20 symfony [info] {sfCreole} connect(): DSN: array (   'compat_assoc_lower' => NULL,   'compat_rtrim_string' => NULL,   'database' => 'virtual',   'encoding' => NULL,   'hostspec' => '163.10.34.214',   'password' => 'virtual',   'persistent' => NULL,   'phptype' => 'mysql',   'port' => 3306,   'protocol' => NULL,   'socket' => NULL,   'username' => 'virtual', ), FLAGS: 0
+Aug 19 15:18:20 symfony [info] {sfCreole} prepareStatement(): SELECT COUNT(article.ID) FROM article
+Aug 19 15:18:20 symfony [info] {sfCreole} executeQuery(): [0.88 ms] SELECT COUNT(article.ID) FROM article
+Aug 19 15:18:20 symfony [info] {sfCreole} prepareStatement(): SELECT COUNT(section.ID) FROM section
+Aug 19 15:18:20 symfony [info] {sfCreole} executeQuery(): [0.61 ms] SELECT COUNT(section.ID) FROM section
+Aug 19 15:18:20 symfony [info] {sfCreole} prepareStatement(): SELECT COUNT(document.ID) FROM document
+Aug 19 15:18:20 symfony [info] {sfCreole} executeQuery(): [0.53 ms] SELECT COUNT(document.ID) FROM document
