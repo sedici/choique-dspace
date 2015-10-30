@@ -44,7 +44,7 @@ class SectionMapBuilder {
 
 		$tMap->addColumn('COMMENT', 'Comment', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
-		$tMap->addColumn('IS_PUBLISHED', 'IsPublished', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_PUBLISHED', 'IsPublished', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addForeignKey('MULTIMEDIA_ID', 'MultimediaId', 'int', CreoleTypes::INTEGER, 'multimedia', 'ID', false, null);
 

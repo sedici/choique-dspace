@@ -44,9 +44,9 @@ class FormMapBuilder {
 
 		$tMap->addColumn('ROWS', 'Rows', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('IS_POLL', 'IsPoll', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_POLL', 'IsPoll', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('IS_ACTIVE', 'IsActive', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_ACTIVE', 'IsActive', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('SUCCESS_MSG', 'SuccessMsg', 'string', CreoleTypes::VARCHAR, false, 256);
 

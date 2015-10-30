@@ -33,7 +33,7 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 
 
 	
-	protected $is_published = false;
+	protected $is_published = 0;
 
 
 	
@@ -94,22 +94,16 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 	protected $lastArticleCriteria = null;
 
 	
-	protected $collEventSections;
-
-	
-	protected $lastEventSectionCriteria = null;
-
-	
 	protected $collArticleSections;
 
 	
 	protected $lastArticleSectionCriteria = null;
 
 	
-	protected $collSectionTags;
+	protected $collEventSections;
 
 	
-	protected $lastSectionTagCriteria = null;
+	protected $lastEventSectionCriteria = null;
 
 	
 	protected $collSectionsRelatedBySectionId;
@@ -118,16 +112,22 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 	protected $lastSectionRelatedBySectionIdCriteria = null;
 
 	
+	protected $collSectionDocuments;
+
+	
+	protected $lastSectionDocumentCriteria = null;
+
+	
 	protected $collSectionLinks;
 
 	
 	protected $lastSectionLinkCriteria = null;
 
 	
-	protected $collSectionDocuments;
+	protected $collSectionTags;
 
 	
-	protected $lastSectionDocumentCriteria = null;
+	protected $lastSectionTagCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -321,7 +321,11 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 	public function setIsPublished($v)
 	{
 
-		if ($this->is_published !== $v || $v === false) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->is_published !== $v || $v === 0) {
 			$this->is_published = $v;
 			$this->modifiedColumns[] = SectionPeer::IS_PUBLISHED;
 		}
@@ -466,7 +470,7 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 
 			$this->comment = $rs->getString($startcol + 5);
 
-			$this->is_published = $rs->getBoolean($startcol + 6);
+			$this->is_published = $rs->getInt($startcol + 6);
 
 			$this->multimedia_id = $rs->getInt($startcol + 7);
 
@@ -647,14 +651,6 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collEventSections !== null) {
-				foreach($this->collEventSections as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			if ($this->collArticleSections !== null) {
 				foreach($this->collArticleSections as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -663,8 +659,8 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collSectionTags !== null) {
-				foreach($this->collSectionTags as $referrerFK) {
+			if ($this->collEventSections !== null) {
+				foreach($this->collEventSections as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -679,6 +675,14 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collSectionDocuments !== null) {
+				foreach($this->collSectionDocuments as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collSectionLinks !== null) {
 				foreach($this->collSectionLinks as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -687,8 +691,8 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collSectionDocuments !== null) {
-				foreach($this->collSectionDocuments as $referrerFK) {
+			if ($this->collSectionTags !== null) {
+				foreach($this->collSectionTags as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -790,14 +794,6 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collEventSections !== null) {
-					foreach($this->collEventSections as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
 				if ($this->collArticleSections !== null) {
 					foreach($this->collArticleSections as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
@@ -806,8 +802,16 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collSectionTags !== null) {
-					foreach($this->collSectionTags as $referrerFK) {
+				if ($this->collEventSections !== null) {
+					foreach($this->collEventSections as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collSectionDocuments !== null) {
+					foreach($this->collSectionDocuments as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -822,8 +826,8 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collSectionDocuments !== null) {
-					foreach($this->collSectionDocuments as $referrerFK) {
+				if ($this->collSectionTags !== null) {
+					foreach($this->collSectionTags as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1081,16 +1085,12 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 				$copyObj->addArticle($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getEventSections() as $relObj) {
-				$copyObj->addEventSection($relObj->copy($deepCopy));
-			}
-
 			foreach($this->getArticleSections() as $relObj) {
 				$copyObj->addArticleSection($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getSectionTags() as $relObj) {
-				$copyObj->addSectionTag($relObj->copy($deepCopy));
+			foreach($this->getEventSections() as $relObj) {
+				$copyObj->addEventSection($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getSectionsRelatedBySectionId() as $relObj) {
@@ -1101,12 +1101,16 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 				$copyObj->addSectionRelatedBySectionId($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getSectionDocuments() as $relObj) {
+				$copyObj->addSectionDocument($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getSectionLinks() as $relObj) {
 				$copyObj->addSectionLink($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getSectionDocuments() as $relObj) {
-				$copyObj->addSectionDocument($relObj->copy($deepCopy));
+			foreach($this->getSectionTags() as $relObj) {
+				$copyObj->addSectionTag($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1659,111 +1663,6 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initEventSections()
-	{
-		if ($this->collEventSections === null) {
-			$this->collEventSections = array();
-		}
-	}
-
-	
-	public function getEventSections($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventSectionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventSections === null) {
-			if ($this->isNew()) {
-			   $this->collEventSections = array();
-			} else {
-
-				$criteria->add(EventSectionPeer::SECTION_ID, $this->getId());
-
-				EventSectionPeer::addSelectColumns($criteria);
-				$this->collEventSections = EventSectionPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(EventSectionPeer::SECTION_ID, $this->getId());
-
-				EventSectionPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventSectionCriteria) || !$this->lastEventSectionCriteria->equals($criteria)) {
-					$this->collEventSections = EventSectionPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastEventSectionCriteria = $criteria;
-		return $this->collEventSections;
-	}
-
-	
-	public function countEventSections($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventSectionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(EventSectionPeer::SECTION_ID, $this->getId());
-
-		return EventSectionPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addEventSection(EventSection $l)
-	{
-		$this->collEventSections[] = $l;
-		$l->setSection($this);
-	}
-
-
-	
-	public function getEventSectionsJoinEvent($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventSectionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventSections === null) {
-			if ($this->isNew()) {
-				$this->collEventSections = array();
-			} else {
-
-				$criteria->add(EventSectionPeer::SECTION_ID, $this->getId());
-
-				$this->collEventSections = EventSectionPeer::doSelectJoinEvent($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(EventSectionPeer::SECTION_ID, $this->getId());
-
-			if (!isset($this->lastEventSectionCriteria) || !$this->lastEventSectionCriteria->equals($criteria)) {
-				$this->collEventSections = EventSectionPeer::doSelectJoinEvent($criteria, $con);
-			}
-		}
-		$this->lastEventSectionCriteria = $criteria;
-
-		return $this->collEventSections;
-	}
-
-	
 	public function initArticleSections()
 	{
 		if ($this->collArticleSections === null) {
@@ -1869,17 +1768,17 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initSectionTags()
+	public function initEventSections()
 	{
-		if ($this->collSectionTags === null) {
-			$this->collSectionTags = array();
+		if ($this->collEventSections === null) {
+			$this->collEventSections = array();
 		}
 	}
 
 	
-	public function getSectionTags($criteria = null, $con = null)
+	public function getEventSections($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseSectionTagPeer.php';
+				include_once 'lib/model/om/BaseEventSectionPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1888,36 +1787,36 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collSectionTags === null) {
+		if ($this->collEventSections === null) {
 			if ($this->isNew()) {
-			   $this->collSectionTags = array();
+			   $this->collEventSections = array();
 			} else {
 
-				$criteria->add(SectionTagPeer::SECTION_ID, $this->getId());
+				$criteria->add(EventSectionPeer::SECTION_ID, $this->getId());
 
-				SectionTagPeer::addSelectColumns($criteria);
-				$this->collSectionTags = SectionTagPeer::doSelect($criteria, $con);
+				EventSectionPeer::addSelectColumns($criteria);
+				$this->collEventSections = EventSectionPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(SectionTagPeer::SECTION_ID, $this->getId());
+				$criteria->add(EventSectionPeer::SECTION_ID, $this->getId());
 
-				SectionTagPeer::addSelectColumns($criteria);
-				if (!isset($this->lastSectionTagCriteria) || !$this->lastSectionTagCriteria->equals($criteria)) {
-					$this->collSectionTags = SectionTagPeer::doSelect($criteria, $con);
+				EventSectionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventSectionCriteria) || !$this->lastEventSectionCriteria->equals($criteria)) {
+					$this->collEventSections = EventSectionPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastSectionTagCriteria = $criteria;
-		return $this->collSectionTags;
+		$this->lastEventSectionCriteria = $criteria;
+		return $this->collEventSections;
 	}
 
 	
-	public function countSectionTags($criteria = null, $distinct = false, $con = null)
+	public function countEventSections($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseSectionTagPeer.php';
+				include_once 'lib/model/om/BaseEventSectionPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1926,23 +1825,23 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(SectionTagPeer::SECTION_ID, $this->getId());
+		$criteria->add(EventSectionPeer::SECTION_ID, $this->getId());
 
-		return SectionTagPeer::doCount($criteria, $distinct, $con);
+		return EventSectionPeer::doCount($criteria, $distinct, $con);
 	}
 
 	
-	public function addSectionTag(SectionTag $l)
+	public function addEventSection(EventSection $l)
 	{
-		$this->collSectionTags[] = $l;
+		$this->collEventSections[] = $l;
 		$l->setSection($this);
 	}
 
 
 	
-	public function getSectionTagsJoinTag($criteria = null, $con = null)
+	public function getEventSectionsJoinEvent($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseSectionTagPeer.php';
+				include_once 'lib/model/om/BaseEventSectionPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1951,26 +1850,26 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collSectionTags === null) {
+		if ($this->collEventSections === null) {
 			if ($this->isNew()) {
-				$this->collSectionTags = array();
+				$this->collEventSections = array();
 			} else {
 
-				$criteria->add(SectionTagPeer::SECTION_ID, $this->getId());
+				$criteria->add(EventSectionPeer::SECTION_ID, $this->getId());
 
-				$this->collSectionTags = SectionTagPeer::doSelectJoinTag($criteria, $con);
+				$this->collEventSections = EventSectionPeer::doSelectJoinEvent($criteria, $con);
 			}
 		} else {
 									
-			$criteria->add(SectionTagPeer::SECTION_ID, $this->getId());
+			$criteria->add(EventSectionPeer::SECTION_ID, $this->getId());
 
-			if (!isset($this->lastSectionTagCriteria) || !$this->lastSectionTagCriteria->equals($criteria)) {
-				$this->collSectionTags = SectionTagPeer::doSelectJoinTag($criteria, $con);
+			if (!isset($this->lastEventSectionCriteria) || !$this->lastEventSectionCriteria->equals($criteria)) {
+				$this->collEventSections = EventSectionPeer::doSelectJoinEvent($criteria, $con);
 			}
 		}
-		$this->lastSectionTagCriteria = $criteria;
+		$this->lastEventSectionCriteria = $criteria;
 
-		return $this->collSectionTags;
+		return $this->collEventSections;
 	}
 
 	
@@ -2219,6 +2118,111 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 	}
 
 	
+	public function initSectionDocuments()
+	{
+		if ($this->collSectionDocuments === null) {
+			$this->collSectionDocuments = array();
+		}
+	}
+
+	
+	public function getSectionDocuments($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSectionDocumentPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSectionDocuments === null) {
+			if ($this->isNew()) {
+			   $this->collSectionDocuments = array();
+			} else {
+
+				$criteria->add(SectionDocumentPeer::SECTION_ID, $this->getId());
+
+				SectionDocumentPeer::addSelectColumns($criteria);
+				$this->collSectionDocuments = SectionDocumentPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(SectionDocumentPeer::SECTION_ID, $this->getId());
+
+				SectionDocumentPeer::addSelectColumns($criteria);
+				if (!isset($this->lastSectionDocumentCriteria) || !$this->lastSectionDocumentCriteria->equals($criteria)) {
+					$this->collSectionDocuments = SectionDocumentPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastSectionDocumentCriteria = $criteria;
+		return $this->collSectionDocuments;
+	}
+
+	
+	public function countSectionDocuments($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseSectionDocumentPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(SectionDocumentPeer::SECTION_ID, $this->getId());
+
+		return SectionDocumentPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addSectionDocument(SectionDocument $l)
+	{
+		$this->collSectionDocuments[] = $l;
+		$l->setSection($this);
+	}
+
+
+	
+	public function getSectionDocumentsJoinDocument($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSectionDocumentPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSectionDocuments === null) {
+			if ($this->isNew()) {
+				$this->collSectionDocuments = array();
+			} else {
+
+				$criteria->add(SectionDocumentPeer::SECTION_ID, $this->getId());
+
+				$this->collSectionDocuments = SectionDocumentPeer::doSelectJoinDocument($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(SectionDocumentPeer::SECTION_ID, $this->getId());
+
+			if (!isset($this->lastSectionDocumentCriteria) || !$this->lastSectionDocumentCriteria->equals($criteria)) {
+				$this->collSectionDocuments = SectionDocumentPeer::doSelectJoinDocument($criteria, $con);
+			}
+		}
+		$this->lastSectionDocumentCriteria = $criteria;
+
+		return $this->collSectionDocuments;
+	}
+
+	
 	public function initSectionLinks()
 	{
 		if ($this->collSectionLinks === null) {
@@ -2324,17 +2328,17 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initSectionDocuments()
+	public function initSectionTags()
 	{
-		if ($this->collSectionDocuments === null) {
-			$this->collSectionDocuments = array();
+		if ($this->collSectionTags === null) {
+			$this->collSectionTags = array();
 		}
 	}
 
 	
-	public function getSectionDocuments($criteria = null, $con = null)
+	public function getSectionTags($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseSectionDocumentPeer.php';
+				include_once 'lib/model/om/BaseSectionTagPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -2343,36 +2347,36 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collSectionDocuments === null) {
+		if ($this->collSectionTags === null) {
 			if ($this->isNew()) {
-			   $this->collSectionDocuments = array();
+			   $this->collSectionTags = array();
 			} else {
 
-				$criteria->add(SectionDocumentPeer::SECTION_ID, $this->getId());
+				$criteria->add(SectionTagPeer::SECTION_ID, $this->getId());
 
-				SectionDocumentPeer::addSelectColumns($criteria);
-				$this->collSectionDocuments = SectionDocumentPeer::doSelect($criteria, $con);
+				SectionTagPeer::addSelectColumns($criteria);
+				$this->collSectionTags = SectionTagPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(SectionDocumentPeer::SECTION_ID, $this->getId());
+				$criteria->add(SectionTagPeer::SECTION_ID, $this->getId());
 
-				SectionDocumentPeer::addSelectColumns($criteria);
-				if (!isset($this->lastSectionDocumentCriteria) || !$this->lastSectionDocumentCriteria->equals($criteria)) {
-					$this->collSectionDocuments = SectionDocumentPeer::doSelect($criteria, $con);
+				SectionTagPeer::addSelectColumns($criteria);
+				if (!isset($this->lastSectionTagCriteria) || !$this->lastSectionTagCriteria->equals($criteria)) {
+					$this->collSectionTags = SectionTagPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastSectionDocumentCriteria = $criteria;
-		return $this->collSectionDocuments;
+		$this->lastSectionTagCriteria = $criteria;
+		return $this->collSectionTags;
 	}
 
 	
-	public function countSectionDocuments($criteria = null, $distinct = false, $con = null)
+	public function countSectionTags($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseSectionDocumentPeer.php';
+				include_once 'lib/model/om/BaseSectionTagPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -2381,23 +2385,23 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(SectionDocumentPeer::SECTION_ID, $this->getId());
+		$criteria->add(SectionTagPeer::SECTION_ID, $this->getId());
 
-		return SectionDocumentPeer::doCount($criteria, $distinct, $con);
+		return SectionTagPeer::doCount($criteria, $distinct, $con);
 	}
 
 	
-	public function addSectionDocument(SectionDocument $l)
+	public function addSectionTag(SectionTag $l)
 	{
-		$this->collSectionDocuments[] = $l;
+		$this->collSectionTags[] = $l;
 		$l->setSection($this);
 	}
 
 
 	
-	public function getSectionDocumentsJoinDocument($criteria = null, $con = null)
+	public function getSectionTagsJoinTag($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseSectionDocumentPeer.php';
+				include_once 'lib/model/om/BaseSectionTagPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -2406,26 +2410,26 @@ abstract class BaseSection extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collSectionDocuments === null) {
+		if ($this->collSectionTags === null) {
 			if ($this->isNew()) {
-				$this->collSectionDocuments = array();
+				$this->collSectionTags = array();
 			} else {
 
-				$criteria->add(SectionDocumentPeer::SECTION_ID, $this->getId());
+				$criteria->add(SectionTagPeer::SECTION_ID, $this->getId());
 
-				$this->collSectionDocuments = SectionDocumentPeer::doSelectJoinDocument($criteria, $con);
+				$this->collSectionTags = SectionTagPeer::doSelectJoinTag($criteria, $con);
 			}
 		} else {
 									
-			$criteria->add(SectionDocumentPeer::SECTION_ID, $this->getId());
+			$criteria->add(SectionTagPeer::SECTION_ID, $this->getId());
 
-			if (!isset($this->lastSectionDocumentCriteria) || !$this->lastSectionDocumentCriteria->equals($criteria)) {
-				$this->collSectionDocuments = SectionDocumentPeer::doSelectJoinDocument($criteria, $con);
+			if (!isset($this->lastSectionTagCriteria) || !$this->lastSectionTagCriteria->equals($criteria)) {
+				$this->collSectionTags = SectionTagPeer::doSelectJoinTag($criteria, $con);
 			}
 		}
-		$this->lastSectionDocumentCriteria = $criteria;
+		$this->lastSectionTagCriteria = $criteria;
 
-		return $this->collSectionDocuments;
+		return $this->collSectionTags;
 	}
 
 

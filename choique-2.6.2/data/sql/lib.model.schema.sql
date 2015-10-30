@@ -41,44 +41,53 @@ CREATE TABLE `article`
 	`reference_type` TINYINT default 0,
 	`open_reference_new_window` INTEGER default 0,
 	`times_read` BIGINT,
-	`rating` DECIMAL,
+	`rating` DECIMAL(10),
 	`open_as_popup` INTEGER default 0,
 	`auto_publish_at` DATETIME,
 	`auto_unpublish_at` DATETIME,
 	PRIMARY KEY (`id`),
 	KEY `name_publmished_at_index`(`name`, `published_at`),
-	INDEX `article_FI_1` (`created_by`),
+	KEY `article_FI_1`(`created_by`),
+	KEY `article_FI_2`(`updated_by`),
+	KEY `article_FI_3`(`multimedia_id`),
+	KEY `article_FI_4`(`main_gallery_id`),
+	KEY `article_FI_5`(`link_id`),
+	KEY `article_FI_6`(`source_id`),
+	KEY `article_FI_7`(`section_id`),
 	CONSTRAINT `article_FK_1`
 		FOREIGN KEY (`created_by`)
-		REFERENCES `sf_guard_user` (`id`),
-	INDEX `article_FI_2` (`updated_by`),
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
 	CONSTRAINT `article_FK_2`
 		FOREIGN KEY (`updated_by`)
-		REFERENCES `sf_guard_user` (`id`),
-	INDEX `article_FI_3` (`multimedia_id`),
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
 	CONSTRAINT `article_FK_3`
 		FOREIGN KEY (`multimedia_id`)
 		REFERENCES `multimedia` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL,
-	INDEX `article_FI_4` (`main_gallery_id`),
 	CONSTRAINT `article_FK_4`
 		FOREIGN KEY (`main_gallery_id`)
 		REFERENCES `gallery` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL,
-	INDEX `article_FI_5` (`link_id`),
 	CONSTRAINT `article_FK_5`
 		FOREIGN KEY (`link_id`)
 		REFERENCES `link` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL,
-	INDEX `article_FI_6` (`source_id`),
 	CONSTRAINT `article_FK_6`
 		FOREIGN KEY (`source_id`)
 		REFERENCES `source` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL,
-	INDEX `article_FI_7` (`section_id`),
 	CONSTRAINT `article_FK_7`
 		FOREIGN KEY (`section_id`)
 		REFERENCES `section` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL
 )ENGINE=InnoDB;
 
@@ -95,16 +104,298 @@ CREATE TABLE `article_article`
 	`article_referer_id` INTEGER,
 	`article_referee_id` INTEGER,
 	PRIMARY KEY (`id`),
-	INDEX `article_article_FI_1` (`article_referer_id`),
+	KEY `article_article_FI_1`(`article_referer_id`),
+	KEY `article_article_FI_2`(`article_referee_id`),
 	CONSTRAINT `article_article_FK_1`
 		FOREIGN KEY (`article_referer_id`)
 		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE,
-	INDEX `article_article_FI_2` (`article_referee_id`),
 	CONSTRAINT `article_article_FK_2`
 		FOREIGN KEY (`article_referee_id`)
 		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE RESTRICT
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- article_article_group
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `article_article_group`;
+
+
+CREATE TABLE `article_article_group`
+(
+	`article_id` INTEGER,
+	`article_group_id` INTEGER,
+	`priority` INTEGER default 0,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	KEY `article_article_group_FI_1`(`article_id`),
+	KEY `article_article_group_FI_2`(`article_group_id`),
+	CONSTRAINT `article_article_group_FK_1`
+		FOREIGN KEY (`article_id`)
+		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `article_article_group_FK_2`
+		FOREIGN KEY (`article_group_id`)
+		REFERENCES `article_group` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- article_document
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `article_document`;
+
+
+CREATE TABLE `article_document`
+(
+	`article_id` INTEGER,
+	`document_id` INTEGER,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	KEY `article_document_FI_1`(`article_id`),
+	KEY `article_document_FI_2`(`document_id`),
+	CONSTRAINT `article_document_FK_1`
+		FOREIGN KEY (`article_id`)
+		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `article_document_FK_2`
+		FOREIGN KEY (`document_id`)
+		REFERENCES `document` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- article_form
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `article_form`;
+
+
+CREATE TABLE `article_form`
+(
+	`article_id` INTEGER,
+	`form_id` INTEGER,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	KEY `article_form_FI_1`(`article_id`),
+	KEY `article_form_FI_2`(`form_id`),
+	CONSTRAINT `article_form_FK_1`
+		FOREIGN KEY (`article_id`)
+		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `article_form_FK_2`
+		FOREIGN KEY (`form_id`)
+		REFERENCES `form` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- article_gallery
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `article_gallery`;
+
+
+CREATE TABLE `article_gallery`
+(
+	`article_id` INTEGER,
+	`gallery_id` INTEGER,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	KEY `article_gallery_FI_1`(`article_id`),
+	KEY `article_gallery_FI_2`(`gallery_id`),
+	CONSTRAINT `article_gallery_FK_1`
+		FOREIGN KEY (`article_id`)
+		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `article_gallery_FK_2`
+		FOREIGN KEY (`gallery_id`)
+		REFERENCES `gallery` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- article_group
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `article_group`;
+
+
+CREATE TABLE `article_group`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(256)  NOT NULL,
+	`description` TEXT,
+	`comment` TEXT,
+	`visible_items` TINYINT default 0,
+	`is_published` INTEGER,
+	`created_at` DATETIME,
+	`published_at` DATETIME,
+	`created_by` INTEGER,
+	`updated_at` DATETIME,
+	`updated_by` INTEGER,
+	PRIMARY KEY (`id`),
+	KEY `article_group_FI_1`(`created_by`),
+	KEY `article_group_FI_2`(`updated_by`),
+	CONSTRAINT `article_group_FK_1`
+		FOREIGN KEY (`created_by`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE SET NULL,
+	CONSTRAINT `article_group_FK_2`
+		FOREIGN KEY (`updated_by`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE SET NULL
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- article_link_group
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `article_link_group`;
+
+
+CREATE TABLE `article_link_group`
+(
+	`article_id` INTEGER,
+	`link_group_id` INTEGER,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	KEY `article_link_group_FI_1`(`article_id`),
+	KEY `article_link_group_FI_2`(`link_group_id`),
+	CONSTRAINT `article_link_group_FK_1`
+		FOREIGN KEY (`article_id`)
+		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `article_link_group_FK_2`
+		FOREIGN KEY (`link_group_id`)
+		REFERENCES `link_group` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- article_multimedia
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `article_multimedia`;
+
+
+CREATE TABLE `article_multimedia`
+(
+	`article_id` INTEGER,
+	`multimedia_id` INTEGER,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	KEY `article_multimedia_FI_1`(`article_id`),
+	KEY `article_multimedia_FI_2`(`multimedia_id`),
+	CONSTRAINT `article_multimedia_FK_1`
+		FOREIGN KEY (`article_id`)
+		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `article_multimedia_FK_2`
+		FOREIGN KEY (`multimedia_id`)
+		REFERENCES `multimedia` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- article_rss_channel
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `article_rss_channel`;
+
+
+CREATE TABLE `article_rss_channel`
+(
+	`article_id` INTEGER,
+	`rss_channel_id` INTEGER,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	KEY `article_rss_channel_FI_1`(`article_id`),
+	KEY `article_rss_channel_FI_2`(`rss_channel_id`),
+	CONSTRAINT `article_rss_channel_FK_1`
+		FOREIGN KEY (`article_id`)
+		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `article_rss_channel_FK_2`
+		FOREIGN KEY (`rss_channel_id`)
+		REFERENCES `rss_channel` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- article_section
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `article_section`;
+
+
+CREATE TABLE `article_section`
+(
+	`article_id` INTEGER,
+	`section_id` INTEGER,
+	`priority` INTEGER default 0,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	KEY `article_section_FI_1`(`article_id`),
+	KEY `article_section_FI_2`(`section_id`),
+	CONSTRAINT `article_section_FK_1`
+		FOREIGN KEY (`article_id`)
+		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `article_section_FK_2`
+		FOREIGN KEY (`section_id`)
+		REFERENCES `section` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- article_tag
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `article_tag`;
+
+
+CREATE TABLE `article_tag`
+(
+	`article_id` INTEGER,
+	`tag_id` INTEGER,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	KEY `article_tag_FI_1`(`article_id`),
+	KEY `article_tag_FI_2`(`tag_id`),
+	CONSTRAINT `article_tag_FK_1`
+		FOREIGN KEY (`article_id`)
+		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `article_tag_FK_2`
+		FOREIGN KEY (`tag_id`)
+		REFERENCES `tag` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -121,7 +412,58 @@ CREATE TABLE `cms_configuration`
 	`configuration_key` VARCHAR(255)  NOT NULL,
 	`configuration_value` TEXT,
 	PRIMARY KEY (`id`),
-	KEY `configuration_key_index`(`configuration_key`)
+	KEY `cms_configuration_configuration_key_index`(`configuration_key`)
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- container
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `container`;
+
+
+CREATE TABLE `container`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(256)  NOT NULL,
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- container_slotlet
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `container_slotlet`;
+
+
+CREATE TABLE `container_slotlet`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`container_id` INTEGER,
+	`slotlet_id` INTEGER,
+	`name` VARCHAR(256)  NOT NULL,
+	`priority` INTEGER default 0,
+	`rss_channel_id` INTEGER,
+	`visible_rss` INTEGER default 3,
+	PRIMARY KEY (`id`),
+	KEY `container_slotlet_FI_1`(`container_id`),
+	KEY `container_slotlet_FI_2`(`slotlet_id`),
+	KEY `container_slotlet_FI_3`(`rss_channel_id`),
+	CONSTRAINT `container_slotlet_FK_1`
+		FOREIGN KEY (`container_id`)
+		REFERENCES `container` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `container_slotlet_FK_2`
+		FOREIGN KEY (`slotlet_id`)
+		REFERENCES `slotlet` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	CONSTRAINT `container_slotlet_FK_3`
+		FOREIGN KEY (`rss_channel_id`)
+		REFERENCES `rss_channel` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -138,10 +480,11 @@ CREATE TABLE `data`
 	`data` TEXT,
 	`field_id` INTEGER,
 	PRIMARY KEY (`id`),
-	INDEX `data_FI_1` (`field_id`),
+	KEY `data_FI_1`(`field_id`),
 	CONSTRAINT `data_FK_1`
 		FOREIGN KEY (`field_id`)
 		REFERENCES `field` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE
 )ENGINE=InnoDB;
 
@@ -163,41 +506,17 @@ CREATE TABLE `document`
 	`updated_at` DATETIME,
 	`updated_by` INTEGER,
 	PRIMARY KEY (`id`),
-	INDEX `document_FI_1` (`uploaded_by`),
+	KEY `document_FI_1`(`uploaded_by`),
+	KEY `document_FI_2`(`updated_by`),
 	CONSTRAINT `document_FK_1`
 		FOREIGN KEY (`uploaded_by`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL,
-	INDEX `document_FI_2` (`updated_by`),
 	CONSTRAINT `document_FK_2`
 		FOREIGN KEY (`updated_by`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
-		ON DELETE RESTRICT
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- article_document
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `article_document`;
-
-
-CREATE TABLE `article_document`
-(
-	`article_id` INTEGER,
-	`document_id` INTEGER,
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	INDEX `article_document_FI_1` (`article_id`),
-	CONSTRAINT `article_document_FK_1`
-		FOREIGN KEY (`article_id`)
-		REFERENCES `article` (`id`)
-		ON DELETE CASCADE,
-	INDEX `article_document_FI_2` (`document_id`),
-	CONSTRAINT `article_document_FK_2`
-		FOREIGN KEY (`document_id`)
-		REFERENCES `document` (`id`)
 		ON DELETE RESTRICT
 )ENGINE=InnoDB;
 
@@ -228,44 +547,36 @@ CREATE TABLE `event`
 	`updated_at` DATETIME,
 	`multimedia_id` INTEGER,
 	PRIMARY KEY (`id`),
-	INDEX `event_FI_1` (`author`),
+	KEY `event_FI_1`(`author`),
+	KEY `event_FI_2`(`article_id`),
+	KEY `event_FI_3`(`event_type_id`),
+	KEY `event_FI_4`(`updated_by`),
+	KEY `event_FI_5`(`multimedia_id`),
 	CONSTRAINT `event_FK_1`
 		FOREIGN KEY (`author`)
-		REFERENCES `sf_guard_user` (`id`),
-	INDEX `event_FI_2` (`article_id`),
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
 	CONSTRAINT `event_FK_2`
 		FOREIGN KEY (`article_id`)
 		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE RESTRICT,
-	INDEX `event_FI_3` (`event_type_id`),
 	CONSTRAINT `event_FK_3`
 		FOREIGN KEY (`event_type_id`)
 		REFERENCES `event_type` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL,
-	INDEX `event_FI_4` (`updated_by`),
 	CONSTRAINT `event_FK_4`
 		FOREIGN KEY (`updated_by`)
-		REFERENCES `sf_guard_user` (`id`),
-	INDEX `event_FI_5` (`multimedia_id`),
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
 	CONSTRAINT `event_FK_5`
 		FOREIGN KEY (`multimedia_id`)
 		REFERENCES `multimedia` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- event_type
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `event_type`;
-
-
-CREATE TABLE `event_type`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(256)  NOT NULL,
-	`description` TEXT,
-	PRIMARY KEY (`id`)
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -282,15 +593,32 @@ CREATE TABLE `event_section`
 	`section_id` INTEGER  NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `unique_event_section` (`event_id`, `section_id`),
+	KEY `event_section_FI_2`(`section_id`),
 	CONSTRAINT `event_section_FK_1`
 		FOREIGN KEY (`event_id`)
 		REFERENCES `event` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE,
-	INDEX `event_section_FI_2` (`section_id`),
 	CONSTRAINT `event_section_FK_2`
 		FOREIGN KEY (`section_id`)
 		REFERENCES `section` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- event_type
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `event_type`;
+
+
+CREATE TABLE `event_type`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`title` VARCHAR(256)  NOT NULL,
+	`description` TEXT,
+	PRIMARY KEY (`id`)
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -310,10 +638,11 @@ CREATE TABLE `field`
 	`sort` INTEGER,
 	`form_id` INTEGER,
 	PRIMARY KEY (`id`),
-	INDEX `field_FI_1` (`form_id`),
+	KEY `field_FI_1`(`form_id`),
 	CONSTRAINT `field_FK_1`
 		FOREIGN KEY (`form_id`)
 		REFERENCES `form` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE
 )ENGINE=InnoDB;
 
@@ -341,42 +670,17 @@ CREATE TABLE `form`
 	`created_by` INTEGER,
 	`updated_by` INTEGER,
 	PRIMARY KEY (`id`),
-	INDEX `form_FI_1` (`created_by`),
+	KEY `form_FI_1`(`created_by`),
+	KEY `form_FI_2`(`updated_by`),
 	CONSTRAINT `form_FK_1`
 		FOREIGN KEY (`created_by`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
-	INDEX `form_FI_2` (`updated_by`),
 	CONSTRAINT `form_FK_2`
 		FOREIGN KEY (`updated_by`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
-		ON DELETE RESTRICT
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- article_form
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `article_form`;
-
-
-CREATE TABLE `article_form`
-(
-	`article_id` INTEGER,
-	`form_id` INTEGER,
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	INDEX `article_form_FI_1` (`article_id`),
-	CONSTRAINT `article_form_FK_1`
-		FOREIGN KEY (`article_id`)
-		REFERENCES `article` (`id`)
-		ON DELETE CASCADE,
-	INDEX `article_form_FI_2` (`form_id`),
-	CONSTRAINT `article_form_FK_2`
-		FOREIGN KEY (`form_id`)
-		REFERENCES `form` (`id`)
 		ON DELETE RESTRICT
 )ENGINE=InnoDB;
 
@@ -403,105 +707,45 @@ CREATE TABLE `gallery`
 	`updated_by` INTEGER,
 	`published_by` INTEGER,
 	PRIMARY KEY (`id`),
-	INDEX `gallery_FI_1` (`created_by`),
+	KEY `gallery_FI_1`(`created_by`),
+	KEY `gallery_FI_2`(`updated_by`),
+	KEY `gallery_FI_3`(`published_by`),
 	CONSTRAINT `gallery_FK_1`
 		FOREIGN KEY (`created_by`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL,
-	INDEX `gallery_FI_2` (`updated_by`),
 	CONSTRAINT `gallery_FK_2`
 		FOREIGN KEY (`updated_by`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL,
-	INDEX `gallery_FI_3` (`published_by`),
 	CONSTRAINT `gallery_FK_3`
 		FOREIGN KEY (`published_by`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- article_gallery
+#-- layout
 #-----------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `article_gallery`;
+DROP TABLE IF EXISTS `layout`;
 
 
-CREATE TABLE `article_gallery`
-(
-	`article_id` INTEGER,
-	`gallery_id` INTEGER,
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	INDEX `article_gallery_FI_1` (`article_id`),
-	CONSTRAINT `article_gallery_FK_1`
-		FOREIGN KEY (`article_id`)
-		REFERENCES `article` (`id`)
-		ON DELETE CASCADE,
-	INDEX `article_gallery_FI_2` (`gallery_id`),
-	CONSTRAINT `article_gallery_FK_2`
-		FOREIGN KEY (`gallery_id`)
-		REFERENCES `gallery` (`id`)
-		ON DELETE RESTRICT
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- article_group
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `article_group`;
-
-
-CREATE TABLE `article_group`
+CREATE TABLE `layout`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(256)  NOT NULL,
-	`description` TEXT,
-	`comment` TEXT,
-	`visible_items` TINYINT default 0,
-	`is_published` INTEGER,
+	`name` VARCHAR(255)  NOT NULL,
+	`article_layout` TEXT,
+	`template_layout` TEXT,
+	`is_default` INTEGER default 0,
+	`virtual_section_id` INTEGER,
 	`created_at` DATETIME,
-	`published_at` DATETIME,
-	`created_by` INTEGER,
 	`updated_at` DATETIME,
-	`updated_by` INTEGER,
 	PRIMARY KEY (`id`),
-	INDEX `article_group_FI_1` (`created_by`),
-	CONSTRAINT `article_group_FK_1`
-		FOREIGN KEY (`created_by`)
-		REFERENCES `sf_guard_user` (`id`)
-		ON DELETE SET NULL,
-	INDEX `article_group_FI_2` (`updated_by`),
-	CONSTRAINT `article_group_FK_2`
-		FOREIGN KEY (`updated_by`)
-		REFERENCES `sf_guard_user` (`id`)
-		ON DELETE SET NULL
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- article_article_group
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `article_article_group`;
-
-
-CREATE TABLE `article_article_group`
-(
-	`article_id` INTEGER,
-	`article_group_id` INTEGER,
-	`priority` INTEGER default 0,
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	INDEX `article_article_group_FI_1` (`article_id`),
-	CONSTRAINT `article_article_group_FK_1`
-		FOREIGN KEY (`article_id`)
-		REFERENCES `article` (`id`)
-		ON DELETE CASCADE,
-	INDEX `article_article_group_FI_2` (`article_group_id`),
-	CONSTRAINT `article_article_group_FK_2`
-		FOREIGN KEY (`article_group_id`)
-		REFERENCES `article_group` (`id`)
-		ON DELETE CASCADE
+	UNIQUE KEY `layout_name_unique` (`name`)
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -522,14 +766,18 @@ CREATE TABLE `link`
 	`updated_by` INTEGER,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
-	INDEX `link_FI_1` (`created_by`),
+	KEY `link_FI_1`(`created_by`),
+	KEY `link_FI_2`(`updated_by`),
 	CONSTRAINT `link_FK_1`
 		FOREIGN KEY (`created_by`)
-		REFERENCES `sf_guard_user` (`id`),
-	INDEX `link_FI_2` (`updated_by`),
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
 	CONSTRAINT `link_FK_2`
 		FOREIGN KEY (`updated_by`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -547,31 +795,6 @@ CREATE TABLE `link_group`
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- article_link_group
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `article_link_group`;
-
-
-CREATE TABLE `article_link_group`
-(
-	`article_id` INTEGER,
-	`link_group_id` INTEGER,
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	INDEX `article_link_group_FI_1` (`article_id`),
-	CONSTRAINT `article_link_group_FK_1`
-		FOREIGN KEY (`article_id`)
-		REFERENCES `article` (`id`)
-		ON DELETE CASCADE,
-	INDEX `article_link_group_FI_2` (`link_group_id`),
-	CONSTRAINT `article_link_group_FK_2`
-		FOREIGN KEY (`link_group_id`)
-		REFERENCES `link_group` (`id`)
-		ON DELETE RESTRICT
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- link_group_link
 #-----------------------------------------------------------------------------
 
@@ -584,15 +807,17 @@ CREATE TABLE `link_group_link`
 	`link_id` INTEGER,
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (`id`),
-	INDEX `link_group_link_FI_1` (`link_group_id`),
+	KEY `link_group_link_FI_1`(`link_group_id`),
+	KEY `link_group_link_FI_2`(`link_id`),
 	CONSTRAINT `link_group_link_FK_1`
 		FOREIGN KEY (`link_group_id`)
 		REFERENCES `link_group` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE,
-	INDEX `link_group_link_FI_2` (`link_id`),
 	CONSTRAINT `link_group_link_FK_2`
 		FOREIGN KEY (`link_id`)
 		REFERENCES `link` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE
 )ENGINE=InnoDB;
 
@@ -653,48 +878,25 @@ CREATE TABLE `multimedia`
 	`player_id` INTEGER,
 	`external_uri` TEXT,
 	`times_seen` INTEGER,
-	`rating` DECIMAL,
+	`rating` DECIMAL(10),
 	`times_rated` INTEGER,
 	`times_downloaded` INTEGER,
 	`longdesc_uri` VARCHAR(256),
 	`updated_at` DATETIME,
 	`updated_by` INTEGER,
 	PRIMARY KEY (`id`),
-	INDEX `multimedia_FI_1` (`uploaded_by`),
+	KEY `multimedia_FI_1`(`uploaded_by`),
+	KEY `multimedia_FI_2`(`updated_by`),
 	CONSTRAINT `multimedia_FK_1`
 		FOREIGN KEY (`uploaded_by`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL,
-	INDEX `multimedia_FI_2` (`updated_by`),
 	CONSTRAINT `multimedia_FK_2`
 		FOREIGN KEY (`updated_by`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- article_multimedia
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `article_multimedia`;
-
-
-CREATE TABLE `article_multimedia`
-(
-	`article_id` INTEGER,
-	`multimedia_id` INTEGER,
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	INDEX `article_multimedia_FI_1` (`article_id`),
-	CONSTRAINT `article_multimedia_FK_1`
-		FOREIGN KEY (`article_id`)
-		REFERENCES `article` (`id`)
-		ON DELETE CASCADE,
-	INDEX `article_multimedia_FI_2` (`multimedia_id`),
-	CONSTRAINT `article_multimedia_FK_2`
-		FOREIGN KEY (`multimedia_id`)
-		REFERENCES `multimedia` (`id`)
-		ON DELETE RESTRICT
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -711,15 +913,17 @@ CREATE TABLE `multimedia_gallery`
 	`priority` INTEGER default 0,
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (`id`),
-	INDEX `multimedia_gallery_FI_1` (`multimedia_id`),
+	KEY `multimedia_gallery_FI_1`(`multimedia_id`),
+	KEY `multimedia_gallery_FI_2`(`gallery_id`),
 	CONSTRAINT `multimedia_gallery_FK_1`
 		FOREIGN KEY (`multimedia_id`)
 		REFERENCES `multimedia` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE,
-	INDEX `multimedia_gallery_FI_2` (`gallery_id`),
 	CONSTRAINT `multimedia_gallery_FK_2`
 		FOREIGN KEY (`gallery_id`)
 		REFERENCES `gallery` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE
 )ENGINE=InnoDB;
 
@@ -736,41 +940,226 @@ CREATE TABLE `multimedia_tag`
 	`tag_id` INTEGER,
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (`id`),
-	INDEX `multimedia_tag_FI_1` (`multimedia_id`),
+	KEY `multimedia_tag_FI_1`(`multimedia_id`),
+	KEY `multimedia_tag_FI_2`(`tag_id`),
 	CONSTRAINT `multimedia_tag_FK_1`
 		FOREIGN KEY (`multimedia_id`)
 		REFERENCES `multimedia` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE,
-	INDEX `multimedia_tag_FI_2` (`tag_id`),
 	CONSTRAINT `multimedia_tag_FK_2`
 		FOREIGN KEY (`tag_id`)
 		REFERENCES `tag` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- article_section
+#-- news_space
 #-----------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `article_section`;
+DROP TABLE IF EXISTS `news_space`;
 
 
-CREATE TABLE `article_section`
+CREATE TABLE `news_space`
 (
-	`article_id` INTEGER,
-	`section_id` INTEGER,
-	`priority` INTEGER default 0,
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`type` TINYINT,
+	`comment` TEXT,
+	`row_number` TINYINT,
+	`column_number` TINYINT,
+	`template_id` INTEGER,
+	`article_id` INTEGER,
+	`width` FLOAT,
 	PRIMARY KEY (`id`),
-	INDEX `article_section_FI_1` (`article_id`),
-	CONSTRAINT `article_section_FK_1`
+	KEY `news_space_FI_1`(`template_id`),
+	KEY `news_space_FI_2`(`article_id`),
+	CONSTRAINT `news_space_FK_1`
+		FOREIGN KEY (`template_id`)
+		REFERENCES `template` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `news_space_FK_2`
 		FOREIGN KEY (`article_id`)
 		REFERENCES `article` (`id`)
-		ON DELETE CASCADE,
-	INDEX `article_section_FI_2` (`section_id`),
-	CONSTRAINT `article_section_FK_2`
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- rss_channel
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `rss_channel`;
+
+
+CREATE TABLE `rss_channel`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`title` VARCHAR(255)  NOT NULL,
+	`link` VARCHAR(255)  NOT NULL,
+	`is_active` INTEGER  NOT NULL,
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	`created_by` INTEGER,
+	`updated_by` INTEGER,
+	PRIMARY KEY (`id`),
+	KEY `rss_channel_FI_1`(`created_by`),
+	KEY `rss_channel_FI_2`(`updated_by`),
+	CONSTRAINT `rss_channel_FK_1`
+		FOREIGN KEY (`created_by`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	CONSTRAINT `rss_channel_FK_2`
+		FOREIGN KEY (`updated_by`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- section
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `section`;
+
+
+CREATE TABLE `section`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(256)  NOT NULL,
+	`title` TEXT  NOT NULL,
+	`priority` INTEGER default 0,
+	`description` TEXT,
+	`comment` TEXT,
+	`is_published` INTEGER default 0,
+	`multimedia_id` INTEGER,
+	`section_id` INTEGER,
+	`template_id` INTEGER,
+	`article_id` INTEGER,
+	`layout_id` INTEGER,
+	`color` VARCHAR(7),
+	`article_group_id` INTEGER,
+	PRIMARY KEY (`id`),
+	KEY `section_name_index`(`name`),
+	KEY `section_FI_1`(`multimedia_id`),
+	KEY `section_FI_2`(`section_id`),
+	KEY `section_FI_3`(`template_id`),
+	KEY `section_FI_4`(`article_id`),
+	KEY `section_FI_5`(`layout_id`),
+	KEY `section_FI_6`(`article_group_id`),
+	CONSTRAINT `section_FK_1`
+		FOREIGN KEY (`multimedia_id`)
+		REFERENCES `multimedia` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE SET NULL,
+	CONSTRAINT `section_FK_2`
 		FOREIGN KEY (`section_id`)
 		REFERENCES `section` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	CONSTRAINT `section_FK_3`
+		FOREIGN KEY (`template_id`)
+		REFERENCES `template` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE SET NULL,
+	CONSTRAINT `section_FK_4`
+		FOREIGN KEY (`article_id`)
+		REFERENCES `article` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	CONSTRAINT `section_FK_5`
+		FOREIGN KEY (`layout_id`)
+		REFERENCES `layout` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE SET NULL,
+	CONSTRAINT `section_FK_6`
+		FOREIGN KEY (`article_group_id`)
+		REFERENCES `article_group` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- section_document
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `section_document`;
+
+
+CREATE TABLE `section_document`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`section_id` INTEGER  NOT NULL,
+	`document_id` INTEGER  NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `unique_section_document` (`section_id`, `document_id`),
+	KEY `section_document_FI_2`(`document_id`),
+	CONSTRAINT `section_document_FK_1`
+		FOREIGN KEY (`section_id`)
+		REFERENCES `section` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `section_document_FK_2`
+		FOREIGN KEY (`document_id`)
+		REFERENCES `document` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- section_link
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `section_link`;
+
+
+CREATE TABLE `section_link`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`section_id` INTEGER  NOT NULL,
+	`link_id` INTEGER  NOT NULL,
+	`target_blank` TINYINT default 1,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `unique_section_link` (`section_id`, `link_id`),
+	KEY `section_link_FI_2`(`link_id`),
+	CONSTRAINT `section_link_FK_1`
+		FOREIGN KEY (`section_id`)
+		REFERENCES `section` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `section_link_FK_2`
+		FOREIGN KEY (`link_id`)
+		REFERENCES `link` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- section_tag
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `section_tag`;
+
+
+CREATE TABLE `section_tag`
+(
+	`section_id` INTEGER,
+	`tag_id` INTEGER,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	KEY `section_tag_FI_1`(`section_id`),
+	KEY `section_tag_FI_2`(`tag_id`),
+	CONSTRAINT `section_tag_FK_1`
+		FOREIGN KEY (`section_id`)
+		REFERENCES `section` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE CASCADE,
+	CONSTRAINT `section_tag_FK_2`
+		FOREIGN KEY (`tag_id`)
+		REFERENCES `tag` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE CASCADE
 )ENGINE=InnoDB;
 
@@ -799,24 +1188,30 @@ CREATE TABLE `shortcut`
 	`updated_by` INTEGER,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
-	INDEX `shortcut_FI_1` (`multimedia_id`),
+	KEY `shortcut_FI_1`(`multimedia_id`),
+	KEY `shortcut_FI_2`(`container_slotlet_id`),
+	KEY `shortcut_FI_3`(`created_by`),
+	KEY `shortcut_FI_4`(`updated_by`),
 	CONSTRAINT `shortcut_FK_1`
 		FOREIGN KEY (`multimedia_id`)
 		REFERENCES `multimedia` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE RESTRICT,
-	INDEX `shortcut_FI_2` (`container_slotlet_id`),
 	CONSTRAINT `shortcut_FK_2`
 		FOREIGN KEY (`container_slotlet_id`)
 		REFERENCES `container_slotlet` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE SET NULL,
-	INDEX `shortcut_FI_3` (`created_by`),
 	CONSTRAINT `shortcut_FK_3`
 		FOREIGN KEY (`created_by`)
-		REFERENCES `sf_guard_user` (`id`),
-	INDEX `shortcut_FI_4` (`updated_by`),
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
 	CONSTRAINT `shortcut_FK_4`
 		FOREIGN KEY (`updated_by`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -832,54 +1227,6 @@ CREATE TABLE `slotlet`
 	`name` VARCHAR(256)  NOT NULL,
 	`cls` VARCHAR(256)  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- container
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `container`;
-
-
-CREATE TABLE `container`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(256)  NOT NULL,
-	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- container_slotlet
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `container_slotlet`;
-
-
-CREATE TABLE `container_slotlet`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`container_id` INTEGER,
-	`slotlet_id` INTEGER,
-	`name` VARCHAR(256)  NOT NULL,
-	`priority` INTEGER default 0,
-	`rss_channel_id` INTEGER,
-	`visible_rss` INTEGER default 3,
-	PRIMARY KEY (`id`),
-	INDEX `container_slotlet_FI_1` (`container_id`),
-	CONSTRAINT `container_slotlet_FK_1`
-		FOREIGN KEY (`container_id`)
-		REFERENCES `container` (`id`)
-		ON DELETE CASCADE,
-	INDEX `container_slotlet_FI_2` (`slotlet_id`),
-	CONSTRAINT `container_slotlet_FK_2`
-		FOREIGN KEY (`slotlet_id`)
-		REFERENCES `slotlet` (`id`)
-		ON DELETE RESTRICT,
-	INDEX `container_slotlet_FI_3` (`rss_channel_id`),
-	CONSTRAINT `container_slotlet_FK_3`
-		FOREIGN KEY (`rss_channel_id`)
-		REFERENCES `rss_channel` (`id`)
-		ON DELETE RESTRICT
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -915,56 +1262,6 @@ CREATE TABLE `tag`
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- section_tag
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `section_tag`;
-
-
-CREATE TABLE `section_tag`
-(
-	`section_id` INTEGER,
-	`tag_id` INTEGER,
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	INDEX `section_tag_FI_1` (`section_id`),
-	CONSTRAINT `section_tag_FK_1`
-		FOREIGN KEY (`section_id`)
-		REFERENCES `section` (`id`)
-		ON DELETE CASCADE,
-	INDEX `section_tag_FI_2` (`tag_id`),
-	CONSTRAINT `section_tag_FK_2`
-		FOREIGN KEY (`tag_id`)
-		REFERENCES `tag` (`id`)
-		ON DELETE CASCADE
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- article_tag
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `article_tag`;
-
-
-CREATE TABLE `article_tag`
-(
-	`article_id` INTEGER,
-	`tag_id` INTEGER,
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	INDEX `article_tag_FI_1` (`article_id`),
-	CONSTRAINT `article_tag_FK_1`
-		FOREIGN KEY (`article_id`)
-		REFERENCES `article` (`id`)
-		ON DELETE CASCADE,
-	INDEX `article_tag_FI_2` (`tag_id`),
-	CONSTRAINT `article_tag_FK_2`
-		FOREIGN KEY (`tag_id`)
-		REFERENCES `tag` (`id`)
-		ON DELETE CASCADE
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- template
 #-----------------------------------------------------------------------------
 
@@ -982,177 +1279,18 @@ CREATE TABLE `template`
 	`created_by` INTEGER,
 	`updated_by` INTEGER,
 	PRIMARY KEY (`id`),
-	INDEX `template_FI_1` (`created_by`),
+	KEY `template_FI_1`(`created_by`),
+	KEY `template_FI_2`(`updated_by`),
 	CONSTRAINT `template_FK_1`
 		FOREIGN KEY (`created_by`)
-		REFERENCES `sf_guard_user` (`id`),
-	INDEX `template_FI_2` (`updated_by`),
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
 	CONSTRAINT `template_FK_2`
 		FOREIGN KEY (`updated_by`)
 		REFERENCES `sf_guard_user` (`id`)
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- section
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `section`;
-
-
-CREATE TABLE `section`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(256)  NOT NULL,
-	`title` TEXT  NOT NULL,
-	`priority` INTEGER default 0,
-	`description` TEXT,
-	`comment` TEXT,
-	`is_published` INTEGER default 0,
-	`multimedia_id` INTEGER,
-	`section_id` INTEGER,
-	`template_id` INTEGER,
-	`article_id` INTEGER,
-	`layout_id` INTEGER,
-	`color` VARCHAR(7),
-	`article_group_id` INTEGER,
-	PRIMARY KEY (`id`),
-	KEY `name_index`(`name`),
-	INDEX `section_FI_1` (`multimedia_id`),
-	CONSTRAINT `section_FK_1`
-		FOREIGN KEY (`multimedia_id`)
-		REFERENCES `multimedia` (`id`)
-		ON DELETE SET NULL,
-	INDEX `section_FI_2` (`section_id`),
-	CONSTRAINT `section_FK_2`
-		FOREIGN KEY (`section_id`)
-		REFERENCES `section` (`id`)
-		ON DELETE RESTRICT,
-	INDEX `section_FI_3` (`template_id`),
-	CONSTRAINT `section_FK_3`
-		FOREIGN KEY (`template_id`)
-		REFERENCES `template` (`id`)
-		ON DELETE SET NULL,
-	INDEX `section_FI_4` (`article_id`),
-	CONSTRAINT `section_FK_4`
-		FOREIGN KEY (`article_id`)
-		REFERENCES `article` (`id`)
-		ON DELETE RESTRICT,
-	INDEX `section_FI_5` (`layout_id`),
-	CONSTRAINT `section_FK_5`
-		FOREIGN KEY (`layout_id`)
-		REFERENCES `layout` (`id`)
-		ON DELETE SET NULL,
-	INDEX `section_FI_6` (`article_group_id`),
-	CONSTRAINT `section_FK_6`
-		FOREIGN KEY (`article_group_id`)
-		REFERENCES `article_group` (`id`)
+		ON UPDATE RESTRICT
 		ON DELETE RESTRICT
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- news_space
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `news_space`;
-
-
-CREATE TABLE `news_space`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`type` TINYINT,
-	`comment` TEXT,
-	`row_number` TINYINT,
-	`column_number` TINYINT,
-	`template_id` INTEGER,
-	`article_id` INTEGER,
-	`width` FLOAT,
-	PRIMARY KEY (`id`),
-	INDEX `news_space_FI_1` (`template_id`),
-	CONSTRAINT `news_space_FK_1`
-		FOREIGN KEY (`template_id`)
-		REFERENCES `template` (`id`)
-		ON DELETE CASCADE,
-	INDEX `news_space_FI_2` (`article_id`),
-	CONSTRAINT `news_space_FK_2`
-		FOREIGN KEY (`article_id`)
-		REFERENCES `article` (`id`)
-		ON DELETE RESTRICT
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- rss_channel
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `rss_channel`;
-
-
-CREATE TABLE `rss_channel`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(255)  NOT NULL,
-	`link` VARCHAR(255)  NOT NULL,
-	`is_active` INTEGER  NOT NULL,
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	`created_by` INTEGER,
-	`updated_by` INTEGER,
-	PRIMARY KEY (`id`),
-	INDEX `rss_channel_FI_1` (`created_by`),
-	CONSTRAINT `rss_channel_FK_1`
-		FOREIGN KEY (`created_by`)
-		REFERENCES `sf_guard_user` (`id`)
-		ON DELETE RESTRICT,
-	INDEX `rss_channel_FI_2` (`updated_by`),
-	CONSTRAINT `rss_channel_FK_2`
-		FOREIGN KEY (`updated_by`)
-		REFERENCES `sf_guard_user` (`id`)
-		ON DELETE RESTRICT
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- article_rss_channel
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `article_rss_channel`;
-
-
-CREATE TABLE `article_rss_channel`
-(
-	`article_id` INTEGER,
-	`rss_channel_id` INTEGER,
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	INDEX `article_rss_channel_FI_1` (`article_id`),
-	CONSTRAINT `article_rss_channel_FK_1`
-		FOREIGN KEY (`article_id`)
-		REFERENCES `article` (`id`)
-		ON DELETE CASCADE,
-	INDEX `article_rss_channel_FI_2` (`rss_channel_id`),
-	CONSTRAINT `article_rss_channel_FK_2`
-		FOREIGN KEY (`rss_channel_id`)
-		REFERENCES `rss_channel` (`id`)
-		ON DELETE RESTRICT
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- layout
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `layout`;
-
-
-CREATE TABLE `layout`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(255)  NOT NULL,
-	`article_layout` TEXT,
-	`template_layout` TEXT,
-	`is_default` INTEGER default 0,
-	`virtual_section_id` INTEGER,
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	PRIMARY KEY (`id`),
-	UNIQUE KEY `layout_name_unique` (`name`)
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1167,57 +1305,6 @@ CREATE TABLE `temporary_layout`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`layout` TEXT,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- section_link
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `section_link`;
-
-
-CREATE TABLE `section_link`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`section_id` INTEGER  NOT NULL,
-	`link_id` INTEGER  NOT NULL,
-	`target_blank` TINYINT default 1,
-	PRIMARY KEY (`id`),
-	UNIQUE KEY `unique_section_link` (`section_id`, `link_id`),
-	CONSTRAINT `section_link_FK_1`
-		FOREIGN KEY (`section_id`)
-		REFERENCES `section` (`id`)
-		ON DELETE CASCADE,
-	INDEX `section_link_FI_2` (`link_id`),
-	CONSTRAINT `section_link_FK_2`
-		FOREIGN KEY (`link_id`)
-		REFERENCES `link` (`id`)
-		ON DELETE CASCADE
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- section_document
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `section_document`;
-
-
-CREATE TABLE `section_document`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`section_id` INTEGER  NOT NULL,
-	`document_id` INTEGER  NOT NULL,
-	PRIMARY KEY (`id`),
-	UNIQUE KEY `unique_section_document` (`section_id`, `document_id`),
-	CONSTRAINT `section_document_FK_1`
-		FOREIGN KEY (`section_id`)
-		REFERENCES `section` (`id`)
-		ON DELETE CASCADE,
-	INDEX `section_document_FI_2` (`document_id`),
-	CONSTRAINT `section_document_FK_2`
-		FOREIGN KEY (`document_id`)
-		REFERENCES `document` (`id`)
-		ON DELETE CASCADE
 )ENGINE=InnoDB;
 
 # This restores the fkey checks, after having unset them earlier

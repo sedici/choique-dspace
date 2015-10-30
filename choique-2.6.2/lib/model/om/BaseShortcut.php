@@ -37,7 +37,7 @@ abstract class BaseShortcut extends BaseObject  implements Persistent {
 
 
 	
-	protected $open_in_new_window = false;
+	protected $open_in_new_window = 0;
 
 
 	
@@ -49,7 +49,7 @@ abstract class BaseShortcut extends BaseObject  implements Persistent {
 
 
 	
-	protected $is_published = false;
+	protected $is_published = 0;
 
 
 	
@@ -330,7 +330,11 @@ abstract class BaseShortcut extends BaseObject  implements Persistent {
 	public function setOpenInNewWindow($v)
 	{
 
-		if ($this->open_in_new_window !== $v || $v === false) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->open_in_new_window !== $v || $v === 0) {
 			$this->open_in_new_window = $v;
 			$this->modifiedColumns[] = ShortcutPeer::OPEN_IN_NEW_WINDOW;
 		}
@@ -368,7 +372,11 @@ abstract class BaseShortcut extends BaseObject  implements Persistent {
 	public function setIsPublished($v)
 	{
 
-		if ($this->is_published !== $v || $v === false) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->is_published !== $v || $v === 0) {
 			$this->is_published = $v;
 			$this->modifiedColumns[] = ShortcutPeer::IS_PUBLISHED;
 		}
@@ -463,13 +471,13 @@ abstract class BaseShortcut extends BaseObject  implements Persistent {
 
 			$this->reference_type = $rs->getInt($startcol + 6);
 
-			$this->open_in_new_window = $rs->getBoolean($startcol + 7);
+			$this->open_in_new_window = $rs->getInt($startcol + 7);
 
 			$this->priority = $rs->getInt($startcol + 8);
 
 			$this->comment = $rs->getString($startcol + 9);
 
-			$this->is_published = $rs->getBoolean($startcol + 10);
+			$this->is_published = $rs->getInt($startcol + 10);
 
 			$this->created_by = $rs->getInt($startcol + 11);
 

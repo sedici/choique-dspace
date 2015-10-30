@@ -42,7 +42,7 @@ class ArticleGroupMapBuilder {
 
 		$tMap->addColumn('VISIBLE_ITEMS', 'VisibleItems', 'int', CreoleTypes::TINYINT, false, null);
 
-		$tMap->addColumn('IS_PUBLISHED', 'IsPublished', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_PUBLISHED', 'IsPublished', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

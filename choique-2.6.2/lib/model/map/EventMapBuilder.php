@@ -34,7 +34,7 @@ class EventMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('IS_PUBLISHED', 'IsPublished', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_PUBLISHED', 'IsPublished', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('TITLE', 'Title', 'string', CreoleTypes::VARCHAR, true, 256);
 

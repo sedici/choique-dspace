@@ -145,6 +145,10 @@ abstract class BaseField extends BaseObject  implements Persistent {
 	public function setIsRequired($v)
 	{
 
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
 		if ($this->is_required !== $v) {
 			$this->is_required = $v;
 			$this->modifiedColumns[] = FieldPeer::IS_REQUIRED;
@@ -208,7 +212,7 @@ abstract class BaseField extends BaseObject  implements Persistent {
 
 			$this->type = $rs->getInt($startcol + 2);
 
-			$this->is_required = $rs->getBoolean($startcol + 3);
+			$this->is_required = $rs->getInt($startcol + 3);
 
 			$this->default_value = $rs->getString($startcol + 4);
 

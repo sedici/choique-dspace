@@ -25,7 +25,7 @@ abstract class BaseLayout extends BaseObject  implements Persistent {
 
 
 	
-	protected $is_default = false;
+	protected $is_default = 0;
 
 
 	
@@ -197,7 +197,11 @@ abstract class BaseLayout extends BaseObject  implements Persistent {
 	public function setIsDefault($v)
 	{
 
-		if ($this->is_default !== $v || $v === false) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->is_default !== $v || $v === 0) {
 			$this->is_default = $v;
 			$this->modifiedColumns[] = LayoutPeer::IS_DEFAULT;
 		}
@@ -264,7 +268,7 @@ abstract class BaseLayout extends BaseObject  implements Persistent {
 
 			$this->template_layout = $rs->getString($startcol + 3);
 
-			$this->is_default = $rs->getBoolean($startcol + 4);
+			$this->is_default = $rs->getInt($startcol + 4);
 
 			$this->virtual_section_id = $rs->getInt($startcol + 5);
 

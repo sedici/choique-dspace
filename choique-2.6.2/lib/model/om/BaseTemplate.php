@@ -46,16 +46,16 @@ abstract class BaseTemplate extends BaseObject  implements Persistent {
 	protected $asfGuardUserRelatedByUpdatedBy;
 
 	
-	protected $collSections;
-
-	
-	protected $lastSectionCriteria = null;
-
-	
 	protected $collNewsSpaces;
 
 	
 	protected $lastNewsSpaceCriteria = null;
+
+	
+	protected $collSections;
+
+	
+	protected $lastSectionCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -427,16 +427,16 @@ abstract class BaseTemplate extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
-			if ($this->collSections !== null) {
-				foreach($this->collSections as $referrerFK) {
+			if ($this->collNewsSpaces !== null) {
+				foreach($this->collNewsSpaces as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
 				}
 			}
 
-			if ($this->collNewsSpaces !== null) {
-				foreach($this->collNewsSpaces as $referrerFK) {
+			if ($this->collSections !== null) {
+				foreach($this->collSections as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -498,16 +498,16 @@ abstract class BaseTemplate extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collSections !== null) {
-					foreach($this->collSections as $referrerFK) {
+				if ($this->collNewsSpaces !== null) {
+					foreach($this->collNewsSpaces as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
 					}
 				}
 
-				if ($this->collNewsSpaces !== null) {
-					foreach($this->collNewsSpaces as $referrerFK) {
+				if ($this->collSections !== null) {
+					foreach($this->collSections as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -691,12 +691,12 @@ abstract class BaseTemplate extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach($this->getSections() as $relObj) {
-				$copyObj->addSection($relObj->copy($deepCopy));
-			}
-
 			foreach($this->getNewsSpaces() as $relObj) {
 				$copyObj->addNewsSpace($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getSections() as $relObj) {
+				$copyObj->addSection($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -780,6 +780,111 @@ abstract class BaseTemplate extends BaseObject  implements Persistent {
 			
 		}
 		return $this->asfGuardUserRelatedByUpdatedBy;
+	}
+
+	
+	public function initNewsSpaces()
+	{
+		if ($this->collNewsSpaces === null) {
+			$this->collNewsSpaces = array();
+		}
+	}
+
+	
+	public function getNewsSpaces($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseNewsSpacePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collNewsSpaces === null) {
+			if ($this->isNew()) {
+			   $this->collNewsSpaces = array();
+			} else {
+
+				$criteria->add(NewsSpacePeer::TEMPLATE_ID, $this->getId());
+
+				NewsSpacePeer::addSelectColumns($criteria);
+				$this->collNewsSpaces = NewsSpacePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(NewsSpacePeer::TEMPLATE_ID, $this->getId());
+
+				NewsSpacePeer::addSelectColumns($criteria);
+				if (!isset($this->lastNewsSpaceCriteria) || !$this->lastNewsSpaceCriteria->equals($criteria)) {
+					$this->collNewsSpaces = NewsSpacePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastNewsSpaceCriteria = $criteria;
+		return $this->collNewsSpaces;
+	}
+
+	
+	public function countNewsSpaces($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseNewsSpacePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(NewsSpacePeer::TEMPLATE_ID, $this->getId());
+
+		return NewsSpacePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addNewsSpace(NewsSpace $l)
+	{
+		$this->collNewsSpaces[] = $l;
+		$l->setTemplate($this);
+	}
+
+
+	
+	public function getNewsSpacesJoinArticle($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseNewsSpacePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collNewsSpaces === null) {
+			if ($this->isNew()) {
+				$this->collNewsSpaces = array();
+			} else {
+
+				$criteria->add(NewsSpacePeer::TEMPLATE_ID, $this->getId());
+
+				$this->collNewsSpaces = NewsSpacePeer::doSelectJoinArticle($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(NewsSpacePeer::TEMPLATE_ID, $this->getId());
+
+			if (!isset($this->lastNewsSpaceCriteria) || !$this->lastNewsSpaceCriteria->equals($criteria)) {
+				$this->collNewsSpaces = NewsSpacePeer::doSelectJoinArticle($criteria, $con);
+			}
+		}
+		$this->lastNewsSpaceCriteria = $criteria;
+
+		return $this->collNewsSpaces;
 	}
 
 	
@@ -1025,111 +1130,6 @@ abstract class BaseTemplate extends BaseObject  implements Persistent {
 		$this->lastSectionCriteria = $criteria;
 
 		return $this->collSections;
-	}
-
-	
-	public function initNewsSpaces()
-	{
-		if ($this->collNewsSpaces === null) {
-			$this->collNewsSpaces = array();
-		}
-	}
-
-	
-	public function getNewsSpaces($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseNewsSpacePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collNewsSpaces === null) {
-			if ($this->isNew()) {
-			   $this->collNewsSpaces = array();
-			} else {
-
-				$criteria->add(NewsSpacePeer::TEMPLATE_ID, $this->getId());
-
-				NewsSpacePeer::addSelectColumns($criteria);
-				$this->collNewsSpaces = NewsSpacePeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(NewsSpacePeer::TEMPLATE_ID, $this->getId());
-
-				NewsSpacePeer::addSelectColumns($criteria);
-				if (!isset($this->lastNewsSpaceCriteria) || !$this->lastNewsSpaceCriteria->equals($criteria)) {
-					$this->collNewsSpaces = NewsSpacePeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastNewsSpaceCriteria = $criteria;
-		return $this->collNewsSpaces;
-	}
-
-	
-	public function countNewsSpaces($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseNewsSpacePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(NewsSpacePeer::TEMPLATE_ID, $this->getId());
-
-		return NewsSpacePeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addNewsSpace(NewsSpace $l)
-	{
-		$this->collNewsSpaces[] = $l;
-		$l->setTemplate($this);
-	}
-
-
-	
-	public function getNewsSpacesJoinArticle($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseNewsSpacePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collNewsSpaces === null) {
-			if ($this->isNew()) {
-				$this->collNewsSpaces = array();
-			} else {
-
-				$criteria->add(NewsSpacePeer::TEMPLATE_ID, $this->getId());
-
-				$this->collNewsSpaces = NewsSpacePeer::doSelectJoinArticle($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(NewsSpacePeer::TEMPLATE_ID, $this->getId());
-
-			if (!isset($this->lastNewsSpaceCriteria) || !$this->lastNewsSpaceCriteria->equals($criteria)) {
-				$this->collNewsSpaces = NewsSpacePeer::doSelectJoinArticle($criteria, $con);
-			}
-		}
-		$this->lastNewsSpaceCriteria = $criteria;
-
-		return $this->collNewsSpaces;
 	}
 
 

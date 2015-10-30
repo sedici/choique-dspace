@@ -46,13 +46,13 @@ class ShortcutMapBuilder {
 
 		$tMap->addColumn('REFERENCE_TYPE', 'ReferenceType', 'int', CreoleTypes::TINYINT, false, null);
 
-		$tMap->addColumn('OPEN_IN_NEW_WINDOW', 'OpenInNewWindow', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('OPEN_IN_NEW_WINDOW', 'OpenInNewWindow', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('PRIORITY', 'Priority', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('COMMENT', 'Comment', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
-		$tMap->addColumn('IS_PUBLISHED', 'IsPublished', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_PUBLISHED', 'IsPublished', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addForeignKey('CREATED_BY', 'CreatedBy', 'int', CreoleTypes::INTEGER, 'sf_guard_user', 'ID', false, null);
 

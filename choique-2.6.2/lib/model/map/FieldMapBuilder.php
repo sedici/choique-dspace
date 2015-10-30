@@ -38,7 +38,7 @@ class FieldMapBuilder {
 
 		$tMap->addColumn('TYPE', 'Type', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('IS_REQUIRED', 'IsRequired', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_REQUIRED', 'IsRequired', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('DEFAULT_VALUE', 'DefaultValue', 'string', CreoleTypes::LONGVARCHAR, false, null);
 

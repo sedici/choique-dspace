@@ -271,6 +271,10 @@ abstract class BaseArticleGroup extends BaseObject  implements Persistent {
 	public function setIsPublished($v)
 	{
 
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
 		if ($this->is_published !== $v) {
 			$this->is_published = $v;
 			$this->modifiedColumns[] = ArticleGroupPeer::IS_PUBLISHED;
@@ -379,7 +383,7 @@ abstract class BaseArticleGroup extends BaseObject  implements Persistent {
 
 			$this->visible_items = $rs->getInt($startcol + 4);
 
-			$this->is_published = $rs->getBoolean($startcol + 5);
+			$this->is_published = $rs->getInt($startcol + 5);
 
 			$this->created_at = $rs->getTimestamp($startcol + 6, null);
 

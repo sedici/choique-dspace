@@ -24,6 +24,12 @@ abstract class BaseTag extends BaseObject  implements Persistent {
 	protected $comment;
 
 	
+	protected $collArticleTags;
+
+	
+	protected $lastArticleTagCriteria = null;
+
+	
 	protected $collMultimediaTags;
 
 	
@@ -34,12 +40,6 @@ abstract class BaseTag extends BaseObject  implements Persistent {
 
 	
 	protected $lastSectionTagCriteria = null;
-
-	
-	protected $collArticleTags;
-
-	
-	protected $lastArticleTagCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -249,6 +249,14 @@ abstract class BaseTag extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collArticleTags !== null) {
+				foreach($this->collArticleTags as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collMultimediaTags !== null) {
 				foreach($this->collMultimediaTags as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -259,14 +267,6 @@ abstract class BaseTag extends BaseObject  implements Persistent {
 
 			if ($this->collSectionTags !== null) {
 				foreach($this->collSectionTags as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collArticleTags !== null) {
-				foreach($this->collArticleTags as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -314,6 +314,14 @@ abstract class BaseTag extends BaseObject  implements Persistent {
 			}
 
 
+				if ($this->collArticleTags !== null) {
+					foreach($this->collArticleTags as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 				if ($this->collMultimediaTags !== null) {
 					foreach($this->collMultimediaTags as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
@@ -324,14 +332,6 @@ abstract class BaseTag extends BaseObject  implements Persistent {
 
 				if ($this->collSectionTags !== null) {
 					foreach($this->collSectionTags as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collArticleTags !== null) {
-					foreach($this->collArticleTags as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -471,16 +471,16 @@ abstract class BaseTag extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
+			foreach($this->getArticleTags() as $relObj) {
+				$copyObj->addArticleTag($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getMultimediaTags() as $relObj) {
 				$copyObj->addMultimediaTag($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getSectionTags() as $relObj) {
 				$copyObj->addSectionTag($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getArticleTags() as $relObj) {
-				$copyObj->addArticleTag($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -506,6 +506,111 @@ abstract class BaseTag extends BaseObject  implements Persistent {
 			self::$peer = new TagPeer();
 		}
 		return self::$peer;
+	}
+
+	
+	public function initArticleTags()
+	{
+		if ($this->collArticleTags === null) {
+			$this->collArticleTags = array();
+		}
+	}
+
+	
+	public function getArticleTags($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleTagPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collArticleTags === null) {
+			if ($this->isNew()) {
+			   $this->collArticleTags = array();
+			} else {
+
+				$criteria->add(ArticleTagPeer::TAG_ID, $this->getId());
+
+				ArticleTagPeer::addSelectColumns($criteria);
+				$this->collArticleTags = ArticleTagPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ArticleTagPeer::TAG_ID, $this->getId());
+
+				ArticleTagPeer::addSelectColumns($criteria);
+				if (!isset($this->lastArticleTagCriteria) || !$this->lastArticleTagCriteria->equals($criteria)) {
+					$this->collArticleTags = ArticleTagPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastArticleTagCriteria = $criteria;
+		return $this->collArticleTags;
+	}
+
+	
+	public function countArticleTags($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleTagPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ArticleTagPeer::TAG_ID, $this->getId());
+
+		return ArticleTagPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addArticleTag(ArticleTag $l)
+	{
+		$this->collArticleTags[] = $l;
+		$l->setTag($this);
+	}
+
+
+	
+	public function getArticleTagsJoinArticle($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleTagPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collArticleTags === null) {
+			if ($this->isNew()) {
+				$this->collArticleTags = array();
+			} else {
+
+				$criteria->add(ArticleTagPeer::TAG_ID, $this->getId());
+
+				$this->collArticleTags = ArticleTagPeer::doSelectJoinArticle($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ArticleTagPeer::TAG_ID, $this->getId());
+
+			if (!isset($this->lastArticleTagCriteria) || !$this->lastArticleTagCriteria->equals($criteria)) {
+				$this->collArticleTags = ArticleTagPeer::doSelectJoinArticle($criteria, $con);
+			}
+		}
+		$this->lastArticleTagCriteria = $criteria;
+
+		return $this->collArticleTags;
 	}
 
 	
@@ -716,111 +821,6 @@ abstract class BaseTag extends BaseObject  implements Persistent {
 		$this->lastSectionTagCriteria = $criteria;
 
 		return $this->collSectionTags;
-	}
-
-	
-	public function initArticleTags()
-	{
-		if ($this->collArticleTags === null) {
-			$this->collArticleTags = array();
-		}
-	}
-
-	
-	public function getArticleTags($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleTagPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collArticleTags === null) {
-			if ($this->isNew()) {
-			   $this->collArticleTags = array();
-			} else {
-
-				$criteria->add(ArticleTagPeer::TAG_ID, $this->getId());
-
-				ArticleTagPeer::addSelectColumns($criteria);
-				$this->collArticleTags = ArticleTagPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(ArticleTagPeer::TAG_ID, $this->getId());
-
-				ArticleTagPeer::addSelectColumns($criteria);
-				if (!isset($this->lastArticleTagCriteria) || !$this->lastArticleTagCriteria->equals($criteria)) {
-					$this->collArticleTags = ArticleTagPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastArticleTagCriteria = $criteria;
-		return $this->collArticleTags;
-	}
-
-	
-	public function countArticleTags($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleTagPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(ArticleTagPeer::TAG_ID, $this->getId());
-
-		return ArticleTagPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addArticleTag(ArticleTag $l)
-	{
-		$this->collArticleTags[] = $l;
-		$l->setTag($this);
-	}
-
-
-	
-	public function getArticleTagsJoinArticle($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleTagPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collArticleTags === null) {
-			if ($this->isNew()) {
-				$this->collArticleTags = array();
-			} else {
-
-				$criteria->add(ArticleTagPeer::TAG_ID, $this->getId());
-
-				$this->collArticleTags = ArticleTagPeer::doSelectJoinArticle($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(ArticleTagPeer::TAG_ID, $this->getId());
-
-			if (!isset($this->lastArticleTagCriteria) || !$this->lastArticleTagCriteria->equals($criteria)) {
-				$this->collArticleTags = ArticleTagPeer::doSelectJoinArticle($criteria, $con);
-			}
-		}
-		$this->lastArticleTagCriteria = $criteria;
-
-		return $this->collArticleTags;
 	}
 
 

@@ -58,9 +58,9 @@ class ArticleMapBuilder {
 
 		$tMap->addForeignKey('UPDATED_BY', 'UpdatedBy', 'int', CreoleTypes::INTEGER, 'sf_guard_user', 'ID', false, null);
 
-		$tMap->addColumn('IS_PUBLISHED', 'IsPublished', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_PUBLISHED', 'IsPublished', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('IS_ARCHIVED', 'IsArchived', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_ARCHIVED', 'IsArchived', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('PUBLISHED_AT', 'PublishedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
@@ -70,7 +70,7 @@ class ArticleMapBuilder {
 
 		$tMap->addColumn('CONTACT', 'Contact', 'string', CreoleTypes::VARCHAR, false, 256);
 
-		$tMap->addColumn('ZOOMABLE_MULTIMEDIA', 'ZoomableMultimedia', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('ZOOMABLE_MULTIMEDIA', 'ZoomableMultimedia', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addForeignKey('MULTIMEDIA_ID', 'MultimediaId', 'int', CreoleTypes::INTEGER, 'multimedia', 'ID', false, null);
 
@@ -86,13 +86,13 @@ class ArticleMapBuilder {
 
 		$tMap->addColumn('REFERENCE_TYPE', 'ReferenceType', 'int', CreoleTypes::TINYINT, false, null);
 
-		$tMap->addColumn('OPEN_REFERENCE_NEW_WINDOW', 'OpenReferenceNewWindow', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('OPEN_REFERENCE_NEW_WINDOW', 'OpenReferenceNewWindow', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('TIMES_READ', 'TimesRead', 'string', CreoleTypes::BIGINT, false, null);
 
-		$tMap->addColumn('RATING', 'Rating', 'double', CreoleTypes::DECIMAL, false, null);
+		$tMap->addColumn('RATING', 'Rating', 'double', CreoleTypes::DECIMAL, false, 10);
 
-		$tMap->addColumn('OPEN_AS_POPUP', 'OpenAsPopup', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('OPEN_AS_POPUP', 'OpenAsPopup', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('AUTO_PUBLISH_AT', 'AutoPublishAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

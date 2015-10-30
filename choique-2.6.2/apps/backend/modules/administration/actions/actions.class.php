@@ -31,7 +31,7 @@ class administrationActions extends sfActions
 {
   public function executeIndex()
   {
-    $this->parameters = CmsConfiguration::getAllOptions();
+    $this->prueba = CmsConfiguration::getAllOptions();
   }
 
   public function executeSave()

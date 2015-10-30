@@ -38,7 +38,7 @@ class RssChannelMapBuilder {
 
 		$tMap->addColumn('LINK', 'Link', 'string', CreoleTypes::VARCHAR, true, 255);
 
-		$tMap->addColumn('IS_ACTIVE', 'IsActive', 'boolean', CreoleTypes::BOOLEAN, true, null);
+		$tMap->addColumn('IS_ACTIVE', 'IsActive', 'int', CreoleTypes::INTEGER, true, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

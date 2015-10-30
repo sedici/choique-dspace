@@ -41,7 +41,7 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 
 
 	
-	protected $large_uri = '';
+	protected $large_uri = 'null';
 
 
 	
@@ -101,7 +101,7 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 
 
 	
-	protected $is_external = false;
+	protected $is_external = 0;
 
 
 	
@@ -152,16 +152,16 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 	protected $lastArticleCriteria = null;
 
 	
-	protected $collEvents;
-
-	
-	protected $lastEventCriteria = null;
-
-	
 	protected $collArticleMultimedias;
 
 	
 	protected $lastArticleMultimediaCriteria = null;
+
+	
+	protected $collEvents;
+
+	
+	protected $lastEventCriteria = null;
 
 	
 	protected $collMultimediaGallerys;
@@ -176,16 +176,16 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 	protected $lastMultimediaTagCriteria = null;
 
 	
-	protected $collShortcuts;
-
-	
-	protected $lastShortcutCriteria = null;
-
-	
 	protected $collSections;
 
 	
 	protected $lastSectionCriteria = null;
+
+	
+	protected $collShortcuts;
+
+	
+	protected $lastShortcutCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -528,6 +528,10 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 	public function setIsDeleted($v)
 	{
 
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
 		if ($this->is_deleted !== $v) {
 			$this->is_deleted = $v;
 			$this->modifiedColumns[] = MultimediaPeer::IS_DELETED;
@@ -570,7 +574,7 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->large_uri !== $v || $v === '') {
+		if ($this->large_uri !== $v || $v === 'null') {
 			$this->large_uri = $v;
 			$this->modifiedColumns[] = MultimediaPeer::LARGE_URI;
 		}
@@ -783,7 +787,11 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 	public function setIsExternal($v)
 	{
 
-		if ($this->is_external !== $v || $v === false) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->is_external !== $v || $v === 0) {
 			$this->is_external = $v;
 			$this->modifiedColumns[] = MultimediaPeer::IS_EXTERNAL;
 		}
@@ -933,7 +941,7 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 
 			$this->comment = $rs->getString($startcol + 4);
 
-			$this->is_deleted = $rs->getBoolean($startcol + 5);
+			$this->is_deleted = $rs->getInt($startcol + 5);
 
 			$this->small_uri = $rs->getString($startcol + 6);
 
@@ -969,7 +977,7 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 
 			$this->flv_params = $rs->getString($startcol + 22);
 
-			$this->is_external = $rs->getBoolean($startcol + 23);
+			$this->is_external = $rs->getInt($startcol + 23);
 
 			$this->player_id = $rs->getInt($startcol + 24);
 
@@ -1128,16 +1136,16 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collEvents !== null) {
-				foreach($this->collEvents as $referrerFK) {
+			if ($this->collArticleMultimedias !== null) {
+				foreach($this->collArticleMultimedias as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
 				}
 			}
 
-			if ($this->collArticleMultimedias !== null) {
-				foreach($this->collArticleMultimedias as $referrerFK) {
+			if ($this->collEvents !== null) {
+				foreach($this->collEvents as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1160,16 +1168,16 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collShortcuts !== null) {
-				foreach($this->collShortcuts as $referrerFK) {
+			if ($this->collSections !== null) {
+				foreach($this->collSections as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
 				}
 			}
 
-			if ($this->collSections !== null) {
-				foreach($this->collSections as $referrerFK) {
+			if ($this->collShortcuts !== null) {
+				foreach($this->collShortcuts as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1239,16 +1247,16 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collEvents !== null) {
-					foreach($this->collEvents as $referrerFK) {
+				if ($this->collArticleMultimedias !== null) {
+					foreach($this->collArticleMultimedias as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
 					}
 				}
 
-				if ($this->collArticleMultimedias !== null) {
-					foreach($this->collArticleMultimedias as $referrerFK) {
+				if ($this->collEvents !== null) {
+					foreach($this->collEvents as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1271,16 +1279,16 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collShortcuts !== null) {
-					foreach($this->collShortcuts as $referrerFK) {
+				if ($this->collSections !== null) {
+					foreach($this->collSections as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
 					}
 				}
 
-				if ($this->collSections !== null) {
-					foreach($this->collSections as $referrerFK) {
+				if ($this->collShortcuts !== null) {
+					foreach($this->collShortcuts as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1743,12 +1751,12 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 				$copyObj->addArticle($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getEvents() as $relObj) {
-				$copyObj->addEvent($relObj->copy($deepCopy));
-			}
-
 			foreach($this->getArticleMultimedias() as $relObj) {
 				$copyObj->addArticleMultimedia($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEvents() as $relObj) {
+				$copyObj->addEvent($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getMultimediaGallerys() as $relObj) {
@@ -1759,12 +1767,12 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 				$copyObj->addMultimediaTag($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getShortcuts() as $relObj) {
-				$copyObj->addShortcut($relObj->copy($deepCopy));
-			}
-
 			foreach($this->getSections() as $relObj) {
 				$copyObj->addSection($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getShortcuts() as $relObj) {
+				$copyObj->addShortcut($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -2131,6 +2139,111 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 	}
 
 	
+	public function initArticleMultimedias()
+	{
+		if ($this->collArticleMultimedias === null) {
+			$this->collArticleMultimedias = array();
+		}
+	}
+
+	
+	public function getArticleMultimedias($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleMultimediaPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collArticleMultimedias === null) {
+			if ($this->isNew()) {
+			   $this->collArticleMultimedias = array();
+			} else {
+
+				$criteria->add(ArticleMultimediaPeer::MULTIMEDIA_ID, $this->getId());
+
+				ArticleMultimediaPeer::addSelectColumns($criteria);
+				$this->collArticleMultimedias = ArticleMultimediaPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ArticleMultimediaPeer::MULTIMEDIA_ID, $this->getId());
+
+				ArticleMultimediaPeer::addSelectColumns($criteria);
+				if (!isset($this->lastArticleMultimediaCriteria) || !$this->lastArticleMultimediaCriteria->equals($criteria)) {
+					$this->collArticleMultimedias = ArticleMultimediaPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastArticleMultimediaCriteria = $criteria;
+		return $this->collArticleMultimedias;
+	}
+
+	
+	public function countArticleMultimedias($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleMultimediaPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ArticleMultimediaPeer::MULTIMEDIA_ID, $this->getId());
+
+		return ArticleMultimediaPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addArticleMultimedia(ArticleMultimedia $l)
+	{
+		$this->collArticleMultimedias[] = $l;
+		$l->setMultimedia($this);
+	}
+
+
+	
+	public function getArticleMultimediasJoinArticle($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleMultimediaPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collArticleMultimedias === null) {
+			if ($this->isNew()) {
+				$this->collArticleMultimedias = array();
+			} else {
+
+				$criteria->add(ArticleMultimediaPeer::MULTIMEDIA_ID, $this->getId());
+
+				$this->collArticleMultimedias = ArticleMultimediaPeer::doSelectJoinArticle($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ArticleMultimediaPeer::MULTIMEDIA_ID, $this->getId());
+
+			if (!isset($this->lastArticleMultimediaCriteria) || !$this->lastArticleMultimediaCriteria->equals($criteria)) {
+				$this->collArticleMultimedias = ArticleMultimediaPeer::doSelectJoinArticle($criteria, $con);
+			}
+		}
+		$this->lastArticleMultimediaCriteria = $criteria;
+
+		return $this->collArticleMultimedias;
+	}
+
+	
 	public function initEvents()
 	{
 		if ($this->collEvents === null) {
@@ -2341,111 +2454,6 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initArticleMultimedias()
-	{
-		if ($this->collArticleMultimedias === null) {
-			$this->collArticleMultimedias = array();
-		}
-	}
-
-	
-	public function getArticleMultimedias($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleMultimediaPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collArticleMultimedias === null) {
-			if ($this->isNew()) {
-			   $this->collArticleMultimedias = array();
-			} else {
-
-				$criteria->add(ArticleMultimediaPeer::MULTIMEDIA_ID, $this->getId());
-
-				ArticleMultimediaPeer::addSelectColumns($criteria);
-				$this->collArticleMultimedias = ArticleMultimediaPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(ArticleMultimediaPeer::MULTIMEDIA_ID, $this->getId());
-
-				ArticleMultimediaPeer::addSelectColumns($criteria);
-				if (!isset($this->lastArticleMultimediaCriteria) || !$this->lastArticleMultimediaCriteria->equals($criteria)) {
-					$this->collArticleMultimedias = ArticleMultimediaPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastArticleMultimediaCriteria = $criteria;
-		return $this->collArticleMultimedias;
-	}
-
-	
-	public function countArticleMultimedias($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleMultimediaPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(ArticleMultimediaPeer::MULTIMEDIA_ID, $this->getId());
-
-		return ArticleMultimediaPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addArticleMultimedia(ArticleMultimedia $l)
-	{
-		$this->collArticleMultimedias[] = $l;
-		$l->setMultimedia($this);
-	}
-
-
-	
-	public function getArticleMultimediasJoinArticle($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleMultimediaPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collArticleMultimedias === null) {
-			if ($this->isNew()) {
-				$this->collArticleMultimedias = array();
-			} else {
-
-				$criteria->add(ArticleMultimediaPeer::MULTIMEDIA_ID, $this->getId());
-
-				$this->collArticleMultimedias = ArticleMultimediaPeer::doSelectJoinArticle($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(ArticleMultimediaPeer::MULTIMEDIA_ID, $this->getId());
-
-			if (!isset($this->lastArticleMultimediaCriteria) || !$this->lastArticleMultimediaCriteria->equals($criteria)) {
-				$this->collArticleMultimedias = ArticleMultimediaPeer::doSelectJoinArticle($criteria, $con);
-			}
-		}
-		$this->lastArticleMultimediaCriteria = $criteria;
-
-		return $this->collArticleMultimedias;
-	}
-
-	
 	public function initMultimediaGallerys()
 	{
 		if ($this->collMultimediaGallerys === null) {
@@ -2653,181 +2661,6 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 		$this->lastMultimediaTagCriteria = $criteria;
 
 		return $this->collMultimediaTags;
-	}
-
-	
-	public function initShortcuts()
-	{
-		if ($this->collShortcuts === null) {
-			$this->collShortcuts = array();
-		}
-	}
-
-	
-	public function getShortcuts($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseShortcutPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collShortcuts === null) {
-			if ($this->isNew()) {
-			   $this->collShortcuts = array();
-			} else {
-
-				$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
-
-				ShortcutPeer::addSelectColumns($criteria);
-				$this->collShortcuts = ShortcutPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
-
-				ShortcutPeer::addSelectColumns($criteria);
-				if (!isset($this->lastShortcutCriteria) || !$this->lastShortcutCriteria->equals($criteria)) {
-					$this->collShortcuts = ShortcutPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastShortcutCriteria = $criteria;
-		return $this->collShortcuts;
-	}
-
-	
-	public function countShortcuts($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseShortcutPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
-
-		return ShortcutPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addShortcut(Shortcut $l)
-	{
-		$this->collShortcuts[] = $l;
-		$l->setMultimedia($this);
-	}
-
-
-	
-	public function getShortcutsJoinContainerSlotlet($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseShortcutPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collShortcuts === null) {
-			if ($this->isNew()) {
-				$this->collShortcuts = array();
-			} else {
-
-				$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
-
-				$this->collShortcuts = ShortcutPeer::doSelectJoinContainerSlotlet($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
-
-			if (!isset($this->lastShortcutCriteria) || !$this->lastShortcutCriteria->equals($criteria)) {
-				$this->collShortcuts = ShortcutPeer::doSelectJoinContainerSlotlet($criteria, $con);
-			}
-		}
-		$this->lastShortcutCriteria = $criteria;
-
-		return $this->collShortcuts;
-	}
-
-
-	
-	public function getShortcutsJoinsfGuardUserRelatedByCreatedBy($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseShortcutPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collShortcuts === null) {
-			if ($this->isNew()) {
-				$this->collShortcuts = array();
-			} else {
-
-				$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
-
-				$this->collShortcuts = ShortcutPeer::doSelectJoinsfGuardUserRelatedByCreatedBy($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
-
-			if (!isset($this->lastShortcutCriteria) || !$this->lastShortcutCriteria->equals($criteria)) {
-				$this->collShortcuts = ShortcutPeer::doSelectJoinsfGuardUserRelatedByCreatedBy($criteria, $con);
-			}
-		}
-		$this->lastShortcutCriteria = $criteria;
-
-		return $this->collShortcuts;
-	}
-
-
-	
-	public function getShortcutsJoinsfGuardUserRelatedByUpdatedBy($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseShortcutPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collShortcuts === null) {
-			if ($this->isNew()) {
-				$this->collShortcuts = array();
-			} else {
-
-				$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
-
-				$this->collShortcuts = ShortcutPeer::doSelectJoinsfGuardUserRelatedByUpdatedBy($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
-
-			if (!isset($this->lastShortcutCriteria) || !$this->lastShortcutCriteria->equals($criteria)) {
-				$this->collShortcuts = ShortcutPeer::doSelectJoinsfGuardUserRelatedByUpdatedBy($criteria, $con);
-			}
-		}
-		$this->lastShortcutCriteria = $criteria;
-
-		return $this->collShortcuts;
 	}
 
 	
@@ -3073,6 +2906,181 @@ abstract class BaseMultimedia extends BaseObject  implements Persistent {
 		$this->lastSectionCriteria = $criteria;
 
 		return $this->collSections;
+	}
+
+	
+	public function initShortcuts()
+	{
+		if ($this->collShortcuts === null) {
+			$this->collShortcuts = array();
+		}
+	}
+
+	
+	public function getShortcuts($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseShortcutPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collShortcuts === null) {
+			if ($this->isNew()) {
+			   $this->collShortcuts = array();
+			} else {
+
+				$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
+
+				ShortcutPeer::addSelectColumns($criteria);
+				$this->collShortcuts = ShortcutPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
+
+				ShortcutPeer::addSelectColumns($criteria);
+				if (!isset($this->lastShortcutCriteria) || !$this->lastShortcutCriteria->equals($criteria)) {
+					$this->collShortcuts = ShortcutPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastShortcutCriteria = $criteria;
+		return $this->collShortcuts;
+	}
+
+	
+	public function countShortcuts($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseShortcutPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
+
+		return ShortcutPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addShortcut(Shortcut $l)
+	{
+		$this->collShortcuts[] = $l;
+		$l->setMultimedia($this);
+	}
+
+
+	
+	public function getShortcutsJoinContainerSlotlet($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseShortcutPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collShortcuts === null) {
+			if ($this->isNew()) {
+				$this->collShortcuts = array();
+			} else {
+
+				$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
+
+				$this->collShortcuts = ShortcutPeer::doSelectJoinContainerSlotlet($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
+
+			if (!isset($this->lastShortcutCriteria) || !$this->lastShortcutCriteria->equals($criteria)) {
+				$this->collShortcuts = ShortcutPeer::doSelectJoinContainerSlotlet($criteria, $con);
+			}
+		}
+		$this->lastShortcutCriteria = $criteria;
+
+		return $this->collShortcuts;
+	}
+
+
+	
+	public function getShortcutsJoinsfGuardUserRelatedByCreatedBy($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseShortcutPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collShortcuts === null) {
+			if ($this->isNew()) {
+				$this->collShortcuts = array();
+			} else {
+
+				$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
+
+				$this->collShortcuts = ShortcutPeer::doSelectJoinsfGuardUserRelatedByCreatedBy($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
+
+			if (!isset($this->lastShortcutCriteria) || !$this->lastShortcutCriteria->equals($criteria)) {
+				$this->collShortcuts = ShortcutPeer::doSelectJoinsfGuardUserRelatedByCreatedBy($criteria, $con);
+			}
+		}
+		$this->lastShortcutCriteria = $criteria;
+
+		return $this->collShortcuts;
+	}
+
+
+	
+	public function getShortcutsJoinsfGuardUserRelatedByUpdatedBy($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseShortcutPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collShortcuts === null) {
+			if ($this->isNew()) {
+				$this->collShortcuts = array();
+			} else {
+
+				$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
+
+				$this->collShortcuts = ShortcutPeer::doSelectJoinsfGuardUserRelatedByUpdatedBy($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ShortcutPeer::MULTIMEDIA_ID, $this->getId());
+
+			if (!isset($this->lastShortcutCriteria) || !$this->lastShortcutCriteria->equals($criteria)) {
+				$this->collShortcuts = ShortcutPeer::doSelectJoinsfGuardUserRelatedByUpdatedBy($criteria, $con);
+			}
+		}
+		$this->lastShortcutCriteria = $criteria;
+
+		return $this->collShortcuts;
 	}
 
 

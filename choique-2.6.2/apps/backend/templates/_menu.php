@@ -20,3 +20,5 @@
 <?php use_helper('JSCookMenu') ?>
 
 <?php echo jscookmenu_from_yml(sfConfig::get('sf_app_config_dir').'/menu.yml', 'menu', 'hbr', 'cmThemeOffice') ?>
+
+<?php echo jscookmenu_from_yml(sfConfig::get('sf_app_config_dir').'/menu_exten.yml', 'menu', 'hbr', 'cmThemeOffice') ?>

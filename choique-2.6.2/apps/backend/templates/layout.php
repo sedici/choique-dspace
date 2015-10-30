@@ -40,7 +40,6 @@ var myThemeOfficeBase = '<?php echo $sf_request->getRelativeUrlRoot() ?>/pmJSCoo
 <div class="testing-banner"> <?php echo sfConfig::get('app_choique_testing_text','Version de prueba')?></div>
 <?php endif?>
 
-
 <div id="wrapper">
 
 <?php if ($sf_user->isAuthenticated()):  ?>
@@ -55,6 +54,9 @@ var myThemeOfficeBase = '<?php echo $sf_request->getRelativeUrlRoot() ?>/pmJSCoo
         <?php echo __('Versión %%version%%', array('%%version%%' => CmsConfiguration::getVersion())) ?>
       </div>
       <div><?php echo __('Ingresado como %%user%%', array('%%user%%' => $sf_user->getGuardUser()->getName() .' - '. link_to(' Cambiar Contraseña ', '@change_password'))) ?></div>
+      
+      
+
       <div>[<?php echo link_to(__('SALIR'), '/logout') ?>]</div>
     </div>
   </div>

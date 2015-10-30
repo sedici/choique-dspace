@@ -1,0 +1,11 @@
+## YAML Template.
+---
+propel:
+  _attributes:      { package: plugins.sfPruebaPlugin.lib.model }
+  
+  sedici:
+    _attributes:    { phpName: sedici }
+    id:
+    name:           { type: varchar, size: 255, required: true, index: unique }
+    description:    { type: longvarchar }
+    prueba:    { type: integer }

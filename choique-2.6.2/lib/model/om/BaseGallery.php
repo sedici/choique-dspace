@@ -25,7 +25,7 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 
 
 	
-	protected $is_horizontal = true;
+	protected $is_horizontal = 1;
 
 
 	
@@ -288,7 +288,11 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 	public function setIsHorizontal($v)
 	{
 
-		if ($this->is_horizontal !== $v || $v === true) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->is_horizontal !== $v || $v === 1) {
 			$this->is_horizontal = $v;
 			$this->modifiedColumns[] = GalleryPeer::IS_HORIZONTAL;
 		}
@@ -311,6 +315,10 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 	
 	public function setIsPublished($v)
 	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
 
 		if ($this->is_published !== $v) {
 			$this->is_published = $v;
@@ -436,11 +444,11 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 
 			$this->comment = $rs->getString($startcol + 3);
 
-			$this->is_horizontal = $rs->getBoolean($startcol + 4);
+			$this->is_horizontal = $rs->getInt($startcol + 4);
 
 			$this->visible_items = $rs->getInt($startcol + 5);
 
-			$this->is_published = $rs->getBoolean($startcol + 6);
+			$this->is_published = $rs->getInt($startcol + 6);
 
 			$this->created_at = $rs->getTimestamp($startcol + 7, null);
 

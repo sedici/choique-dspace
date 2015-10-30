@@ -46,16 +46,16 @@ abstract class BaseRssChannel extends BaseObject  implements Persistent {
 	protected $asfGuardUserRelatedByUpdatedBy;
 
 	
-	protected $collContainerSlotlets;
-
-	
-	protected $lastContainerSlotletCriteria = null;
-
-	
 	protected $collArticleRssChannels;
 
 	
 	protected $lastArticleRssChannelCriteria = null;
+
+	
+	protected $collContainerSlotlets;
+
+	
+	protected $lastContainerSlotletCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -195,6 +195,10 @@ abstract class BaseRssChannel extends BaseObject  implements Persistent {
 	public function setIsActive($v)
 	{
 
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
 		if ($this->is_active !== $v) {
 			$this->is_active = $v;
 			$this->modifiedColumns[] = RssChannelPeer::IS_ACTIVE;
@@ -282,7 +286,7 @@ abstract class BaseRssChannel extends BaseObject  implements Persistent {
 
 			$this->link = $rs->getString($startcol + 2);
 
-			$this->is_active = $rs->getBoolean($startcol + 3);
+			$this->is_active = $rs->getInt($startcol + 3);
 
 			$this->created_at = $rs->getTimestamp($startcol + 4, null);
 
@@ -423,16 +427,16 @@ abstract class BaseRssChannel extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
-			if ($this->collContainerSlotlets !== null) {
-				foreach($this->collContainerSlotlets as $referrerFK) {
+			if ($this->collArticleRssChannels !== null) {
+				foreach($this->collArticleRssChannels as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
 				}
 			}
 
-			if ($this->collArticleRssChannels !== null) {
-				foreach($this->collArticleRssChannels as $referrerFK) {
+			if ($this->collContainerSlotlets !== null) {
+				foreach($this->collContainerSlotlets as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -494,16 +498,16 @@ abstract class BaseRssChannel extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collContainerSlotlets !== null) {
-					foreach($this->collContainerSlotlets as $referrerFK) {
+				if ($this->collArticleRssChannels !== null) {
+					foreach($this->collArticleRssChannels as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
 					}
 				}
 
-				if ($this->collArticleRssChannels !== null) {
-					foreach($this->collArticleRssChannels as $referrerFK) {
+				if ($this->collContainerSlotlets !== null) {
+					foreach($this->collContainerSlotlets as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -687,12 +691,12 @@ abstract class BaseRssChannel extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach($this->getContainerSlotlets() as $relObj) {
-				$copyObj->addContainerSlotlet($relObj->copy($deepCopy));
-			}
-
 			foreach($this->getArticleRssChannels() as $relObj) {
 				$copyObj->addArticleRssChannel($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getContainerSlotlets() as $relObj) {
+				$copyObj->addContainerSlotlet($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -776,6 +780,111 @@ abstract class BaseRssChannel extends BaseObject  implements Persistent {
 			
 		}
 		return $this->asfGuardUserRelatedByUpdatedBy;
+	}
+
+	
+	public function initArticleRssChannels()
+	{
+		if ($this->collArticleRssChannels === null) {
+			$this->collArticleRssChannels = array();
+		}
+	}
+
+	
+	public function getArticleRssChannels($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleRssChannelPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collArticleRssChannels === null) {
+			if ($this->isNew()) {
+			   $this->collArticleRssChannels = array();
+			} else {
+
+				$criteria->add(ArticleRssChannelPeer::RSS_CHANNEL_ID, $this->getId());
+
+				ArticleRssChannelPeer::addSelectColumns($criteria);
+				$this->collArticleRssChannels = ArticleRssChannelPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ArticleRssChannelPeer::RSS_CHANNEL_ID, $this->getId());
+
+				ArticleRssChannelPeer::addSelectColumns($criteria);
+				if (!isset($this->lastArticleRssChannelCriteria) || !$this->lastArticleRssChannelCriteria->equals($criteria)) {
+					$this->collArticleRssChannels = ArticleRssChannelPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastArticleRssChannelCriteria = $criteria;
+		return $this->collArticleRssChannels;
+	}
+
+	
+	public function countArticleRssChannels($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleRssChannelPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ArticleRssChannelPeer::RSS_CHANNEL_ID, $this->getId());
+
+		return ArticleRssChannelPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addArticleRssChannel(ArticleRssChannel $l)
+	{
+		$this->collArticleRssChannels[] = $l;
+		$l->setRssChannel($this);
+	}
+
+
+	
+	public function getArticleRssChannelsJoinArticle($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleRssChannelPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collArticleRssChannels === null) {
+			if ($this->isNew()) {
+				$this->collArticleRssChannels = array();
+			} else {
+
+				$criteria->add(ArticleRssChannelPeer::RSS_CHANNEL_ID, $this->getId());
+
+				$this->collArticleRssChannels = ArticleRssChannelPeer::doSelectJoinArticle($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ArticleRssChannelPeer::RSS_CHANNEL_ID, $this->getId());
+
+			if (!isset($this->lastArticleRssChannelCriteria) || !$this->lastArticleRssChannelCriteria->equals($criteria)) {
+				$this->collArticleRssChannels = ArticleRssChannelPeer::doSelectJoinArticle($criteria, $con);
+			}
+		}
+		$this->lastArticleRssChannelCriteria = $criteria;
+
+		return $this->collArticleRssChannels;
 	}
 
 	
@@ -916,111 +1025,6 @@ abstract class BaseRssChannel extends BaseObject  implements Persistent {
 		$this->lastContainerSlotletCriteria = $criteria;
 
 		return $this->collContainerSlotlets;
-	}
-
-	
-	public function initArticleRssChannels()
-	{
-		if ($this->collArticleRssChannels === null) {
-			$this->collArticleRssChannels = array();
-		}
-	}
-
-	
-	public function getArticleRssChannels($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleRssChannelPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collArticleRssChannels === null) {
-			if ($this->isNew()) {
-			   $this->collArticleRssChannels = array();
-			} else {
-
-				$criteria->add(ArticleRssChannelPeer::RSS_CHANNEL_ID, $this->getId());
-
-				ArticleRssChannelPeer::addSelectColumns($criteria);
-				$this->collArticleRssChannels = ArticleRssChannelPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(ArticleRssChannelPeer::RSS_CHANNEL_ID, $this->getId());
-
-				ArticleRssChannelPeer::addSelectColumns($criteria);
-				if (!isset($this->lastArticleRssChannelCriteria) || !$this->lastArticleRssChannelCriteria->equals($criteria)) {
-					$this->collArticleRssChannels = ArticleRssChannelPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastArticleRssChannelCriteria = $criteria;
-		return $this->collArticleRssChannels;
-	}
-
-	
-	public function countArticleRssChannels($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleRssChannelPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(ArticleRssChannelPeer::RSS_CHANNEL_ID, $this->getId());
-
-		return ArticleRssChannelPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addArticleRssChannel(ArticleRssChannel $l)
-	{
-		$this->collArticleRssChannels[] = $l;
-		$l->setRssChannel($this);
-	}
-
-
-	
-	public function getArticleRssChannelsJoinArticle($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleRssChannelPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collArticleRssChannels === null) {
-			if ($this->isNew()) {
-				$this->collArticleRssChannels = array();
-			} else {
-
-				$criteria->add(ArticleRssChannelPeer::RSS_CHANNEL_ID, $this->getId());
-
-				$this->collArticleRssChannels = ArticleRssChannelPeer::doSelectJoinArticle($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(ArticleRssChannelPeer::RSS_CHANNEL_ID, $this->getId());
-
-			if (!isset($this->lastArticleRssChannelCriteria) || !$this->lastArticleRssChannelCriteria->equals($criteria)) {
-				$this->collArticleRssChannels = ArticleRssChannelPeer::doSelectJoinArticle($criteria, $con);
-			}
-		}
-		$this->lastArticleRssChannelCriteria = $criteria;
-
-		return $this->collArticleRssChannels;
 	}
 
 

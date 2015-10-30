@@ -17,12 +17,4 @@
  */
 class sfGuardUser extends PluginsfGuardUser
 {
-  public function setPermissions($permission_id, $con = null)
-  {
-    foreach ($this->getsfGuardUserPermissions() as $p) $p->delete($con);
-    $up = new sfGuardUserPermission();
-    $up->setsfGuardUser($this);
-    $up->setPermissionId($permission_id);
-    $up->save($con);
-  }
 }

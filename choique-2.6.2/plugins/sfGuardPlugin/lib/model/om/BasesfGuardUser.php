@@ -97,6 +97,18 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	protected $lastArticleRelatedByUpdatedByCriteria = null;
 
 	
+	protected $collArticleGroupsRelatedByCreatedBy;
+
+	
+	protected $lastArticleGroupRelatedByCreatedByCriteria = null;
+
+	
+	protected $collArticleGroupsRelatedByUpdatedBy;
+
+	
+	protected $lastArticleGroupRelatedByUpdatedByCriteria = null;
+
+	
 	protected $collDocumentsRelatedByUploadedBy;
 
 	
@@ -151,18 +163,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	protected $lastGalleryRelatedByPublishedByCriteria = null;
 
 	
-	protected $collArticleGroupsRelatedByCreatedBy;
-
-	
-	protected $lastArticleGroupRelatedByCreatedByCriteria = null;
-
-	
-	protected $collArticleGroupsRelatedByUpdatedBy;
-
-	
-	protected $lastArticleGroupRelatedByUpdatedByCriteria = null;
-
-	
 	protected $collLinksRelatedByCreatedBy;
 
 	
@@ -187,6 +187,18 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	protected $lastMultimediaRelatedByUpdatedByCriteria = null;
 
 	
+	protected $collRssChannelsRelatedByCreatedBy;
+
+	
+	protected $lastRssChannelRelatedByCreatedByCriteria = null;
+
+	
+	protected $collRssChannelsRelatedByUpdatedBy;
+
+	
+	protected $lastRssChannelRelatedByUpdatedByCriteria = null;
+
+	
 	protected $collShortcutsRelatedByCreatedBy;
 
 	
@@ -209,18 +221,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 	
 	protected $lastTemplateRelatedByUpdatedByCriteria = null;
-
-	
-	protected $collRssChannelsRelatedByCreatedBy;
-
-	
-	protected $lastRssChannelRelatedByCreatedByCriteria = null;
-
-	
-	protected $collRssChannelsRelatedByUpdatedBy;
-
-	
-	protected $lastRssChannelRelatedByUpdatedByCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -760,6 +760,22 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collArticleGroupsRelatedByCreatedBy !== null) {
+				foreach($this->collArticleGroupsRelatedByCreatedBy as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collArticleGroupsRelatedByUpdatedBy !== null) {
+				foreach($this->collArticleGroupsRelatedByUpdatedBy as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collDocumentsRelatedByUploadedBy !== null) {
 				foreach($this->collDocumentsRelatedByUploadedBy as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -832,22 +848,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collArticleGroupsRelatedByCreatedBy !== null) {
-				foreach($this->collArticleGroupsRelatedByCreatedBy as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collArticleGroupsRelatedByUpdatedBy !== null) {
-				foreach($this->collArticleGroupsRelatedByUpdatedBy as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			if ($this->collLinksRelatedByCreatedBy !== null) {
 				foreach($this->collLinksRelatedByCreatedBy as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -880,6 +880,22 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collRssChannelsRelatedByCreatedBy !== null) {
+				foreach($this->collRssChannelsRelatedByCreatedBy as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collRssChannelsRelatedByUpdatedBy !== null) {
+				foreach($this->collRssChannelsRelatedByUpdatedBy as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collShortcutsRelatedByCreatedBy !== null) {
 				foreach($this->collShortcutsRelatedByCreatedBy as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -906,22 +922,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			if ($this->collTemplatesRelatedByUpdatedBy !== null) {
 				foreach($this->collTemplatesRelatedByUpdatedBy as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collRssChannelsRelatedByCreatedBy !== null) {
-				foreach($this->collRssChannelsRelatedByCreatedBy as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collRssChannelsRelatedByUpdatedBy !== null) {
-				foreach($this->collRssChannelsRelatedByUpdatedBy as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1017,6 +1017,22 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collArticleGroupsRelatedByCreatedBy !== null) {
+					foreach($this->collArticleGroupsRelatedByCreatedBy as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collArticleGroupsRelatedByUpdatedBy !== null) {
+					foreach($this->collArticleGroupsRelatedByUpdatedBy as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 				if ($this->collDocumentsRelatedByUploadedBy !== null) {
 					foreach($this->collDocumentsRelatedByUploadedBy as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
@@ -1089,22 +1105,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collArticleGroupsRelatedByCreatedBy !== null) {
-					foreach($this->collArticleGroupsRelatedByCreatedBy as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collArticleGroupsRelatedByUpdatedBy !== null) {
-					foreach($this->collArticleGroupsRelatedByUpdatedBy as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
 				if ($this->collLinksRelatedByCreatedBy !== null) {
 					foreach($this->collLinksRelatedByCreatedBy as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
@@ -1137,6 +1137,22 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collRssChannelsRelatedByCreatedBy !== null) {
+					foreach($this->collRssChannelsRelatedByCreatedBy as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRssChannelsRelatedByUpdatedBy !== null) {
+					foreach($this->collRssChannelsRelatedByUpdatedBy as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 				if ($this->collShortcutsRelatedByCreatedBy !== null) {
 					foreach($this->collShortcutsRelatedByCreatedBy as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
@@ -1163,22 +1179,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collTemplatesRelatedByUpdatedBy !== null) {
 					foreach($this->collTemplatesRelatedByUpdatedBy as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collRssChannelsRelatedByCreatedBy !== null) {
-					foreach($this->collRssChannelsRelatedByCreatedBy as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collRssChannelsRelatedByUpdatedBy !== null) {
-					foreach($this->collRssChannelsRelatedByUpdatedBy as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1448,6 +1448,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				$copyObj->addArticleRelatedByUpdatedBy($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getArticleGroupsRelatedByCreatedBy() as $relObj) {
+				$copyObj->addArticleGroupRelatedByCreatedBy($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getArticleGroupsRelatedByUpdatedBy() as $relObj) {
+				$copyObj->addArticleGroupRelatedByUpdatedBy($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getDocumentsRelatedByUploadedBy() as $relObj) {
 				$copyObj->addDocumentRelatedByUploadedBy($relObj->copy($deepCopy));
 			}
@@ -1484,14 +1492,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				$copyObj->addGalleryRelatedByPublishedBy($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getArticleGroupsRelatedByCreatedBy() as $relObj) {
-				$copyObj->addArticleGroupRelatedByCreatedBy($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getArticleGroupsRelatedByUpdatedBy() as $relObj) {
-				$copyObj->addArticleGroupRelatedByUpdatedBy($relObj->copy($deepCopy));
-			}
-
 			foreach($this->getLinksRelatedByCreatedBy() as $relObj) {
 				$copyObj->addLinkRelatedByCreatedBy($relObj->copy($deepCopy));
 			}
@@ -1508,6 +1508,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				$copyObj->addMultimediaRelatedByUpdatedBy($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getRssChannelsRelatedByCreatedBy() as $relObj) {
+				$copyObj->addRssChannelRelatedByCreatedBy($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRssChannelsRelatedByUpdatedBy() as $relObj) {
+				$copyObj->addRssChannelRelatedByUpdatedBy($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getShortcutsRelatedByCreatedBy() as $relObj) {
 				$copyObj->addShortcutRelatedByCreatedBy($relObj->copy($deepCopy));
 			}
@@ -1522,14 +1530,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			foreach($this->getTemplatesRelatedByUpdatedBy() as $relObj) {
 				$copyObj->addTemplateRelatedByUpdatedBy($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getRssChannelsRelatedByCreatedBy() as $relObj) {
-				$copyObj->addRssChannelRelatedByCreatedBy($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getRssChannelsRelatedByUpdatedBy() as $relObj) {
-				$copyObj->addRssChannelRelatedByUpdatedBy($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -2354,6 +2354,146 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->lastArticleRelatedByUpdatedByCriteria = $criteria;
 
 		return $this->collArticlesRelatedByUpdatedBy;
+	}
+
+	
+	public function initArticleGroupsRelatedByCreatedBy()
+	{
+		if ($this->collArticleGroupsRelatedByCreatedBy === null) {
+			$this->collArticleGroupsRelatedByCreatedBy = array();
+		}
+	}
+
+	
+	public function getArticleGroupsRelatedByCreatedBy($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleGroupPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collArticleGroupsRelatedByCreatedBy === null) {
+			if ($this->isNew()) {
+			   $this->collArticleGroupsRelatedByCreatedBy = array();
+			} else {
+
+				$criteria->add(ArticleGroupPeer::CREATED_BY, $this->getId());
+
+				ArticleGroupPeer::addSelectColumns($criteria);
+				$this->collArticleGroupsRelatedByCreatedBy = ArticleGroupPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ArticleGroupPeer::CREATED_BY, $this->getId());
+
+				ArticleGroupPeer::addSelectColumns($criteria);
+				if (!isset($this->lastArticleGroupRelatedByCreatedByCriteria) || !$this->lastArticleGroupRelatedByCreatedByCriteria->equals($criteria)) {
+					$this->collArticleGroupsRelatedByCreatedBy = ArticleGroupPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastArticleGroupRelatedByCreatedByCriteria = $criteria;
+		return $this->collArticleGroupsRelatedByCreatedBy;
+	}
+
+	
+	public function countArticleGroupsRelatedByCreatedBy($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleGroupPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ArticleGroupPeer::CREATED_BY, $this->getId());
+
+		return ArticleGroupPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addArticleGroupRelatedByCreatedBy(ArticleGroup $l)
+	{
+		$this->collArticleGroupsRelatedByCreatedBy[] = $l;
+		$l->setsfGuardUserRelatedByCreatedBy($this);
+	}
+
+	
+	public function initArticleGroupsRelatedByUpdatedBy()
+	{
+		if ($this->collArticleGroupsRelatedByUpdatedBy === null) {
+			$this->collArticleGroupsRelatedByUpdatedBy = array();
+		}
+	}
+
+	
+	public function getArticleGroupsRelatedByUpdatedBy($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleGroupPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collArticleGroupsRelatedByUpdatedBy === null) {
+			if ($this->isNew()) {
+			   $this->collArticleGroupsRelatedByUpdatedBy = array();
+			} else {
+
+				$criteria->add(ArticleGroupPeer::UPDATED_BY, $this->getId());
+
+				ArticleGroupPeer::addSelectColumns($criteria);
+				$this->collArticleGroupsRelatedByUpdatedBy = ArticleGroupPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ArticleGroupPeer::UPDATED_BY, $this->getId());
+
+				ArticleGroupPeer::addSelectColumns($criteria);
+				if (!isset($this->lastArticleGroupRelatedByUpdatedByCriteria) || !$this->lastArticleGroupRelatedByUpdatedByCriteria->equals($criteria)) {
+					$this->collArticleGroupsRelatedByUpdatedBy = ArticleGroupPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastArticleGroupRelatedByUpdatedByCriteria = $criteria;
+		return $this->collArticleGroupsRelatedByUpdatedBy;
+	}
+
+	
+	public function countArticleGroupsRelatedByUpdatedBy($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseArticleGroupPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ArticleGroupPeer::UPDATED_BY, $this->getId());
+
+		return ArticleGroupPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addArticleGroupRelatedByUpdatedBy(ArticleGroup $l)
+	{
+		$this->collArticleGroupsRelatedByUpdatedBy[] = $l;
+		$l->setsfGuardUserRelatedByUpdatedBy($this);
 	}
 
 	
@@ -3197,146 +3337,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initArticleGroupsRelatedByCreatedBy()
-	{
-		if ($this->collArticleGroupsRelatedByCreatedBy === null) {
-			$this->collArticleGroupsRelatedByCreatedBy = array();
-		}
-	}
-
-	
-	public function getArticleGroupsRelatedByCreatedBy($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleGroupPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collArticleGroupsRelatedByCreatedBy === null) {
-			if ($this->isNew()) {
-			   $this->collArticleGroupsRelatedByCreatedBy = array();
-			} else {
-
-				$criteria->add(ArticleGroupPeer::CREATED_BY, $this->getId());
-
-				ArticleGroupPeer::addSelectColumns($criteria);
-				$this->collArticleGroupsRelatedByCreatedBy = ArticleGroupPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(ArticleGroupPeer::CREATED_BY, $this->getId());
-
-				ArticleGroupPeer::addSelectColumns($criteria);
-				if (!isset($this->lastArticleGroupRelatedByCreatedByCriteria) || !$this->lastArticleGroupRelatedByCreatedByCriteria->equals($criteria)) {
-					$this->collArticleGroupsRelatedByCreatedBy = ArticleGroupPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastArticleGroupRelatedByCreatedByCriteria = $criteria;
-		return $this->collArticleGroupsRelatedByCreatedBy;
-	}
-
-	
-	public function countArticleGroupsRelatedByCreatedBy($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleGroupPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(ArticleGroupPeer::CREATED_BY, $this->getId());
-
-		return ArticleGroupPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addArticleGroupRelatedByCreatedBy(ArticleGroup $l)
-	{
-		$this->collArticleGroupsRelatedByCreatedBy[] = $l;
-		$l->setsfGuardUserRelatedByCreatedBy($this);
-	}
-
-	
-	public function initArticleGroupsRelatedByUpdatedBy()
-	{
-		if ($this->collArticleGroupsRelatedByUpdatedBy === null) {
-			$this->collArticleGroupsRelatedByUpdatedBy = array();
-		}
-	}
-
-	
-	public function getArticleGroupsRelatedByUpdatedBy($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleGroupPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collArticleGroupsRelatedByUpdatedBy === null) {
-			if ($this->isNew()) {
-			   $this->collArticleGroupsRelatedByUpdatedBy = array();
-			} else {
-
-				$criteria->add(ArticleGroupPeer::UPDATED_BY, $this->getId());
-
-				ArticleGroupPeer::addSelectColumns($criteria);
-				$this->collArticleGroupsRelatedByUpdatedBy = ArticleGroupPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(ArticleGroupPeer::UPDATED_BY, $this->getId());
-
-				ArticleGroupPeer::addSelectColumns($criteria);
-				if (!isset($this->lastArticleGroupRelatedByUpdatedByCriteria) || !$this->lastArticleGroupRelatedByUpdatedByCriteria->equals($criteria)) {
-					$this->collArticleGroupsRelatedByUpdatedBy = ArticleGroupPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastArticleGroupRelatedByUpdatedByCriteria = $criteria;
-		return $this->collArticleGroupsRelatedByUpdatedBy;
-	}
-
-	
-	public function countArticleGroupsRelatedByUpdatedBy($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseArticleGroupPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(ArticleGroupPeer::UPDATED_BY, $this->getId());
-
-		return ArticleGroupPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addArticleGroupRelatedByUpdatedBy(ArticleGroup $l)
-	{
-		$this->collArticleGroupsRelatedByUpdatedBy[] = $l;
-		$l->setsfGuardUserRelatedByUpdatedBy($this);
-	}
-
-	
 	public function initLinksRelatedByCreatedBy()
 	{
 		if ($this->collLinksRelatedByCreatedBy === null) {
@@ -3613,6 +3613,146 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	public function addMultimediaRelatedByUpdatedBy(Multimedia $l)
 	{
 		$this->collMultimediasRelatedByUpdatedBy[] = $l;
+		$l->setsfGuardUserRelatedByUpdatedBy($this);
+	}
+
+	
+	public function initRssChannelsRelatedByCreatedBy()
+	{
+		if ($this->collRssChannelsRelatedByCreatedBy === null) {
+			$this->collRssChannelsRelatedByCreatedBy = array();
+		}
+	}
+
+	
+	public function getRssChannelsRelatedByCreatedBy($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRssChannelPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRssChannelsRelatedByCreatedBy === null) {
+			if ($this->isNew()) {
+			   $this->collRssChannelsRelatedByCreatedBy = array();
+			} else {
+
+				$criteria->add(RssChannelPeer::CREATED_BY, $this->getId());
+
+				RssChannelPeer::addSelectColumns($criteria);
+				$this->collRssChannelsRelatedByCreatedBy = RssChannelPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RssChannelPeer::CREATED_BY, $this->getId());
+
+				RssChannelPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRssChannelRelatedByCreatedByCriteria) || !$this->lastRssChannelRelatedByCreatedByCriteria->equals($criteria)) {
+					$this->collRssChannelsRelatedByCreatedBy = RssChannelPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRssChannelRelatedByCreatedByCriteria = $criteria;
+		return $this->collRssChannelsRelatedByCreatedBy;
+	}
+
+	
+	public function countRssChannelsRelatedByCreatedBy($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRssChannelPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RssChannelPeer::CREATED_BY, $this->getId());
+
+		return RssChannelPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRssChannelRelatedByCreatedBy(RssChannel $l)
+	{
+		$this->collRssChannelsRelatedByCreatedBy[] = $l;
+		$l->setsfGuardUserRelatedByCreatedBy($this);
+	}
+
+	
+	public function initRssChannelsRelatedByUpdatedBy()
+	{
+		if ($this->collRssChannelsRelatedByUpdatedBy === null) {
+			$this->collRssChannelsRelatedByUpdatedBy = array();
+		}
+	}
+
+	
+	public function getRssChannelsRelatedByUpdatedBy($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRssChannelPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRssChannelsRelatedByUpdatedBy === null) {
+			if ($this->isNew()) {
+			   $this->collRssChannelsRelatedByUpdatedBy = array();
+			} else {
+
+				$criteria->add(RssChannelPeer::UPDATED_BY, $this->getId());
+
+				RssChannelPeer::addSelectColumns($criteria);
+				$this->collRssChannelsRelatedByUpdatedBy = RssChannelPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RssChannelPeer::UPDATED_BY, $this->getId());
+
+				RssChannelPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRssChannelRelatedByUpdatedByCriteria) || !$this->lastRssChannelRelatedByUpdatedByCriteria->equals($criteria)) {
+					$this->collRssChannelsRelatedByUpdatedBy = RssChannelPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRssChannelRelatedByUpdatedByCriteria = $criteria;
+		return $this->collRssChannelsRelatedByUpdatedBy;
+	}
+
+	
+	public function countRssChannelsRelatedByUpdatedBy($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRssChannelPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RssChannelPeer::UPDATED_BY, $this->getId());
+
+		return RssChannelPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRssChannelRelatedByUpdatedBy(RssChannel $l)
+	{
+		$this->collRssChannelsRelatedByUpdatedBy[] = $l;
 		$l->setsfGuardUserRelatedByUpdatedBy($this);
 	}
 
@@ -4033,146 +4173,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	public function addTemplateRelatedByUpdatedBy(Template $l)
 	{
 		$this->collTemplatesRelatedByUpdatedBy[] = $l;
-		$l->setsfGuardUserRelatedByUpdatedBy($this);
-	}
-
-	
-	public function initRssChannelsRelatedByCreatedBy()
-	{
-		if ($this->collRssChannelsRelatedByCreatedBy === null) {
-			$this->collRssChannelsRelatedByCreatedBy = array();
-		}
-	}
-
-	
-	public function getRssChannelsRelatedByCreatedBy($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseRssChannelPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collRssChannelsRelatedByCreatedBy === null) {
-			if ($this->isNew()) {
-			   $this->collRssChannelsRelatedByCreatedBy = array();
-			} else {
-
-				$criteria->add(RssChannelPeer::CREATED_BY, $this->getId());
-
-				RssChannelPeer::addSelectColumns($criteria);
-				$this->collRssChannelsRelatedByCreatedBy = RssChannelPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(RssChannelPeer::CREATED_BY, $this->getId());
-
-				RssChannelPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRssChannelRelatedByCreatedByCriteria) || !$this->lastRssChannelRelatedByCreatedByCriteria->equals($criteria)) {
-					$this->collRssChannelsRelatedByCreatedBy = RssChannelPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastRssChannelRelatedByCreatedByCriteria = $criteria;
-		return $this->collRssChannelsRelatedByCreatedBy;
-	}
-
-	
-	public function countRssChannelsRelatedByCreatedBy($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseRssChannelPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(RssChannelPeer::CREATED_BY, $this->getId());
-
-		return RssChannelPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addRssChannelRelatedByCreatedBy(RssChannel $l)
-	{
-		$this->collRssChannelsRelatedByCreatedBy[] = $l;
-		$l->setsfGuardUserRelatedByCreatedBy($this);
-	}
-
-	
-	public function initRssChannelsRelatedByUpdatedBy()
-	{
-		if ($this->collRssChannelsRelatedByUpdatedBy === null) {
-			$this->collRssChannelsRelatedByUpdatedBy = array();
-		}
-	}
-
-	
-	public function getRssChannelsRelatedByUpdatedBy($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseRssChannelPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collRssChannelsRelatedByUpdatedBy === null) {
-			if ($this->isNew()) {
-			   $this->collRssChannelsRelatedByUpdatedBy = array();
-			} else {
-
-				$criteria->add(RssChannelPeer::UPDATED_BY, $this->getId());
-
-				RssChannelPeer::addSelectColumns($criteria);
-				$this->collRssChannelsRelatedByUpdatedBy = RssChannelPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(RssChannelPeer::UPDATED_BY, $this->getId());
-
-				RssChannelPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRssChannelRelatedByUpdatedByCriteria) || !$this->lastRssChannelRelatedByUpdatedByCriteria->equals($criteria)) {
-					$this->collRssChannelsRelatedByUpdatedBy = RssChannelPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastRssChannelRelatedByUpdatedByCriteria = $criteria;
-		return $this->collRssChannelsRelatedByUpdatedBy;
-	}
-
-	
-	public function countRssChannelsRelatedByUpdatedBy($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseRssChannelPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(RssChannelPeer::UPDATED_BY, $this->getId());
-
-		return RssChannelPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addRssChannelRelatedByUpdatedBy(RssChannel $l)
-	{
-		$this->collRssChannelsRelatedByUpdatedBy[] = $l;
 		$l->setsfGuardUserRelatedByUpdatedBy($this);
 	}
 

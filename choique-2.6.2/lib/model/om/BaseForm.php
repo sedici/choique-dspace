@@ -70,16 +70,16 @@ abstract class BaseForm extends BaseObject  implements Persistent {
 	protected $asfGuardUserRelatedByUpdatedBy;
 
 	
-	protected $collFields;
-
-	
-	protected $lastFieldCriteria = null;
-
-	
 	protected $collArticleForms;
 
 	
 	protected $lastArticleFormCriteria = null;
+
+	
+	protected $collFields;
+
+	
+	protected $lastFieldCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -303,6 +303,10 @@ abstract class BaseForm extends BaseObject  implements Persistent {
 	public function setIsPoll($v)
 	{
 
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
 		if ($this->is_poll !== $v) {
 			$this->is_poll = $v;
 			$this->modifiedColumns[] = FormPeer::IS_POLL;
@@ -312,6 +316,10 @@ abstract class BaseForm extends BaseObject  implements Persistent {
 	
 	public function setIsActive($v)
 	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
 
 		if ($this->is_active !== $v) {
 			$this->is_active = $v;
@@ -434,9 +442,9 @@ abstract class BaseForm extends BaseObject  implements Persistent {
 
 			$this->rows = $rs->getInt($startcol + 5);
 
-			$this->is_poll = $rs->getBoolean($startcol + 6);
+			$this->is_poll = $rs->getInt($startcol + 6);
 
-			$this->is_active = $rs->getBoolean($startcol + 7);
+			$this->is_active = $rs->getInt($startcol + 7);
 
 			$this->success_msg = $rs->getString($startcol + 8);
 
@@ -581,16 +589,16 @@ abstract class BaseForm extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
-			if ($this->collFields !== null) {
-				foreach($this->collFields as $referrerFK) {
+			if ($this->collArticleForms !== null) {
+				foreach($this->collArticleForms as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
 				}
 			}
 
-			if ($this->collArticleForms !== null) {
-				foreach($this->collArticleForms as $referrerFK) {
+			if ($this->collFields !== null) {
+				foreach($this->collFields as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -652,16 +660,16 @@ abstract class BaseForm extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collFields !== null) {
-					foreach($this->collFields as $referrerFK) {
+				if ($this->collArticleForms !== null) {
+					foreach($this->collArticleForms as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
 					}
 				}
 
-				if ($this->collArticleForms !== null) {
-					foreach($this->collArticleForms as $referrerFK) {
+				if ($this->collFields !== null) {
+					foreach($this->collFields as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -911,12 +919,12 @@ abstract class BaseForm extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach($this->getFields() as $relObj) {
-				$copyObj->addField($relObj->copy($deepCopy));
-			}
-
 			foreach($this->getArticleForms() as $relObj) {
 				$copyObj->addArticleForm($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getFields() as $relObj) {
+				$copyObj->addField($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1000,76 +1008,6 @@ abstract class BaseForm extends BaseObject  implements Persistent {
 			
 		}
 		return $this->asfGuardUserRelatedByUpdatedBy;
-	}
-
-	
-	public function initFields()
-	{
-		if ($this->collFields === null) {
-			$this->collFields = array();
-		}
-	}
-
-	
-	public function getFields($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseFieldPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collFields === null) {
-			if ($this->isNew()) {
-			   $this->collFields = array();
-			} else {
-
-				$criteria->add(FieldPeer::FORM_ID, $this->getId());
-
-				FieldPeer::addSelectColumns($criteria);
-				$this->collFields = FieldPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(FieldPeer::FORM_ID, $this->getId());
-
-				FieldPeer::addSelectColumns($criteria);
-				if (!isset($this->lastFieldCriteria) || !$this->lastFieldCriteria->equals($criteria)) {
-					$this->collFields = FieldPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastFieldCriteria = $criteria;
-		return $this->collFields;
-	}
-
-	
-	public function countFields($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseFieldPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(FieldPeer::FORM_ID, $this->getId());
-
-		return FieldPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addField(Field $l)
-	{
-		$this->collFields[] = $l;
-		$l->setForm($this);
 	}
 
 	
@@ -1175,6 +1113,76 @@ abstract class BaseForm extends BaseObject  implements Persistent {
 		$this->lastArticleFormCriteria = $criteria;
 
 		return $this->collArticleForms;
+	}
+
+	
+	public function initFields()
+	{
+		if ($this->collFields === null) {
+			$this->collFields = array();
+		}
+	}
+
+	
+	public function getFields($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseFieldPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collFields === null) {
+			if ($this->isNew()) {
+			   $this->collFields = array();
+			} else {
+
+				$criteria->add(FieldPeer::FORM_ID, $this->getId());
+
+				FieldPeer::addSelectColumns($criteria);
+				$this->collFields = FieldPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(FieldPeer::FORM_ID, $this->getId());
+
+				FieldPeer::addSelectColumns($criteria);
+				if (!isset($this->lastFieldCriteria) || !$this->lastFieldCriteria->equals($criteria)) {
+					$this->collFields = FieldPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastFieldCriteria = $criteria;
+		return $this->collFields;
+	}
+
+	
+	public function countFields($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseFieldPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(FieldPeer::FORM_ID, $this->getId());
+
+		return FieldPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addField(Field $l)
+	{
+		$this->collFields[] = $l;
+		$l->setForm($this);
 	}
 
 

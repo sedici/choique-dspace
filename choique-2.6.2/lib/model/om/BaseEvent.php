@@ -299,6 +299,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setIsPublished($v)
 	{
 
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
 		if ($this->is_published !== $v) {
 			$this->is_published = $v;
 			$this->modifiedColumns[] = EventPeer::IS_PUBLISHED;
@@ -554,7 +558,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 			$this->id = $rs->getInt($startcol + 0);
 
-			$this->is_published = $rs->getBoolean($startcol + 1);
+			$this->is_published = $rs->getInt($startcol + 1);
 
 			$this->title = $rs->getString($startcol + 2);
 

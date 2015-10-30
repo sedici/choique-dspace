@@ -5,7 +5,7 @@ all:
     instance_name: "Choique CMS"
     url:
       frontend: /home/virtual/choique/choique-2.6.2/web-frontend
-      backend:  /home/virtual/choique/choique-2.6.2/web-backend
+      backend:  /home/virtual/choique/choique-2.6.2/web-backend/backend_dev.php
     default_flavor_dir: %SF_ROOT_DIR%/data/default-flavor
     #La siguiente solapa muestra u oculta un cartel indicando que esta es una version de prueba
     testing: false

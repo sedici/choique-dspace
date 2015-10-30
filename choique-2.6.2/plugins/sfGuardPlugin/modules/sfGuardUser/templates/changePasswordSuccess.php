@@ -8,7 +8,7 @@
 
 <div id="sf_admin_container">
 
-<h1><?php echo __('Cambiar mi Contraseña', 
+<h1><?php echo __('Cambiar mi Contraseñaaaaa', 
 array()) ?></h1>
 
 <div id="sf_admin_header">

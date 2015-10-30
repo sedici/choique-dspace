@@ -40,7 +40,7 @@ class LayoutMapBuilder {
 
 		$tMap->addColumn('TEMPLATE_LAYOUT', 'TemplateLayout', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
-		$tMap->addColumn('IS_DEFAULT', 'IsDefault', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_DEFAULT', 'IsDefault', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('VIRTUAL_SECTION_ID', 'VirtualSectionId', 'int', CreoleTypes::INTEGER, false, null);
 

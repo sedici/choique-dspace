@@ -18,7 +18,7 @@
  * along with Choique CMS.  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.
  */ ?>
 <div id="sf_admin_container">
-  <h1><?php echo __('Administración del Sistema') ?></h1>
+  <h1><?php echo __('Administración del Sistemaaa') ?></h1>
 
   <?php if ($sf_flash->has("notice")): ?>
     <div class="save-ok">

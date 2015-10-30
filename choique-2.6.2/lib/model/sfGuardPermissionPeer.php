@@ -17,17 +17,4 @@
  */
 class sfGuardPermissionPeer extends PluginsfGuardPermissionPeer
 {
-  public static function doSelectSectionPermissions(Criteria $c=null)
-  {
-    if ($c== null) $c=new Criteria();
-    $c->addAnd(self::SECTION, true);
-    return self::doSelect($c);
-  }
-
-  public static function doCountSectionPermissions(Criteria $c=null)
-  {
-    if ($c== null) $c=new Criteria();
-    $c->addAnd(self::SECTION, true);
-    return self::doCount($c);
-  }
 }

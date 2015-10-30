@@ -42,7 +42,7 @@ class MultimediaMapBuilder {
 
 		$tMap->addColumn('COMMENT', 'Comment', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
-		$tMap->addColumn('IS_DELETED', 'IsDeleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_DELETED', 'IsDeleted', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('SMALL_URI', 'SmallUri', 'string', CreoleTypes::VARCHAR, false, 256);
 
@@ -78,7 +78,7 @@ class MultimediaMapBuilder {
 
 		$tMap->addColumn('FLV_PARAMS', 'FlvParams', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
-		$tMap->addColumn('IS_EXTERNAL', 'IsExternal', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_EXTERNAL', 'IsExternal', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('PLAYER_ID', 'PlayerId', 'int', CreoleTypes::INTEGER, false, null);
 
@@ -86,7 +86,7 @@ class MultimediaMapBuilder {
 
 		$tMap->addColumn('TIMES_SEEN', 'TimesSeen', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('RATING', 'Rating', 'double', CreoleTypes::DECIMAL, false, null);
+		$tMap->addColumn('RATING', 'Rating', 'double', CreoleTypes::DECIMAL, false, 10);
 
 		$tMap->addColumn('TIMES_RATED', 'TimesRated', 'int', CreoleTypes::INTEGER, false, null);
 
