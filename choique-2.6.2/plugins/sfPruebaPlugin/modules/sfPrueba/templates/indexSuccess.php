@@ -1,16 +1,17 @@
 <?php use_javascript('scrips1.js') ?>
 
 <?php echo form_tag('sfPrueba/save') ?>
-
+<?php echo $type;?>
 <p class="show-author">
-Handle <input type="radio" name="type" id="type" value="handle"  />
-Autor <input type="radio" name="type" id="type" value="author" />
-Busqueda Libre <input type="radio" name="type" id="type" value="free" />
+Handle <input type="radio" name="type" id="type" value="handle" <?php if ($type=="handle") echo 'checked="checked"';?>  />
+Autor <input type="radio" name="type" id="type" value="author" <?php if ($type=="author") echo 'checked="checked"';?>  />
+Busqueda Libre <input type="radio" name="type" id="type" value="free" <?php if ($type=="free") echo 'checked="checked"';?>  />
 </p>
  
-<p class="conditionally-author">
-        
-	Mostrar Autores <?php echo checkbox_tag('show_author', 1, true) ?>
+<p class="conditionally-author"
+	<?php if($type!='author') echo ' style="display: none;" ';
+            else  echo ''; ?>>
+	Mostrar Autores <input type="checkbox" name="show_author" id="show_author" <?php if ($show_author==1) echo 'checked="checked"';?>  />
 
 </p>
 
