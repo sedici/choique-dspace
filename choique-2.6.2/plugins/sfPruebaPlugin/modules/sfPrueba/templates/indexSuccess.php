@@ -11,7 +11,7 @@ Busqueda Libre <input type="radio" name="type" id="type" value="free" <?php if (
 <p class="conditionally-author"
 	<?php if($type!='author') echo ' style="display: none;" ';
             else  echo ''; ?>>
-	Mostrar Autores <input type="checkbox" name="show_author" id="show_author" <?php if ($show_author==1) echo 'checked="checked"';?>  />
+	Mostrar Autores <input type="checkbox" name="show_author" id="show_author" <?php if ($show_author) echo 'checked="checked"';?>  />
 
 </p>
 

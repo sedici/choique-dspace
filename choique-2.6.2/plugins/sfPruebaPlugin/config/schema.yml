@@ -9,3 +9,5 @@ propel:
     name:           { type: varchar, size: 255, required: true, index: unique }
     description:    { type: longvarchar }
     prueba:    { type: integer }
+    type:    { type: varchar, size: 10 }
+    show_author:    { type: boolean }

@@ -16,19 +16,19 @@ class sfPruebaActions extends sfActions {
    public function executeIndex()
   {
     $prueba = sediciPeer::retrieveByPK(1);
-    $this->show_author=$prueba->getPrueba();
-    $this->type = $prueba->getName();
+    $this->type=$prueba->getType();
+    $this->show_author = $prueba->getShowAuthor();
   }
   
   public function executeSave()
   {            
-    $name = $this->getRequestParameter('type');
+    $type= $this->getRequestParameter('type');
     $show_author=$this->getRequestParameter('show_author');
-    if ($show_author) $show_author=1;
-            else $show_author=0;
+    if($show_author=="on") $show_author=true;
+    else $show_author=false;
     $prueba = sediciPeer::retrieveByPK(1);
-    $prueba->setName($name);
-    $prueba->setPrueba($show_author);
+    $prueba->setType($type);
+    $prueba->setShowAuthor($show_author);
     $prueba->save();
     
     choiqueFlavors::getInstance()->clearCache('all');
