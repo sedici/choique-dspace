@@ -6,8 +6,13 @@ propel:
   sedici:
     _attributes:    { phpName: sedici }
     id:
-    name:           { type: varchar, size: 255, required: true, index: unique }
-    description:    { type: longvarchar }
-    prueba:    { type: integer }
-    type:    { type: varchar, size: 10 }
+    type:    { type: varchar, size: 10, required: true, index: unique }
+    context:           { type: varchar, size: 255, required: true, index: unique }
+    description:    { type: boolean }
+    summary:    { type: boolean }
     show_author:    { type: boolean }
+    max_lenght:    { type: integer }
+    cache:    { type: integer }
+    date:    { type: boolean }
+    limitt:    { type: boolean }
+    allr:    { type: boolean }

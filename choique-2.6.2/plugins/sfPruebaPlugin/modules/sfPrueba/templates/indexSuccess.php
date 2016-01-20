@@ -1,63 +1,54 @@
 <?php use_javascript('scrips1.js') ?>
-
 <?php echo form_tag('sfPrueba/save') ?>
-<?php echo $type;?>
+
 <p class="show-author">
-Handle <input type="radio" name="type" id="type" value="handle" <?php if ($type=="handle") echo 'checked="checked"';?>  />
-Autor <input type="radio" name="type" id="type" value="author" <?php if ($type=="author") echo 'checked="checked"';?>  />
-Busqueda Libre <input type="radio" name="type" id="type" value="free" <?php if ($type=="free") echo 'checked="checked"';?>  />
+Handle <input type="radio" name="type" id="type" value="handle" <?php if ($value['type']=="handle") echo 'checked="checked"';?>  />
+Autor <input type="radio" name="type" id="type" value="author" <?php if ($value['type']=="author") echo 'checked="checked"';?>  />
+Busqueda Libre <input type="radio" name="type" id="type" value="free" <?php if ($value['type']=="free") echo 'checked="checked"';?>  />
 </p>
  
 <p class="conditionally-author"
-	<?php if($type!='author') echo ' style="display: none;" ';
+	<?php if($value['type']!='author') echo ' style="display: none;" ';
             else  echo ''; ?>>
-	Mostrar Autores <input type="checkbox" name="show_author" id="show_author" <?php if ($show_author) echo 'checked="checked"';?>  />
+	Mostrar Autores <input type="checkbox" name="show_author" id="show_author" <?php if ($value['show_author']) echo 'checked="checked"';?>  />
 
 </p>
 
-<?php if ($context == "") $context="Ingrese un contexto"?>
-<div>
-Context <?php echo input_tag('context', $context ) ?>
-</div>
 
-<p class="limit">
-	Limitar longitud del texto <?php echo checkbox_tag('limit', 1, true) ?>
+<p>
+Contexto: <input id="context" name='context' type="text" required="required" value="<?php echo $value['context'];?>" />
 </p>
-<?php if($maxlenght == "") $maxlenght=0;?>
-<p class="conditionally-limit">
-	Longitud del texto en caracteres: 
-        <input type="number" onKeyPress="return justNumbers(event);"
-		id="maxlenght"
-		name="maxlenght" 
-		value="<?php echo $maxlenght; ?>" />
-        
-</p> 
+
+<p>
+        Mostrar Fecha<input type="checkbox" name="date" id="date" <?php if ($value['date']) echo 'checked="checked"';?>  />
+</p>
 
 <p class="description">
-	Mostrar resumen <?php echo checkbox_tag('description', 1, true) ?>
+        Mostrar Resumen<input type="checkbox" name="description" id="description" <?php if ($value['description']) echo 'checked="checked"';?>  />
 </p>
 
-<p class="conditionally-description">
-	Mostrar sumario <?php echo checkbox_tag('summary', 1, true) ?>
+
+<p class="conditionally-description"
+    <?php if(!$value['description']) echo ' style="display: none;" '; else  echo ''; ?>>        
+        Mostrar Sumario<input type="checkbox" name="summary" id="summary" <?php if ($value['summary']) echo 'checked="checked"';?>  />
+</p>
+
+<p class="limit">
+        Limitar longitud del texto<input type="checkbox" name="limit" id="limit" <?php if ($value['limit']) echo 'checked="checked"';?>  />
+</p>
+<p class="conditionally-limit"
+	<?php if(!$value['limit']) echo ' style="display: none;" '; else  echo ''; ?>>  
+        <input name='max_lenght' type="number" value="<?php echo $value['max_lenght'];?>"  onKeyPress="return justNumbers(event);"/>
+</p>
+
+
+<p>
+Duración de la Cache <?php echo select_tag('cache', options_for_select($valores, $value['cache'])) ?>
 </p>
 
 <p>
-	Mostrar fecha <?php echo checkbox_tag('date', 1, true) ?>
+       Todos los Resultados<input type="checkbox" name="all" id="all" <?php if ($value['all']) echo 'checked="checked"';?>  />
 </p>
-<?php 
-$un_dia=86400;
-$valores=array(
-  $un_dia  => '1',
-  $un_dia * 3    => '3',
-  $un_dia * 7 => '7',
-  $un_dia * 14    => '14',
-);
-
-?>
-<p>
-<?php echo select_tag('cache', options_for_select($valores, $un_dia * 7)) ?>
-</p>
-
 
 <?php echo submit_tag(__('Guardar cambios'), 'class=sf_admin_action_save') ?>
 
