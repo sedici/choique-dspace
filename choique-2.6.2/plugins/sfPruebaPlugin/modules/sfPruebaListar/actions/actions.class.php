@@ -111,7 +111,7 @@ class sfPruebaListarActions extends sfActions {
 		return $consulta;
 	}
         function queryFree($start, $context) {
-		//query for author
+		//query for free search
 		$consulta = $this->query;
 		$consulta .= $start . "&query=\"$context\"";
 		return $consulta;

@@ -13,8 +13,7 @@
  */
 class sfPruebaActions extends sfActions {
    
-    public function indexar($bool){
-        if ($bool){
+    public function indexarView(){
         $obj = sediciPeer::retrieveByPK(1);
         return ( array (
 			'type' => $obj->getType(),
@@ -26,9 +25,20 @@ class sfPruebaActions extends sfActions {
                         'limit' => $obj->getLimitt(),
                         'max_lenght' => $obj->getMaxLenght(),
                         'date' => $obj->getDate(),
+                        'max_results' => $obj->getMaxResults(),
 			'show_author' => $obj->getShowAuthor()
 	));
-        } else {
+        } 
+    public function indexarSubtype(){
+        $obj = subtiposPeer::retrieveByPK(1);
+        return (array (
+            'article' => $obj->getArticle(),
+            'book' => $obj->getBook(),
+            'preprint'=>$obj->getPreprint()
+        ));
+    }    
+        
+    public function indexarSave(){
             $show_author=$this->getRequestParameter('show_author');
             $show_author=($show_author=="on") ;
             $description =$this->getRequestParameter('description');
@@ -41,6 +51,7 @@ class sfPruebaActions extends sfActions {
             $limit= ($limit == "on");
             $all =$this->getRequestParameter('all');
             $all= ($all == "on");
+            $max_results = $this->getRequestParameter('max_results');
             return ( array (
 			'type' => $this->getRequestParameter('type'),
 			'context' => $this->getRequestParameter('context'),
@@ -51,9 +62,32 @@ class sfPruebaActions extends sfActions {
                         'max_lenght' => $this->getRequestParameter('max_lenght'),
                         'cache'  => $this->getRequestParameter('cache'),
                         'all' => $all,
+                        'max_results' => $max_results,
 			'show_author' => $show_author
 	));
-        }
+    }
+    public function On($value){
+        if($value == "on") return (true);
+        else return (false);
+    }
+    
+    public function indexarSaveST(){
+        $article=  $this->On ($this->getRequestParameter('article'));
+        $book= $this->On( $this->getRequestParameter('book'));
+        $preprint=$this->On($this->getRequestParameter('preprint'));
+        return( array(
+            'article' => $article,
+            'book' => $book,
+            'preprint' => $preprint
+        ));  
+    }
+    
+    public function setParametersSt($st){
+        $obj = subtiposPeer::retrieveByPK(1);
+        $obj->setArticle($st['article']);
+        $obj->setBook($st['book']);
+        $obj->setPreprint($st['preprint']);
+        $obj->save();
     }
     
     public function setParameters($value){
@@ -68,6 +102,7 @@ class sfPruebaActions extends sfActions {
         $prueba->setCache($value['cache']);
         $prueba->setAllr($value['all']);
         $prueba->setDate($value['date']);
+        $prueba->setMaxResults($value['max_results']);
         $prueba->save();
     }
     
@@ -82,15 +117,28 @@ class sfPruebaActions extends sfActions {
     );          
     $this->un_dia=$un_dia;
     $this->valores=$valores;
-    $this->value = $this->indexar(true);
+    $this->total_results = array(
+        0 => "Todos",
+        10=>10,
+        25=>25,
+        50=>50,
+        100=>100);
+    $this->subtypes = array ("article" => "Artículo",
+                             "book" => "Libro",
+                             "preprint" => "Preprint"
+		);
+    $this->st = $this->indexarSubtype();
+    $this->value = $this->indexarView();
   }
   
  
   
   public function executeSave()
   {            
-    $value = $this->indexar(false);
+    $value = $this->indexarSave();
+    $st = $this->indexarSaveST();
     $this->setParameters($value);
+    $this->setParametersST($st);
     choiqueFlavors::getInstance()->clearCache('all');
     return $this->redirect("sfPrueba/index");
   }

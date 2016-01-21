@@ -13,6 +13,14 @@ propel:
     show_author:    { type: boolean }
     max_lenght:    { type: integer }
     cache:    { type: integer }
+    max_results:    { type: integer }
     date:    { type: boolean }
     limitt:    { type: boolean }
     allr:    { type: boolean }
+  
+  subtipos:
+    _attributes:    { phpName: subtipos }
+    id:
+    article:    { type: boolean }
+    book:    { type: boolean }
+    preprint:    { type: boolean }

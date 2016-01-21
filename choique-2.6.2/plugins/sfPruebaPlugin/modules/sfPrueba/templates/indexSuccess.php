@@ -42,13 +42,27 @@ Contexto: <input id="context" name='context' type="text" required="required" val
 </p>
 
 
-<p>
+<p> 
 Duración de la Cache <?php echo select_tag('cache', options_for_select($valores, $value['cache'])) ?>
 </p>
 
-<p>
+<p class="show-filter">
        Todos los Resultados<input type="checkbox" name="all" id="all" <?php if ($value['all']) echo 'checked="checked"';?>  />
 </p>
+
+<p class="conditionally-filter"
+<?php if($value['all']) echo ' style="display: none;" '; else  echo ''; ?>> 
+Resultados por subtipo <?php echo select_tag('max_results', options_for_select($total_results, $value['max_results'])) ?>
+<br/>
+<?php foreach ($subtypes as $key => $val){
+    echo $val;
+?>    
+<input type="checkbox" name="<?php echo $key; ?>" id="<?php echo $key; ?>" <?php if ($st[$key]) echo 'checked="checked"';?>  />
+<?php
+}
+?>
+</p>
+
 
 <?php echo submit_tag(__('Guardar cambios'), 'class=sf_admin_action_save') ?>
 
