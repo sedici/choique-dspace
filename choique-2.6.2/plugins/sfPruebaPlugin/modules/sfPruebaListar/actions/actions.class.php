@@ -117,6 +117,40 @@ class sfPruebaListarActions extends sfActions {
 		return $consulta;
 	}
         
+    public function convertirEspIng($filtro) {
+		//Pasa los subtipos al ingles para la comparacion con el shortcode
+		switch ($filtro) {
+                        case "learning_object":
+                            $valor="Objeto de aprendizaje";
+                            break;
+			case "article" :
+				$valor = "Articulo";
+				break;
+			case "book" :
+				$valor = "Libro";
+				break;
+			case "preprint" :
+				$valor = "Preprint";
+				break;
+			case "Documento de trabajo" :
+				$valor = "working_paper";
+				break;
+			case "Informe tecnico" :
+				$valor = "technical_report";
+				break;
+			case "Objeto de conferencia" :
+				$valor = "conference_object";
+				break;
+			case "Revision" :
+				$valor = "revision";
+				break;
+			case "Trabajo de especializacion" :
+				$valor = "work_specialization";
+				break;
+		}
+		return ($valor);
+	}    
+        
     function group_subtypes($type, $all, $context, $selected_subtypes, $groups,$cache) {
 		$start = 0; 
 		$count = 0;
@@ -169,24 +203,60 @@ class sfPruebaListarActions extends sfActions {
                         'limit' => $obj->getLimitt(),
                         'max_lenght' => $obj->getMaxLenght(),
                         'date' => $obj->getDate(),
+                        'max_results' => $obj->getMaxResults(),
 			'show_author' => $obj->getShowAuthor()
 	));
     }
+    public function subtypes(){
+        $obj = subtiposPeer::retrieveByPK(1);
+        return ( array(
+            'article' => $obj->getArticle(),
+            'book' => $obj->getBook(),
+            'preprint' => $obj->getPreprint()
+        ) );
+    }
         
-  function group_attributes($description, $date, $show_author, $context, $maxlenght) {
+  function group_attributes($description, $date, $show_author, $context, $maxlenght, $maxresults) {
 		return ( array (
 				'description' => $description,
 				'show_author' => $show_author,
 				'context' => $context,
 				'max_lenght' => $maxlenght,
+                                'max_results' => $maxresults,
 				'date' => $date 
 		));
 	}  
+    function view_subtypes($selected_subtypes, $type ,$context) {
+		$publications = array (); // documents for the view
+		while ( list ( $key, $val ) = each ( $selected_subtypes ) ) {
+			// $val: all documents by subtype
+			$elements = count ( $val );
+			if ($elements > 0) {
+				// $key: document subtype
+				if ($type == 'handle') {
+					$url = $this->UrlSedici ( $key, $context );
+					$colection = array (
+							'view' => $val,
+							'url' => $url,
+							'filter' => $key 
+					);
+				} else { // author and free search
+					$colection = array (
+							'view' => $val,
+							'filter' => $key 
+					);
+				}
+				array_push ( $publications, $colection );
+			}
+		}
+		return ($publications);
+	}    
     
    public function executeIndex()
   {
     $this->Query();
     $instance = $this->indexar();
+    $subtypes = $this->subtypes();
     If ( $instance ['description']) {
 	if ($instance ['summary']) {
             $description = "summary"; 
@@ -208,8 +278,24 @@ class sfPruebaListarActions extends sfActions {
 			// $selected_subtypes: subtypes selected by the user
     $groups = array ();
     // $groups: groups publications by subtype
+    
+    
+    foreach ($subtypes as $key => $val){
+				//compares the user marked subtypes, if ON, save the subtype.
+				if ($val) {
+                                        $keyEsp = $this->convertirEspIng($key);
+					array_push ( $selected_subtypes, $keyEsp );
+					$groups [$keyEsp] = array ();
+				}
+			}
+    
     $groups = $this->group_subtypes ( $instance['type'], $instance['all'], $instance['context'], $selected_subtypes, $groups, $instance['cache'] );
-    $attributes = $this->group_attributes ( $description, $instance['date'], $instance['show_author'], $instance['context']  , $maxlenght);
+    if (! $instance['all']) {
+	//elements to view publications by subtypes
+	$groups = $this->view_subtypes ( $groups, $instance['type'], $instance['context'] );
+    }
+    
+    $attributes = $this->group_attributes ( $description, $instance['date'], $instance['show_author'], $instance['context']  , $maxlenght,$instance['max_results'] );
     if ($instance['type'] != 'author')  $attributes['show_author'] = TRUE;
     $this->groups=$groups;
     $this->attributes=$attributes;

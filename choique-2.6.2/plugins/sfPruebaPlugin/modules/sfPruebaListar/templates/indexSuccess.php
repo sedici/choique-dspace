@@ -155,9 +155,9 @@ class View {
 		return;
 	}
 	public function go_to_sedici($type,$url){
-		if ($this->is_handle($type)){ ?> 
+		?> 
 		<span class="go-to"> <a href='<?php echo $url; ?>'><?php echo('Ir a SEDICI'); ?></a></span><br><br>
-		<?php }
+		<?php
 	}
 	
 	function publications($feed, $a, $type) {
@@ -177,6 +177,7 @@ class View {
 		?>
 		</ol>
 		<?php 
+                    if ($this->is_handle($type))
 			$this->go_to_sedici($type, $i['url']);
 			} 
 		return;
@@ -198,8 +199,6 @@ class View {
 				}
 	
 } // end class
-
-
 $view = new View();
 if ($all) {
     $view->all_publications ( $groups, $attributes,$type );
