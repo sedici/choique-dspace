@@ -149,7 +149,7 @@ class sfPruebaActions extends sfActions {
                              "technical_report" =>"Informe tecnico",
                              "conference_object" =>"Objeto de conferencia",
                              "revision" =>"Revisión",
-                             "work_specialization" =>"Trabajo de especializacion",
+                             "work_specialization" =>"Trabajo de especialización",
                              "preprint" => "Preprint"
 		);
     $this->st = $this->indexarSubtype();
