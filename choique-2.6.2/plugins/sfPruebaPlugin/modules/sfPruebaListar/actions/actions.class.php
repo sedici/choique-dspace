@@ -39,29 +39,11 @@ require_once(dirname(__FILE__).'/../lib/model/SimplepieModel.php');
 class sfPruebaListarActions extends sfActions {    
         protected $max_lenght_text;
 	protected $query;
-	protected $one_day;
-	protected $cache_days;
-	protected $total_results;	
+        
 	public function Query() {
 		$this->query = get_base_url () . "?rpp=" . RPP . "&format=" . FORMAT . "&sort_by=" . SORTBY . "&order=" . ORDER . "&start=";
-		$this->cache_days = array (7,1,3,14);
-		$this->one_day = 86400;
-		$this->total_results = array(0,10,25,50,100);
 		$this->max_lenght_text = 150;
 	}
-	public function max_lenght_text(){
-		return $this->max_lenght_text;
-	}
-	public function one_day(){
-		return $this->one_day;
-	}
-	public function cache_days(){
-		return $this->cache_days;
-	}
-	public function total_results() {
-		return  $this->total_results;
-	}
-    
     
     function UrlSedici($filter, $handle) {
 		//URL : go to sedici by subtype and handle
@@ -132,20 +114,20 @@ class sfPruebaListarActions extends sfActions {
 			case "preprint" :
 				$valor = "Preprint";
 				break;
-			case "Documento de trabajo" :
-				$valor = "working_paper";
+			case "working_paper" :
+				$valor = "Documento de trabajo";
 				break;
-			case "Informe tecnico" :
-				$valor = "technical_report";
+			case "technical_report" :
+				$valor = "Informe tecnico";
 				break;
-			case "Objeto de conferencia" :
-				$valor = "conference_object";
+			case "conference_object" :
+				$valor = "Objeto de conferencia";
 				break;
-			case "Revision" :
-				$valor = "revision";
+			case "revision" :
+				$valor = "Revision";
 				break;
-			case "Trabajo de especializacion" :
-				$valor = "work_specialization";
+			case "work_specialization" :
+				$valor = "Trabajo de especializacion";
 				break;
 		}
 		return ($valor);
@@ -212,6 +194,11 @@ class sfPruebaListarActions extends sfActions {
         return ( array(
             'article' => $obj->getArticle(),
             'book' => $obj->getBook(),
+            'working_paper' =>  $obj->getWorkingPaper(),
+            'technical_report' => $obj->getTechnicalReport(),
+            'conference_object' => $obj->getConferenceObject(),
+            'revision' => $obj->getRevision(),
+            'work_specialization' => $obj->getWorkSpecialization(),
             'preprint' => $obj->getPreprint()
         ) );
     }
@@ -270,7 +257,7 @@ class sfPruebaListarActions extends sfActions {
 	//shorten text
 	$maxlenght = $instance ['max_lenght'];
 	if ($maxlenght == 0){
-            $maxlenght = 150;
+            $maxlenght = $this->max_lenght_text;
             //default lenght
 	}
     } else { $maxlenght = 0; }
@@ -278,8 +265,6 @@ class sfPruebaListarActions extends sfActions {
 			// $selected_subtypes: subtypes selected by the user
     $groups = array ();
     // $groups: groups publications by subtype
-    
-    
     foreach ($subtypes as $key => $val){
 				//compares the user marked subtypes, if ON, save the subtype.
 				if ($val) {

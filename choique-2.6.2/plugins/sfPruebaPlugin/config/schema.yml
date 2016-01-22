@@ -24,3 +24,9 @@ propel:
     article:    { type: boolean }
     book:    { type: boolean }
     preprint:    { type: boolean }
+    working_paper:    { type: boolean }
+    technical_report:    { type: boolean }
+    conference_object:    { type: boolean }
+    revision:    { type: boolean }
+    work_specialization:    { type: boolean }
+    

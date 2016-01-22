@@ -34,6 +34,11 @@ class sfPruebaActions extends sfActions {
         return (array (
             'article' => $obj->getArticle(),
             'book' => $obj->getBook(),
+            'working_paper' => $obj->getWorkingPaper(),
+            'technical_report' => $obj->getTechnicalReport(),
+            'conference_object' => $obj->getConferenceObject(),
+            'revision' => $obj->getRevision(),
+            'work_specialization' => $obj->getWorkSpecialization(),
             'preprint'=>$obj->getPreprint()
         ));
     }    
@@ -75,9 +80,19 @@ class sfPruebaActions extends sfActions {
         $article=  $this->On ($this->getRequestParameter('article'));
         $book= $this->On( $this->getRequestParameter('book'));
         $preprint=$this->On($this->getRequestParameter('preprint'));
+        $working_paper=$this->On($this->getRequestParameter('working_paper'));
+        $technical_report=$this->On($this->getRequestParameter('technical_report'));
+        $conference_object=$this->On($this->getRequestParameter('conference_object'));
+        $revision=$this->On($this->getRequestParameter('revision'));
+        $work_specialization=$this->On($this->getRequestParameter('work_specialization'));
         return( array(
             'article' => $article,
             'book' => $book,
+            'working_paper' => $working_paper,
+            'technical_report' => $technical_report,
+            'conference_object' => $conference_object,
+            'revision' => $revision,
+            'work_specialization' => $work_specialization,
             'preprint' => $preprint
         ));  
     }
@@ -87,6 +102,11 @@ class sfPruebaActions extends sfActions {
         $obj->setArticle($st['article']);
         $obj->setBook($st['book']);
         $obj->setPreprint($st['preprint']);
+        $obj->setWorkingPaper($st['working_paper']);
+        $obj->setTechnicalReport($st['technical_report']);
+        $obj->setConferenceObject($st['conference_object']);
+        $obj->setRevision($st['revision']);
+        $obj->setWorkSpecialization($st['work_specialization']);
         $obj->save();
     }
     
@@ -125,6 +145,11 @@ class sfPruebaActions extends sfActions {
         100=>100);
     $this->subtypes = array ("article" => "Artículo",
                              "book" => "Libro",
+                             "working_paper" =>"Documento de trabajo",
+                             "technical_report" =>"Informe tecnico",
+                             "conference_object" =>"Objeto de conferencia",
+                             "revision" =>"Revisión",
+                             "work_specialization" =>"Trabajo de especializacion",
                              "preprint" => "Preprint"
 		);
     $this->st = $this->indexarSubtype();
