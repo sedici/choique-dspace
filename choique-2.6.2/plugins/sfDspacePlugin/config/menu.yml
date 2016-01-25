@@ -2,12 +2,12 @@ administracion:
   submenu:  
     sedici:
       title:           Sedici
-      url:         sfPrueba/index
+      url:         sfDspaceMenu/index
       credentials:  [admin ]
       submenu:
         listado:
           title:        Configurar
-          url:          sfPrueba/index
+          url:          sfDspaceMenu/index
         nueva:
           title:        Ver
-          url:          template/create
+          url:          sfDspaceListar/index

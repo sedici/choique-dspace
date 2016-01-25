@@ -126,6 +126,15 @@ class sfDspaceListarActions extends sfActions {
 			case "revision" :
 				$valor = "Revision";
 				break;
+                        case "phd" :
+				$valor = "Tesis de doctorado";
+				break;
+                        case "licentiate" :
+				$valor = "Tesis de grado";
+				break;
+                        case "master" :
+				$valor = "Tesis de maestria";
+				break;
 			case "work_specialization" :
 				$valor = "Trabajo de especializacion";
 				break;
@@ -199,6 +208,9 @@ class sfDspaceListarActions extends sfActions {
             'conference_object' => $obj->getConferenceObject(),
             'revision' => $obj->getRevision(),
             'work_specialization' => $obj->getWorkSpecialization(),
+            'licentiate'=>$obj->getLicentiate(),
+            'master'=>  $obj->getMaster(),
+            'phd'=>$obj->getPhd(),
             'preprint' => $obj->getPreprint()
         ) );
     }

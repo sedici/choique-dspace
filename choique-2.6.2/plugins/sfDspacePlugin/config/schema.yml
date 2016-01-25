@@ -1,7 +1,7 @@
 ## YAML Template.
 ---
 propel:
-  _attributes:      { package: plugins.sfPruebaPlugin.lib.model }
+  _attributes:      { package: plugins.sfDspacePlugin.lib.model }
   
   sedici:
     _attributes:    { phpName: sedici }
@@ -29,4 +29,7 @@ propel:
     conference_object:    { type: boolean }
     revision:    { type: boolean }
     work_specialization:    { type: boolean }
+    phd:    { type: boolean }
+    licentiate:    { type: boolean }
+    master:    { type: boolean }
     

@@ -5,7 +5,7 @@
  *
  * 
  *
- * @package plugins.sfPruebaPlugin.lib.model
+ * @package plugins.sfDspacePlugin.lib.model
  */ 
 class sedici extends Basesedici
 {

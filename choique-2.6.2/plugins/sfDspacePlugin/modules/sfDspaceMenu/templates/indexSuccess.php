@@ -54,11 +54,15 @@ Duración de la Cache <?php echo select_tag('cache', options_for_select($valores
 <?php if($value['all']) echo ' style="display: none;" '; else  echo ''; ?>> 
 Resultados por subtipo <?php echo select_tag('max_results', options_for_select($total_results, $value['max_results'])) ?>
 <br/>
+
+<?php $iterador = 0;?>
 <?php foreach ($subtypes as $key => $val){
     echo $val;
+    $iterador ++;
 ?>    
-<input type="checkbox" name="<?php echo $key; ?>" id="<?php echo $key; ?>" <?php if ($st[$key]) echo 'checked="checked"';?>  />
+<input type="checkbox" name="<?php echo $key; ?>" id="<?php echo $key; ?>" <?php if ($st[$key]) echo 'checked="checked"';?>  /> | 
 <?php
+if ($iterador == 3) { $iterador = 0; echo "<br/>";};;
 }
 ?>
 </p>

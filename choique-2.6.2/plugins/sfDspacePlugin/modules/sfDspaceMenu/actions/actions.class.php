@@ -39,6 +39,9 @@ class sfDspaceMenuActions extends sfActions {
             'conference_object' => $obj->getConferenceObject(),
             'revision' => $obj->getRevision(),
             'work_specialization' => $obj->getWorkSpecialization(),
+            'licentiate' => $obj->getLicentiate(),
+            'master' => $obj->getMaster(),
+            'phd' => $obj->getPhd(),
             'preprint'=>$obj->getPreprint()
         ));
     }    
@@ -85,6 +88,9 @@ class sfDspaceMenuActions extends sfActions {
         $conference_object=$this->On($this->getRequestParameter('conference_object'));
         $revision=$this->On($this->getRequestParameter('revision'));
         $work_specialization=$this->On($this->getRequestParameter('work_specialization'));
+        $licentiate = $this->On($this->getRequestParameter('licentiate'));
+        $master = $this->On($this->getRequestParameter('master'));
+        $phd = $this->On($this->getRequestParameter('phd'));
         return( array(
             'article' => $article,
             'book' => $book,
@@ -93,6 +99,9 @@ class sfDspaceMenuActions extends sfActions {
             'conference_object' => $conference_object,
             'revision' => $revision,
             'work_specialization' => $work_specialization,
+            'licentiate'=> $licentiate,
+            'master'=> $master,
+            'phd'=> $phd,
             'preprint' => $preprint
         ));  
     }
@@ -107,6 +116,9 @@ class sfDspaceMenuActions extends sfActions {
         $obj->setConferenceObject($st['conference_object']);
         $obj->setRevision($st['revision']);
         $obj->setWorkSpecialization($st['work_specialization']);
+        $obj->setLicentiate($st['licentiate']);
+        $obj->setMaster($st['master']);
+        $obj->setPhd($st['phd']);
         $obj->save();
     }
     
@@ -150,6 +162,9 @@ class sfDspaceMenuActions extends sfActions {
                              "conference_object" =>"Objeto de conferencia",
                              "revision" =>"Revisión",
                              "work_specialization" =>"Trabajo de especialización",
+                             "phd" =>"Tesis de doctorado",
+                             "licentiate" =>"Tesis de grado",
+                             "master" =>"Tesis de maestria",
                              "preprint" => "Preprint"
 		);
     $this->st = $this->indexarSubtype();
@@ -165,7 +180,7 @@ class sfDspaceMenuActions extends sfActions {
     $this->setParameters($value);
     $this->setParametersST($st);
     choiqueFlavors::getInstance()->clearCache('all');
-    return $this->redirect("sfPrueba/index");
+    return $this->redirect("sfDspaceMenu/index");
   }
   
 }
