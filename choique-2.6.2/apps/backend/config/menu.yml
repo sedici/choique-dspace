@@ -219,15 +219,15 @@ administracion:
       credentials:  [admin ]
     sedici:
       title:           Sedici
-      url:         sfPrueba/index
+      url:         sfDspaceMenu/index
       credentials:  [admin ]
       submenu:
         listado:
           title:        Configurar
-          url:          sfPrueba/index
+          url:          sfDspaceMenu/index
         nueva:
           title:        Ver
-          url:          sfPruebaListar/index
+          url:          sfDspaceListar/index
 
 <?php if (CmsConfiguration::get('check_use_sources', true)): ?>
     fuentes_periodisticas:

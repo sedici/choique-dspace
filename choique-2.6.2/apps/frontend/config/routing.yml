@@ -3,7 +3,7 @@ homepage:
   param: { module: default, action: index }
 sedici:
   url:   /sedici
-  param: { module: sfPruebaListar, action: index }
+  param: { module: sfDspaceListar, action: index }
 sitemap_xml:
   url:   /sitemap_index.xml
   param: { module: sitemap, action: xmlIndex }

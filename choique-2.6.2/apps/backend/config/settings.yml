@@ -32,7 +32,7 @@ all:
     charset:                utf-8
     i18n:                   on
 
-    enabled_modules:        [default, sfUJS, sfGuardUser, sfGuardAuth, sfCaptchaGD, sfPrueba, sfPruebaListar]
+    enabled_modules:        [default, sfUJS, sfGuardUser, sfGuardAuth, sfCaptchaGD, sfDspaceMenu, sfDspaceListar]
 
     standard_helpers:       [Partial, Cache, Form, Javascript, I18N, CmsCSRFToken]
 
