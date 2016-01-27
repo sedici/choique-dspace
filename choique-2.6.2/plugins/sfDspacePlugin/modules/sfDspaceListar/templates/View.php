@@ -132,7 +132,7 @@ class View {
 				<?php 
 				if ($a['show_author']){ $this->author($item->get_authors ()); }
 				if ($a['date']) { ?>
-				<br><span class="title sedici-style"><published><?php echo('Fecha:'); ?> <?php  echo $item->get_date ( 'Y-m-d' ); ?> </published></span>
+				<br><published><span class="title sedici-style"><?php echo('Fecha:'); ?></span> <?php  echo $item->get_date ( 'Y-m-d' ); ?> </published>
 				<?php } //end if fecha  
 				$this->description($a['description'], $item,$a['max_lenght']);
 				 ?>

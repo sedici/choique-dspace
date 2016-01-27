@@ -264,7 +264,7 @@ class sfDspaceListarActions extends sfActions {
             $description = "description";
             // checkbox description ON, summary OFF
 		}
-    }
+    } else { $description = false;}
     if ('on' == $instance ['limit']){
 	//shorten text
 	$maxlenght = $instance ['max_lenght'];
