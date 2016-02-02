@@ -1,6 +1,28 @@
 <?php use_javascript('ds-menu.js') ?>
 <?php echo form_tag('sfDspaceMenu/save') ?>
 
+
+<Select id="menu-selector">
+   <?php for ($i = 1; $i <= $cant; $i++) { 
+       $menu="menu".$i;
+       ?> 
+   <option value="<?php echo $menu; ?>"> <?php echo "Menu $i"; ?></option>
+   <?php } ?>
+</Select>
+
+<?php for ($i = 1; $i <= $cant; $i++) { 
+       $menu="menu".$i;
+       
+       ?>
+     <div id="<?php echo $menu; ?>" class="menu" 
+     <?php if ($i != 1) echo ' style="display: none;" '; else  echo ''; ?>>
+       
+     <?php
+       for ($j = 1; $j <= $i; $j++) {
+       ?> 
+
+
+
 <p class="show-author">
 Handle <input type="radio" name="type" id="type" value="handle" <?php if ($value['type']=="handle") echo 'checked="checked"';?>  />
 Autor <input type="radio" name="type" id="type" value="author" <?php if ($value['type']=="author") echo 'checked="checked"';?>  />
@@ -72,5 +94,11 @@ if ($iterador == 3) { $iterador = 0; echo "<br/>";};;
 
 </form>
 
+<?php } 
+?>
+</div>
+<?php
+
+}?>
 </div>
 

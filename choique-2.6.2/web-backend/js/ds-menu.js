@@ -40,6 +40,13 @@ jQuery(document).ready(function() {
 		jQuery(conditionalLimit).toggle();
 	});
 
+
+        jQuery('#menu-selector').live('change', function() {
+            jQuery('.menu').hide();
+            jQuery('#' + jQuery(this).val()).show();
+        });
+
+
 });
 
 function justNumbers(e) {
@@ -47,3 +54,4 @@ function justNumbers(e) {
 	if ((keynum == 8) || (keynum == 9)) return true;
 	return /\d/.test(String.fromCharCode(keynum));
 }
+

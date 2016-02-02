@@ -12,10 +12,15 @@
  * @author paw
  */
 class sfDspaceMenuActions extends sfActions {
-   
+    protected $cantidad=2;
+    
     public function indexarView(){
-        $obj = sediciPeer::retrieveByPK(1);
-        return ( array (
+        
+        $menu = array ($this->cantidad);
+        for ($i = 1; $i <= $this->cantidad; $i++) {
+        $obj = sediciPeer::retrieveByPK($i);
+        $menu[$i] = array (
+                        'id' => $obj->getId(),
 			'type' => $obj->getType(),
 			'context' => $obj->getContext(),
                         'description' => $obj->getDescription(),
@@ -27,11 +32,15 @@ class sfDspaceMenuActions extends sfActions {
                         'date' => $obj->getDate(),
                         'max_results' => $obj->getMaxResults(),
 			'show_author' => $obj->getShowAuthor()
-	));
+	);
         } 
+    }
     public function indexarSubtype(){
-        $obj = subtiposPeer::retrieveByPK(1);
-        return (array (
+        $menu = array ($this->cantidad);
+        for ($i = 1; $i <= $this->cantidad; $i++) {
+        $obj = subtiposPeer::retrieveByPK($i);
+        $menu[$i] = array (
+            'id' => $obj->getId(),
             'article' => $obj->getArticle(),
             'book' => $obj->getBook(),
             'working_paper' => $obj->getWorkingPaper(),
@@ -43,7 +52,8 @@ class sfDspaceMenuActions extends sfActions {
             'master' => $obj->getMaster(),
             'phd' => $obj->getPhd(),
             'preprint'=>$obj->getPreprint()
-        ));
+        );
+        }
     }    
         
     public function indexarSave(){
@@ -61,6 +71,7 @@ class sfDspaceMenuActions extends sfActions {
             $all= ($all == "on");
             $max_results = $this->getRequestParameter('max_results');
             return ( array (
+                        'id' => $this->getRequestParameter('id'),
 			'type' => $this->getRequestParameter('type'),
 			'context' => $this->getRequestParameter('context'),
                         'description' => $description,
@@ -92,6 +103,7 @@ class sfDspaceMenuActions extends sfActions {
         $master = $this->On($this->getRequestParameter('master'));
         $phd = $this->On($this->getRequestParameter('phd'));
         return( array(
+            'id' => $this->getRequestParameter('id'),
             'article' => $article,
             'book' => $book,
             'working_paper' => $working_paper,
@@ -107,7 +119,7 @@ class sfDspaceMenuActions extends sfActions {
     }
     
     public function setParametersSt($st){
-        $obj = subtiposPeer::retrieveByPK(1);
+        $obj = subtiposPeer::retrieveByPK($st['id']);
         $obj->setArticle($st['article']);
         $obj->setBook($st['book']);
         $obj->setPreprint($st['preprint']);
@@ -123,7 +135,7 @@ class sfDspaceMenuActions extends sfActions {
     }
     
     public function setParameters($value){
-        $prueba = sediciPeer::retrieveByPK(1);
+        $prueba = sediciPeer::retrieveByPK($value['id']);
         $prueba->setType($value['type']);
         $prueba->setShowAuthor($value['show_author']);
         $prueba->setContext($value['context']);
@@ -169,6 +181,7 @@ class sfDspaceMenuActions extends sfActions {
 		);
     $this->st = $this->indexarSubtype();
     $this->value = $this->indexarView();
+    $this->cant = $this->cantidad;
   }
   
  
