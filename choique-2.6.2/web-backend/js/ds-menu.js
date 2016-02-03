@@ -41,10 +41,14 @@ jQuery(document).ready(function() {
 	});
 
 
-        jQuery('#menu-selector').live('change', function() {
-            jQuery('.menu').hide();
-            jQuery('#' + jQuery(this).val()).show();
-        });
+        jQuery('#menu-selector div').css('position', 'absolute').not(':first').hide();
+    jQuery('#menu-selector ul li:first a').addClass('aqui');
+    jQuery('#menu-selector a').click(function(){
+        jQuery('#menu-selector a').removeClass('aqui');
+        jQuery(this).addClass('aqui');
+        jQuery('#menu-selector div').fadeOut(350).filter(this.hash).fadeIn(350);
+        return false;
+    });
 
 
 });

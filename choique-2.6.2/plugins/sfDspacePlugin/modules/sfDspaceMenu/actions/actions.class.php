@@ -12,7 +12,7 @@
  * @author paw
  */
 class sfDspaceMenuActions extends sfActions {
-    protected $cantidad=2;
+    protected $cantidad=3;
     
     public function indexarView(){
         
@@ -33,13 +33,14 @@ class sfDspaceMenuActions extends sfActions {
                         'max_results' => $obj->getMaxResults(),
 			'show_author' => $obj->getShowAuthor()
 	);
-        } 
+        }
+        return($menu);
     }
     public function indexarSubtype(){
         $menu = array ($this->cantidad);
         for ($i = 1; $i <= $this->cantidad; $i++) {
         $obj = subtiposPeer::retrieveByPK($i);
-        $menu[$i] = array (
+         $subtype = array (
             'id' => $obj->getId(),
             'article' => $obj->getArticle(),
             'book' => $obj->getBook(),
@@ -53,7 +54,9 @@ class sfDspaceMenuActions extends sfActions {
             'phd' => $obj->getPhd(),
             'preprint'=>$obj->getPreprint()
         );
+        array_push ( $menu, $subtype );
         }
+        return $menu;
     }    
         
     public function indexarSave(){

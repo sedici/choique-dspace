@@ -183,7 +183,7 @@ class sfDspaceListarActions extends sfActions {
 	}
         
    public function indexar(){
-        $obj = sediciPeer::retrieveByPK(1);
+        $obj = sediciPeer::retrieveByPK(2);
         return ( array (
 			'type' => $obj->getType(),
 			'context' => $obj->getContext(),
@@ -199,7 +199,7 @@ class sfDspaceListarActions extends sfActions {
 	));
     }
     public function subtypes(){
-        $obj = subtiposPeer::retrieveByPK(1);
+        $obj = subtiposPeer::retrieveByPK(2);
         return ( array(
             'article' => $obj->getArticle(),
             'book' => $obj->getBook(),
