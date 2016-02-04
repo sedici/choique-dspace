@@ -18,9 +18,8 @@ jQuery(document).ready(function() {
 	var conditionaDescription = 'p.conditionally-description';
 	var description = 'p.description input:checkbox';
 	
-	var conditionalFilter = 'p.conditionally-filter';
-	var checkFilter = 'p.show-filter';
-        var conditionalTypes = 'ul.subtipos'
+	var conditionalFilter = '#conditionally-filter';
+	var checkFilter = '#show-filter';
 	
 	var conditionalLimit = 'p.conditionally-limit';
 	var checkLimit = 'p.limit';
@@ -36,9 +35,6 @@ jQuery(document).ready(function() {
 	});
 	jQuery(checkFilter).live('change', function() {
 		jQuery(conditionalFilter).toggle();
-	});
-        jQuery(checkFilter).live('change', function() {
-		jQuery(conditionalTypes).toggle();
 	});
 	jQuery(checkLimit).live('change', function() {
 		jQuery(conditionalLimit).toggle();
