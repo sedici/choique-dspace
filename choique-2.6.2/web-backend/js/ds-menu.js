@@ -13,12 +13,12 @@
 jQuery(document).ready(function() {
 	// inicializacion
 	var conditionalAuthor = '#conditionally-author ';
-	var checkAuthor = '#show-author input:radio[value="author"]';
+	var checkAuthor = '#pshow-author input:radio[value="author"]';
 	
 	var conditionaDescription = 'p.conditionally-description';
 	var description = 'p.description input:checkbox';
 	
-	var conditionalFilter = 'p.conditionally-filter';
+	var conditionalFilter = 'span.conditionally-filter';
 	var checkFilter = 'p.show-filter';
         var conditionalTypes = 'ul.subtipos'
 	
@@ -28,9 +28,9 @@ jQuery(document).ready(function() {
 	
 	
 	// binding
-	jQuery('#show-author input:radio').live('change', function() {
+	jQuery('#pshow-author input:radio').live('change', function() {
 		jQuery(conditionalAuthor).toggle(jQuery(checkAuthor).is(':checked'));
-	});
+	}); 
 	jQuery(description).live('change', function() {
 		jQuery(conditionaDescription).toggle();
 	});
@@ -46,8 +46,8 @@ jQuery(document).ready(function() {
 
 
         jQuery('#menu-selector div').not(':first').hide();
-    jQuery('#menu-selector ul li:first a').addClass('aqui');
-    jQuery('#menu-selector a').click(function(){
+        jQuery('#menu-selector ul li:first a').addClass('aqui');
+        jQuery('#menu-selector a').click(function(){
         jQuery('#menu-selector a').removeClass('aqui');
         jQuery(this).addClass('aqui');
         jQuery('#menu-selector div').fadeOut(350).filter(this.hash).fadeIn(350);

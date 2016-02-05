@@ -15,26 +15,23 @@
 <?php for ($i = 1; $i <= $cant; $i++) { 
        $menu="menu".$i;
 ?>
-     <div id="<?php echo $menu; ?>"
-     <?php if ($i != 1) echo ' style="display: none;" '; else  echo ''; ?>>
+     <div id="<?php echo $menu; ?>">
          
 <?php echo form_tag('sfDspaceMenu/save') ?>
-<h1>Modulo <?php echo $i; ?></h1>
+<h1>Módulo <?php echo $i; ?></h1>
 
 
 <input type="hidden" name="id" id="id" value="<?php echo $value[$i]['id']; ?>" />
 
-<p id="show-author">
+<p id="pshow-author">
 Handle <input type="radio" name="type" id="type" value="handle" <?php if ($value[$i]['type']=="handle") echo 'checked="checked"';?>  />
 Autor <input type="radio" name="type" id="type" value="author" <?php if ($value[$i]['type']=="author") echo 'checked="checked"';?>  />
 Busqueda Libre <input type="radio" name="type" id="type" value="free" <?php if ($value[$i]['type']=="free") echo 'checked="checked"';?>  />
 </p>
  
 <p id="conditionally-author"
-	<?php if($value[$i]['type']!='author') echo ' style="display: none;" ';
-            else  echo ''; ?>>
+       <?php if($value[$i]['type'] == 'author') echo ' '; else  echo ' style="display: none;"'; ?>> 
 	Mostrar Autores <input type="checkbox" name="show_author" id="show_author" <?php if ($value[$i]['show_author']) echo 'checked="checked"';?>  />
-
 </p>
 
 
@@ -56,7 +53,7 @@ Criterio de busqueda: <input id="context" name='context' type="text" required="r
         Mostrar Sumario<input type="checkbox" name="summary" id="summary" <?php if ($value[$i]['summary']) echo 'checked="checked"';?>  />
 </p>
 
-<p class="limit">
+<p class='limit'>
         Limitar longitud del texto<input type="checkbox" name="limit" id="limit" <?php if ($value[$i]['limit']) echo 'checked="checked"';?>  />
 </p>
 <p class="conditionally-limit"
@@ -70,13 +67,15 @@ Duración de la Cache <?php echo select_tag('cache', options_for_select($valores
 </p>
 
 <p class="show-filter">
-       Todos los Resultados sin filtro por subtipos<input type="checkbox" name="all" id="all" <?php if ($value[$i]['all']) echo 'checked="checked"';?>  />
+       Todos los Resultados sin filtro por subtipos<input type="checkbox" name="all" id="all" 
+           <?php if ($value[$i]['all']) echo 'checked="checked"';?>  />
 </p>
 
-<p class="conditionally-filter" <?php if($value[$i]['all']) echo ' style="display: none;" '; else  echo ''; ?>>    
+<span class="conditionally-filter" 
+    <?php if($value[$i]['all']) echo ' style="display: none;" '; else  echo ''; ?>>    
 Resultados por subtipo 
 <?php echo select_tag('max_results', options_for_select($total_results, $value[$i]['max_results'])) ?>
-</p>
+</span>
 
 <ul class="subtipos" <?php if($value[$i]['all']) echo ' style="display: none;" '; else  echo ''; ?> >
 <?php foreach ($subtypes as $key => $val){
