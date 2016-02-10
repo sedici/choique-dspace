@@ -11,9 +11,9 @@
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  */
 
-class SimplepieModel {
+class SimplepieModel1 {
 	protected $cache;
-	public function SimplepieModel(){
+	public function SimplepieModel1(){
 		$this->cache = "/cache";
 	}
 	public function loadPath($str,$duration) {

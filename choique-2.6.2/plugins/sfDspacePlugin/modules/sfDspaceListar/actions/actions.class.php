@@ -10,41 +10,13 @@
  *
  * @author paw
  */
-define ( 'RPP', '100' );
-define ( 'FORMAT', 'atom' );
-define ( 'SORTBY', '0' );
-define ( 'ORDER', 'desc' );
-define ( 'CONECTOR2', '%5C' );
-define ( 'CONECTOR3', '%7C' );
-define ( '_PROTOCOL', "http://" );
-define ( '_DOMAIN', "sedici.unlp.edu.ar" );
-define ( '_BASE_PATH', "/open-search/discover" );
-function conector() {
-	return CONECTOR2 . '+';
-}
-function get_conector() {
-	return (CONECTOR2 . CONECTOR3 . CONECTOR2 . CONECTOR3 . CONECTOR2 . CONECTOR3);
-}
-function get_base_url() {
-	return _PROTOCOL . _DOMAIN . _BASE_PATH;
-}
-function get_protocol_domain() {
-	return _PROTOCOL . _DOMAIN;
-}
-
-require_once(dirname(__FILE__).'/../lib/model/SimplepieModel.php');
 
 
+require_once(dirname(__FILE__).'/../lib/model/SimplepieModel1.php');
+require_once 'config-file.php';
 
-class sfDspaceListarActions extends sfActions {    
-        protected $max_lenght_text;
-	protected $query;
-        
-	public function Query() {
-		$this->query = get_base_url () . "?rpp=" . RPP . "&format=" . FORMAT . "&sort_by=" . SORTBY . "&order=" . ORDER . "&start=";
-		$this->max_lenght_text = 150;
-	}
-    
+
+class sfDspaceListarActions extends sfActions {            
     function UrlSedici($filter, $handle) {
 		//URL : go to sedici by subtype and handle
 		$filter = strtolower ( $filter ); 
@@ -67,14 +39,14 @@ class sfDspaceListarActions extends sfActions {
 	}
 	function queryAllHandle($start, $context) {
 		//all results of query handle
-		$query = $this->query;
+		$query = query();
 		$query .= $start . "&scope=" . $context;
 		return $query;
 	}
 	function queryHandle($start, $context, $subtypes) {
 		//weapon query handle for publications particular subtype
 		$i = 1;
-		$query = $this->query;
+		$query = query();
 		$query .= $start . "&scope=" . $context . "&query=sedici.subtype:";
 		$count_filter = count ( $subtypes );
 		foreach ( $subtypes as $f ) {
@@ -88,13 +60,13 @@ class sfDspaceListarActions extends sfActions {
 	}
 	function queryAuthor($start, $context) {
 		//query for author
-		$consulta = $this->query;
+		$consulta = query();
 		$consulta .= $start . "&query=sedici.creator.person:\"$context\"";
 		return $consulta;
 	}
         function queryFree($start, $context) {
 		//query for free search
-		$consulta = $this->query;
+		$consulta = query();
 		$consulta .= $start . "&query=\"$context\"";
 		return $consulta;
 	}
@@ -145,7 +117,7 @@ class sfDspaceListarActions extends sfActions {
     function group_subtypes($type, $all, $context, $selected_subtypes, $groups,$cache) {
 		$start = 0; 
 		$count = 0;
-		$model = new SimplepieModel();
+		$model = new SimplepieModel1();
 		do {
 			if ($type == "handle") {
 				if ($all) {
@@ -183,7 +155,7 @@ class sfDspaceListarActions extends sfActions {
 	}
         
    public function indexar(){
-        $obj = sediciPeer::retrieveByPK(2);
+        $obj = sediciPeer::retrieveByPK($this->getRequest()->getParameterHolder()->get('id'));
         return ( array (
 			'type' => $obj->getType(),
 			'context' => $obj->getContext(),
@@ -199,7 +171,7 @@ class sfDspaceListarActions extends sfActions {
 	));
     }
     public function subtypes(){
-        $obj = subtiposPeer::retrieveByPK(2);
+        $obj = subtiposPeer::retrieveByPK($this->getRequest()->getParameterHolder()->get('id'));
         return ( array(
             'article' => $obj->getArticle(),
             'book' => $obj->getBook(),
@@ -252,8 +224,7 @@ class sfDspaceListarActions extends sfActions {
 	}    
     
    public function executeIndex()
-  {
-    $this->Query();
+  {       
     $instance = $this->indexar();
     $subtypes = $this->subtypes();
     If ( $instance ['description']) {
@@ -269,7 +240,7 @@ class sfDspaceListarActions extends sfActions {
 	//shorten text
 	$maxlenght = $instance ['max_lenght'];
 	if ($maxlenght == 0){
-            $maxlenght = $this->max_lenght_text;
+            $maxlenght = max_lenght();
             //default lenght
 	}
     } else { $maxlenght = 0; }

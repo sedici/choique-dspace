@@ -11,13 +11,14 @@
  *
  * @author paw
  */
+require_once 'config-file.php';
 class sfDspaceMenuActions extends sfActions {
-    protected $cantidad=3;
     
     public function indexarView(){
         
-        $menu = array ($this->cantidad);
-        for ($i = 1; $i <= $this->cantidad; $i++) {
+        $views= modulesView();
+        $menu = array ($views);
+        for ($i = 1; $i <= $views; $i++) {
         $obj = sediciPeer::retrieveByPK($i);
         $menu[$i] = array (
                         'id' => $obj->getId(),
@@ -37,8 +38,9 @@ class sfDspaceMenuActions extends sfActions {
         return($menu);
     }
     public function indexarSubtype(){
-        $menu = array ($this->cantidad);
-        for ($i = 1; $i <= $this->cantidad; $i++) {
+        $views= modulesView();
+        $menu = array ($views);
+        for ($i = 1; $i <= $views; $i++) {
         $obj = subtiposPeer::retrieveByPK($i);
          $subtype = array (
             'id' => $obj->getId(),
@@ -155,36 +157,13 @@ class sfDspaceMenuActions extends sfActions {
     
     public function executeIndex()
   {
-    $un_dia=86400;
-    $valores=array(
-        $un_dia  => '1',
-        $un_dia * 3    => '3',
-        $un_dia * 7 => '7',
-        $un_dia * 14    => '14',
-    );          
-    $this->un_dia=$un_dia;
-    $this->valores=$valores;
-    $this->total_results = array(
-        0 => "Todos",
-        10=>10,
-        25=>25,
-        50=>50,
-        100=>100);
-    $this->subtypes = array ("article" => "Artículo",
-                             "book" => "Libro",
-                             "working_paper" =>"Documento de trabajo",
-                             "technical_report" =>"Informe tecnico",
-                             "conference_object" =>"Objeto de conferencia",
-                             "revision" =>"Revisión",
-                             "work_specialization" =>"Trabajo de especialización",
-                             "phd" =>"Tesis de doctorado",
-                             "licentiate" =>"Tesis de grado",
-                             "master" =>"Tesis de maestria",
-                             "preprint" => "Preprint"
-		);
+    $this->un_dia=  oneDay();
+    $this->valores=  cacheDays();
+    $this->total_results = totalResults();
+    $this->subtypes = subtypes();
     $this->st = $this->indexarSubtype();
     $this->value = $this->indexarView();
-    $this->cant = $this->cantidad;
+    $this->cant = modulesView();
   }
   
  

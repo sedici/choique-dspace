@@ -4,7 +4,7 @@
 
 <div id="menu-selector">
    <ul> 
-   <?php for ($i = 1; $i <= 10; $i++) { 
+   <?php for ($i = 1; $i <= $cant; $i++) { 
        $menu="menu".$i;
        ?> 
    <li><a href="#<?php echo $menu; ?>" title="Opción 1"><?php echo "Módulo $i"; ?></a></li>
