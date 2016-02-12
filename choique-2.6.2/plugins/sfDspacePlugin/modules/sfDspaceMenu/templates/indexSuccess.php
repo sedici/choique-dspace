@@ -7,7 +7,7 @@
    <?php for ($i = 1; $i <= $cant; $i++) { 
        $menu="menu".$i;
        ?> 
-   <li><a href="#<?php echo $menu; ?>" title="Opción 1"><?php echo "Módulo $i"; ?></a></li>
+   <li><a href="#<?php echo $menu; ?>" title="Opción <?php echo $i; ?>"><?php echo "Módulo $i"; ?></a></li>
 
    <?php } ?>
    </ul>
@@ -15,10 +15,12 @@
 <?php for ($i = 1; $i <= $cant; $i++) { 
        $menu="menu".$i;
 ?>
-     <div id="<?php echo $menu; ?>">
-         
+
+<div id="<?php echo $menu; ?>">
 <?php echo form_tag('sfDspaceMenu/save') ?>
-<h1>Módulo <?php echo $i; ?></h1>
+
+    <h1>Módulo <?php echo $i; ?></h1>
+   
 
 
 <input type="hidden" name="id" id="id" value="<?php echo $value[$i]['id']; ?>" />
@@ -91,6 +93,7 @@ Resultados por subtipo
 <?php echo submit_tag(__('Guardar cambios'), 'class=sf_admin_action_save') ?>
 
 </form>
+ <span class="tony"> <?php echo (link_to(' Pre-visualizar ', 'sfDspaceMenu/preview?modulo='.$i, 'post=true')); ?></span>
 </div>
 <?php } 
 ?>

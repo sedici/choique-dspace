@@ -16,11 +16,7 @@ define ( '_PROTOCOL', "http://" );
 define ( '_DOMAIN', "sedici.unlp.edu.ar" );
 define ( '_BASE_PATH', "/open-search/discover" );
 define ('MAX_LENGHT', 150);
-define ('MODULE' , 1);
 
-function module (){
-    return (MODULE);
-}
 
 function conector() {
 	return CONECTOR2 . '+';

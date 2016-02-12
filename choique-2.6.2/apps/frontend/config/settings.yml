@@ -25,8 +25,8 @@ all:
     standard_helpers:       [Partial, Cache, Form, I18N, CmsSlotlet, Layout, CmsCSRFToken]
     charset:                 utf-8
     i18n:                    on
-
-    enabled_modules:        [default, sfUJS, sfLucence, sfCaptchaGD, sfDspaceListar ]
+    
+    enabled_modules:        [default, sfUJS, sfLucence, sfCaptchaGD, sfDspaceListar]
     #Modulos área servicios externos: [ proyectos, expedientes, extension, sileg, agreements]
 
 #all:

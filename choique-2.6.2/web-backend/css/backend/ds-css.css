@@ -33,3 +33,7 @@ h1 { font-size:1.5em;}
 
 .subtipos {margin:0px}
 .sf_admin_action_save {margin-top:10px;}
+
+.tony a {display:inline-block; border:none!important; color:black !important;}
+.tony a:hover {text-decoration: underline; background-color: white !important;}
+.tony a::before {content: "√";}

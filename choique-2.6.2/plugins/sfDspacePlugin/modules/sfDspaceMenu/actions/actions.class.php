@@ -11,8 +11,9 @@
  *
  * @author paw
  */
+require_once 'previewActions.class.php';
 require_once 'config-file.php';
-class sfDspaceMenuActions extends sfActions {
+class sfDspaceMenuActions extends previewActions {
     
     public function indexarView(){
         

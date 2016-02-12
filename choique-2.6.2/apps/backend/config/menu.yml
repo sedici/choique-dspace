@@ -227,7 +227,10 @@ administracion:
           url:          sfDspaceMenu/index
         nueva:
           title:        Ver
-          url:          sfDspaceListar/index
+          url:
+            module:     sfDspaceListar
+            action:     index
+            id:         1
 
 <?php if (CmsConfiguration::get('check_use_sources', true)): ?>
     fuentes_periodisticas:
