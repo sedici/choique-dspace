@@ -12,23 +12,36 @@
 
 jQuery(document).ready(function() {
 	// inicializacion
-	var conditionalAuthor = '#conditionally-author ';
-	var checkAuthor = '#pshow-author input:radio[value="author"]';
+	var conditionalAuthor = 'div.seleccionada #conditionally-author ';
+	var checkAuthor = 'div.seleccionada #pshow-author input:radio[value="author"]';
 	
-	var conditionaDescription = 'p.conditionally-description';
-	var description = 'p.description input:checkbox';
+	var conditionaDescription = 'div.seleccionada p.conditionally-description';
+	var description = 'div.seleccionada p.description input:checkbox';
 	
-	var conditionalFilter = 'span.conditionally-filter';
-	var checkFilter = 'p.show-filter';
-        var conditionalTypes = 'ul.subtipos'
+	var conditionalFilter = 'div.seleccionada span.conditionally-filter';
+	var checkFilter = 'div.seleccionada p.show-filter';
+        var conditionalTypes = 'div.seleccionada ul.subtipos'
 	
-	var conditionalLimit = 'p.conditionally-limit';
-	var checkLimit = 'p.limit';
+	var conditionalLimit = 'div.seleccionada p.conditionally-limit';
+	var checkLimit = 'div.seleccionada p.limit';
+
 	
 	
-	
-	// binding
-	jQuery('#pshow-author input:radio').live('change', function() {
+        jQuery('#menu-selector div').not(':first').hide();
+        jQuery('#menu-selector ul li:first a').addClass('aqui');
+        jQuery('#menu-selector div:first').addClass('seleccionada');
+        jQuery('#menu-selector a').click(function(){
+        jQuery('#menu-selector div').removeClass('seleccionada');
+        jQuery('#menu-selector a').removeClass('aqui');
+        jQuery(this).addClass('aqui');
+        jQuery('#menu-selector div').fadeOut(350).filter(this.hash).fadeIn(350);
+        jQuery('#menu-selector div').filter(this.hash).addClass('seleccionada');
+        //alert(imprimir);
+        return false;
+         });
+         
+         	// binding
+	jQuery('div.seleccionada #pshow-author input:radio').live('change', function() {
 		jQuery(conditionalAuthor).toggle(jQuery(checkAuthor).is(':checked'));
 	}); 
 	jQuery(description).live('change', function() {
@@ -43,16 +56,6 @@ jQuery(document).ready(function() {
 	jQuery(checkLimit).live('change', function() {
 		jQuery(conditionalLimit).toggle();
 	});
-
-
-        jQuery('#menu-selector div').not(':first').hide();
-        jQuery('#menu-selector ul li:first a').addClass('aqui');
-        jQuery('#menu-selector a').click(function(){
-        jQuery('#menu-selector a').removeClass('aqui');
-        jQuery(this).addClass('aqui');
-        jQuery('#menu-selector div').fadeOut(350).filter(this.hash).fadeIn(350);
-        return false;
-    });
 
 
 });

@@ -8,6 +8,3 @@ administracion:
         listado:
           title:        Configurar
           url:          sfDspaceMenu/index
-        nueva:
-          title:        Ver
-          url:          sfDspaceListar/index

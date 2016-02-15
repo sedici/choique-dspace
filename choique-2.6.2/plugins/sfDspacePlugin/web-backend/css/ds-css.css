@@ -24,11 +24,16 @@ and open the template in the editor.
 position:relative; top:10px;
 }
 h1 { font-size:1.5em;}
-.conditionally-filter, .conditionally-description, .conditionally-limit {  padding:5px 10px 5px 23px;}
-#limit, #date, #description, #all, #summary, #show_author {  float:left; margin:0px; padding-right:5px; margin-right:5px;}
+.conditionally-filter, .conditionally-description, .conditionally-limit, #conditionally-author {  padding:0px 10px 0px 23px; margin:0px;}
+#limit, #date, #description, #all, #summary, #pshow_author {  float:left; margin:0px; padding-right:5px; margin-right:5px;}
 
 .conditionally-filter input {float:left; display:inline; margin:0px; height:10px; }
-
 #menu-selector ul.subtipos li{display:block;    }
 #menu-selector ul.subtipos li input {  }
 
+.subtipos {margin:0px}
+.sf_admin_action_save {margin-top:10px;}
+
+.tony a {display:inline-block; border:none!important; color:black !important;}
+.tony a:hover {text-decoration: underline; background-color: white !important;}
+.tony a::before {content: "√";}
