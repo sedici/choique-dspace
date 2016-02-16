@@ -53,7 +53,7 @@ var myThemeOfficeBase = '<?php echo $sf_request->getRelativeUrlRoot() ?>/pmJSCoo
         <?php echo sfConfig::get('app_choique_instance_name') ?> -
         <?php echo __('Versión %%version%%', array('%%version%%' => CmsConfiguration::getVersion())) ?>
       </div>
-      <div><?php echo __('Ingresado como %%user%%', array('%%user%%' => $sf_user->getGuardUser()->getName() .' - '. link_to(' Cambiar Contraseña ', '@change_password'))) ?></div>
+      <div><?php echo __('Autentificado como %%user%%', array('%%user%%' => $sf_user->getGuardUser()->getName() .' - '. link_to(' Cambiar Contraseña ', '@change_password'))) ?></div>
       
       
 

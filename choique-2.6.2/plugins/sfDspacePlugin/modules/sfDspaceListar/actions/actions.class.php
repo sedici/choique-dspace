@@ -37,7 +37,7 @@ class sfDspaceListarActions extends sfActions {
 		}
 		return $url;
 	}
-	function queryAllHandle($start, $context) {
+	function queryAllHandle($start, $context, $subtypes) {
 		//all results of query handle
 		$query = query();
 		$query .= $start . "&scope=" . $context;
@@ -58,13 +58,13 @@ class sfDspaceListarActions extends sfActions {
 		}
 		return $query;
 	}
-	function queryAuthor($start, $context) {
+	function queryAuthor($start, $context, $subtypes) {
 		//query for author
 		$consulta = query();
 		$consulta .= $start . "&query=sedici.creator.person:\"$context\"";
 		return $consulta;
 	}
-        function queryFree($start, $context) {
+        function queryFree($start, $context, $subtypes) {
 		//query for free search
 		$consulta = query();
 		$consulta .= $start . "&query=\"$context\"";
@@ -73,73 +73,41 @@ class sfDspaceListarActions extends sfActions {
         
     public function convertirEspIng($filtro) {
 		//Pasa los subtipos al ingles para la comparacion con el shortcode
-		switch ($filtro) {
-                        case "learning_object":
-                            $valor="Objeto de aprendizaje";
-                            break;
-			case "article" :
-				$valor = "Articulo";
-				break;
-			case "book" :
-				$valor = "Libro";
-				break;
-			case "preprint" :
-				$valor = "Preprint";
-				break;
-			case "working_paper" :
-				$valor = "Documento de trabajo";
-				break;
-			case "technical_report" :
-				$valor = "Informe tecnico";
-				break;
-			case "conference_object" :
-				$valor = "Objeto de conferencia";
-				break;
-			case "revision" :
-				$valor = "Revision";
-				break;
-                        case "phd" :
-				$valor = "Tesis de doctorado";
-				break;
-                        case "licentiate" :
-				$valor = "Tesis de grado";
-				break;
-                        case "master" :
-				$valor = "Tesis de maestria";
-				break;
-			case "work_specialization" :
-				$valor = "Trabajo de especializacion";
-				break;
-		}
-		return ($valor);
+		$subtypes = subtypes();
+		return ($subtypes[$filtro]);
 	}    
+        
+    public function typeOfQuery($type,$all){
+        if ($type == "handle") {
+            if ($all) {
+		return ('queryAllHandle');
+            } else {
+		return ('queryHandle');
+            }
+	} else {
+        if ($type == "author"){
+            return ('queryAuthor');
+        }
+            else {
+            //Is free search
+                return ('queryFree');
+            }
+	}
+    }    
         
     function group_subtypes($type, $all, $context, $selected_subtypes, $groups,$cache) {
 		$start = 0; 
 		$count = 0;
 		$model = new SimplepieModel1();
+                $TypeQuery = $this->typeOfQuery($type, $all); 
 		do {
-			if ($type == "handle") {
-				if ($all) {
-					$query = $this->queryAllHandle ( $start, $context );
-				} else {
-					$query = $this->queryHandle ( $start, $context, $selected_subtypes );
-				}
-			} else {
-                            if ($type == "author"){
-				$query = $this->queryAuthor ( $start, $context );
-                            }
-                            else {
-                                //Is free search
-                                $query = $this->queryFree($start, $context);
-                            }
-			}
+			call_user_func($TypeQuery, array($start, $context, $selected_subtypes) );
+                        $query = $this->$TypeQuery($start , $context , $selected_subtypes  );
 			$xpath = $model->loadPath ( $query, $cache );
 			$count += $model->itemQuantity ( $xpath ); // number of entrys
 			$totalResults = $model->totalResults ( $xpath );
 			$entry = $model->entry ( $xpath ); //all documents
-			$start += 100;
-			
+			$start += 100;	
 			if ($all) {
 				array_push ( $groups, $entry );
 			} else {

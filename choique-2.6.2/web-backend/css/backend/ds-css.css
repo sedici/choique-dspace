@@ -17,11 +17,7 @@ and open the template in the editor.
 #menu-selector div  {   
                         width: 100%; 
                         padding: 20px;
-                      /* border: 1px solid #333;  
-                      background: #fff; 
-                        box-shadow: 3px 3px 2px #ccc;
-                       -webkit-box-shadow: 3px 3px 2px #ccc; -moz-box-shadow: 3px 3px 2px #ccc;*/
-position:relative; top:10px;
+                        position:relative; top:10px;
 }
 h1 { font-size:1.5em;}
 .conditionally-filter, .conditionally-description, .conditionally-limit, #conditionally-author {  padding:0px 10px 0px 23px; margin:0px;}

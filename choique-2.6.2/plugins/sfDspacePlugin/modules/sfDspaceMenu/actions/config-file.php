@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-define ('CANT' , 10);
+define ('CANT' , 5);
 define ('ONEDAY' , 86400);
 define ( 'RPP', '100' );
 define ( 'FORMAT', 'atom' );
@@ -18,7 +18,6 @@ define ( '_PROTOCOL', "http://" );
 define ( '_DOMAIN', "sedici.unlp.edu.ar" );
 define ( '_BASE_PATH', "/open-search/discover" );
 define ('MAX_LENGHT', 150);
-
 
 function conector() {
 	return CONECTOR2 . '+';
@@ -69,13 +68,13 @@ function totalResults(){
 }
 
 function subtypes (){
-    return ( array ("article" => "Artículo",
+    return ( array ("article" => "Articulo",
                              "book" => "Libro",
                              "working_paper" =>"Documento de trabajo",
                              "technical_report" =>"Informe tecnico",
                              "conference_object" =>"Objeto de conferencia",
-                             "revision" =>"Revisión",
-                             "work_specialization" =>"Trabajo de especialización",
+                             "revision" =>"Revision",
+                             "work_specialization" =>"Trabajo de especializacion",
                              "phd" =>"Tesis de doctorado",
                              "licentiate" =>"Tesis de grado",
                              "master" =>"Tesis de maestria",

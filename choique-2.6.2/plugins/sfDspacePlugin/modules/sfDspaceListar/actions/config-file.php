@@ -37,3 +37,20 @@ function query() {
 function max_lenght(){
     return (MAX_LENGHT);
 }
+
+function subtypes(){
+    return (
+           array(
+            'article' => 'Articulo',
+            'book' => 'Libro',
+            'working_paper' =>  "Documento de trabajo",
+            'technical_report' => "Informe tecnico",
+            'conference_object' => "Objeto de conferencia",
+            'revision' => "Revision",
+            'work_specialization' => "Trabajo de especializacion",
+            'licentiate'=>"Tesis de grado",
+            'master'=>  "Tesis de maestria",
+            'phd'=>"Tesis de doctorado",
+            'preprint' => 'Preprint')
+            );
+}
