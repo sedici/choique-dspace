@@ -27,7 +27,7 @@ jQuery(document).ready(function() {
 
 	
 	
-        jQuery('#menu-selector div').not(':first').hide();
+        jQuery('#menu-selector div:gt(0)').hide();
         jQuery('#menu-selector ul li:first a').addClass('aqui');
         jQuery('#menu-selector div:first').addClass('seleccionada');
         jQuery('#menu-selector a').click(function(){

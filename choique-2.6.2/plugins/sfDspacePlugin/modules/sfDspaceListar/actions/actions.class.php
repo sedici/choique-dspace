@@ -101,7 +101,7 @@ class sfDspaceListarActions extends sfActions {
 		$model = new SimplepieModel1();
                 $TypeQuery = $this->typeOfQuery($type, $all); 
 		do {
-			call_user_func($TypeQuery, array($start, $context, $selected_subtypes) );
+			$query = $this->$TypeQuery($start , $context , $selected_subtypes  );
                         $query = $this->$TypeQuery($start , $context , $selected_subtypes  );
 			$xpath = $model->loadPath ( $query, $cache );
 			$count += $model->itemQuantity ( $xpath ); // number of entrys
