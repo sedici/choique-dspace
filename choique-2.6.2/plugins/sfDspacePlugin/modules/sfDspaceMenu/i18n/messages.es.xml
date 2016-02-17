@@ -1,0 +1,135 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en_US" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>Author:</source>
+        <target>Autor:</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Abstract:</source>
+        <target>Resumen:</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Summary:</source>
+        <target>Sumario:</target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>Title:</source>
+        <target>Título:</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Date:</source>
+        <target>Fecha:</target>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>Go to SEDICI</source>
+        <target>Ir a SEDICI</target>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>Preprint</source>
+        <target>Preprint</target>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>PhD thesis</source>
+        <target>Tesis de Doctorado</target>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>Master thesis</source>
+        <target>Tesis de maestria</target>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>Licentiate thesis</source>
+        <target>Tesis de grado</target>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>Work specialization</source>
+        <target>Trabajo de especialización</target>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>Revision</source>
+        <target>Revisión</target>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>Conference object</source>
+        <target>Objeto de conferencia</target>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>Technical report</source>
+        <target>Informe técnico</target>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>Working paper</source>
+        <target>Documento de trabajo</target>
+      </trans-unit>
+      <trans-unit id="16">
+        <source>Book</source>
+        <target>Libro</target>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>Article</source>
+        <target>Artículo</target>
+      </trans-unit> 
+      <trans-unit id="18">
+        <source>Module </source>
+        <target>Módulo </target>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>Author</source>
+        <target>Autor</target>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>Handle</source>
+        <target>Handle</target>
+      </trans-unit>
+      <trans-unit id="21">
+        <source>Free search</source>
+        <target>Busqueda libre</target>
+      </trans-unit>
+      <trans-unit id="22">
+        <source>Show authors</source>
+        <target>Mostrar autores</target>
+      </trans-unit>
+      <trans-unit id="23">
+        <source>Show date</source>
+        <target>Mostrar fecha</target>
+      </trans-unit>
+      <trans-unit id="24">
+        <source>Show abstract</source>
+        <target>Mostrar resumen</target>
+      </trans-unit>
+      <trans-unit id="25">
+        <source>Show summary</source>
+        <target>Mostrar sumario</target>
+      </trans-unit>
+      <trans-unit id="26">
+        <source>Limit text lenght</source>
+        <target>Limitar la longitud del texto</target>
+      </trans-unit>
+      <trans-unit id="27">
+        <source>Cache days</source>
+        <target>Duración de la cache en días</target>
+      </trans-unit>
+      <trans-unit id="28">
+        <source>All result without filtering by subtypes</source>
+        <target>Todos los resultados sin filtrar por subtipos</target>
+      </trans-unit>
+      <trans-unit id="29">
+        <source>Results by subtypes</source>
+        <target>Resultados por subtipos</target>
+      </trans-unit>
+      <trans-unit id="30">
+        <source>Save</source>
+        <target>Guardar</target>
+      </trans-unit>
+      <trans-unit id="31">
+        <source>Preview</source>
+        <target>Pre-visualizar</target>
+      </trans-unit>
+      <trans-unit id="32">
+        <source>Search criteria</source>
+        <target>Criterio de búsqueda</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

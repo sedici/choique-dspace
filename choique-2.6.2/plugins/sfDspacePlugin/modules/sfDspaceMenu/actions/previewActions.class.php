@@ -145,9 +145,9 @@ class previewActions extends sfActions {
             'conference_object' => $obj->getConferenceObject(),
             'revision' => $obj->getRevision(),
             'work_specialization' => $obj->getWorkSpecialization(),
-            'licentiate'=>$obj->getLicentiate(),
-            'master'=>  $obj->getMaster(),
-            'phd'=>$obj->getPhd(),
+            'licentiate_thesis'=>$obj->getLicentiate(),
+            'master_thesis'=>  $obj->getMaster(),
+            'phD_thesis'=>$obj->getPhd(),
             'preprint' => $obj->getPreprint()
         ) );
     }
@@ -162,24 +162,25 @@ class previewActions extends sfActions {
 				'date' => $date 
 		));
 	}  
-    function view_subtypes($selected_subtypes, $type ,$context) {
+    function view_subtypes($selected_subtypes, $type ,$context,$keys_subtypes) {
 		$publications = array (); // documents for the view
 		while ( list ( $key, $val ) = each ( $selected_subtypes ) ) {
 			// $val: all documents by subtype
 			$elements = count ( $val );
 			if ($elements > 0) {
 				// $key: document subtype
+                                $subtype = $keys_subtypes[$key];
 				if ($type == 'handle') {
 					$url = $this->UrlSedici ( $key, $context );
 					$colection = array (
 							'view' => $val,
 							'url' => $url,
-							'filter' => $key 
+							'filter' =>  $subtype 
 					);
 				} else { // author and free search
 					$colection = array (
 							'view' => $val,
-							'filter' => $key 
+							'filter' =>  $subtype 
 					);
 				}
 				array_push ( $publications, $colection );
@@ -210,15 +211,18 @@ class previewActions extends sfActions {
             //default lenght
 	}
     } else { $maxlenght = 0; }
+    $keys_subtypes = array ();
     $selected_subtypes = array (); 
 			// $selected_subtypes: subtypes selected by the user
     $groups = array ();
     // $groups: groups publications by subtype
+    $Allsubtypes = Allsubtypes();
     foreach ($subtypes as $key => $val){
 				//compares the user marked subtypes, if ON, save the subtype.
 				if ($val) {
-                                        $keyEsp = $this->convertirEspIng($key);
+                                        $keyEsp = $Allsubtypes[$key];
 					array_push ( $selected_subtypes, $keyEsp );
+                                        $keys_subtypes[$keyEsp] = $key;
 					$groups [$keyEsp] = array ();
 				}
 			}
@@ -226,11 +230,13 @@ class previewActions extends sfActions {
     $groups = $this->group_subtypes ( $instance['type'], $instance['all'], $instance['context'], $selected_subtypes, $groups, $instance['cache'] );
     if (! $instance['all']) {
 	//elements to view publications by subtypes
-	$groups = $this->view_subtypes ( $groups, $instance['type'], $instance['context'] );
+	$groups = $this->view_subtypes ( $groups, $instance['type'], $instance['context'],$keys_subtypes );
     }
     
     $attributes = $this->group_attributes ( $description, $instance['date'], $instance['show_author'], $instance['context']  , $maxlenght,$instance['max_results'] );
     if ($instance['type'] != 'author')  $attributes['show_author'] = TRUE;
+    $cultura = $this->getRequest()->getLanguages();
+    $this->getUser()->setCulture($cultura[0]);
     $this->groups=$groups;
     $this->attributes=$attributes;
     $this->type=$instance['type'];

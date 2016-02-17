@@ -67,7 +67,7 @@ function totalResults(){
         100=>100));
 }
 
-function subtypes (){
+function Allsubtypes (){
     return ( array ("article" => "Articulo",
                              "book" => "Libro",
                              "working_paper" =>"Documento de trabajo",
@@ -75,9 +75,9 @@ function subtypes (){
                              "conference_object" =>"Objeto de conferencia",
                              "revision" =>"Revision",
                              "work_specialization" =>"Trabajo de especializacion",
-                             "phd" =>"Tesis de doctorado",
-                             "licentiate" =>"Tesis de grado",
-                             "master" =>"Tesis de maestria",
+                             "phD_thesis" =>"Tesis de doctorado",
+                             "licentiate_thesis" =>"Tesis de grado",
+                             "master_thesis" =>"Tesis de maestria",
                              "preprint" => "Preprint"
 		));
 }

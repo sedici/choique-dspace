@@ -19,7 +19,7 @@ define ('SEPARATOR', '\|\|\|');
 class View {
 
 	public function subtype($sub){
-		return ucfirst($sub);
+		return str_replace('_',' ',ucfirst($sub));
 	}
 	public function max_results($cant,$list){
 		if ($cant == 0){ return (count($list)); }
@@ -48,94 +48,88 @@ class View {
 		$link.=$this->strtolower_text($name).SEPARATOR;
 		$link .= $this->ucwords_text($lastname).CON1.$this->ucwords_text($name);
 		?>
-				<a href="<?php echo $link; ?>"> <?php echo $author;?></a>
+		<a href="<?php echo $link; ?>"> <?php echo $author;?></a>
 		<?php 
-				return;
-			}
-	
-	public function author($authors){
-		?>			<br>
-					<span class="title sedici-style"><?php echo('Autor:'); ?></span>
-					<?php
-					$count = count($authors); $i = 1;
-					foreach ( $authors as $au ) {
-						?>
-					<author> <name>	
-						<?php 
-							$this->link_author($au->get_name ());
-						?>
-					</name>
-					</author>
-					<?php
-						if ($i != $count) echo " - ";
-						$i ++;
-					}//end foreach autores
 		return;
 	}
+	
+	public function author($authors){
+	?>			
+            <br>
+            <span class="title sedici-style"><?php echo __('Author:'); ?></span>
+            <?php
+            $count = count($authors); $i = 1;
+            foreach ( $authors as $au ) {
+            ?>
+                <author> <name>	
+                    <?php $this->link_author($au->get_name ());?>
+                </name></author>
+                <?php
+                if ($i != $count) echo " - ";
+                    $i ++;
+            }//end foreach autores
+            return;
+	}
 	public function is_description($des){
-		return  ( ($des == "description" || $des == "summary"  ));
+            return  ( ($des == "description" || $des == "summary"  ));
 	}
 	public function shorten_text($text,$maxlenght){
-		return ($this->html_especial_chars(substr($text, 0, $maxlenght).'...'));
+            return ($this->html_especial_chars(substr($text, 0, $maxlenght).'...'));
 	}
 	
 	public function show_description ($description,$item,$maxlenght){
-		if ($description == "description") {
-			?>
-			<span class="title sedici-style"><?php echo('Resumen:'); ?></span> 
-			<?php
-					$des= $item->get_item_tags(SIMPLEPIE_NAMESPACE_DC_11,'description') ;
-					if ($maxlenght != 0){
-						echo $this->shorten_text($des[0]['data'],$maxlenght);
-					} else {
-						echo $this->html_especial_chars($des[0]['data']);
-					}
-					?>
-			<?php 
-		}else if($description == "summary") {
-			?>
-			 <span class="title sedici-style"><?php echo('Sumario:'); ?></span>
-			 <?php 
-			 if ($maxlenght != 0){
-				 echo $this->shorten_text($item->get_description (),$maxlenght);
-				} else {
-					echo $this->html_especial_chars($item->get_description ());
-				}
-			}
-			 ?> 
-	<?php 
-		return;
+            if ($description == "description") {
+            ?>
+		<span class="title sedici-style"><?php echo __('Abstract:'); ?></span> 
+		<?php
+                $des= $item->get_item_tags(SIMPLEPIE_NAMESPACE_DC_11,'description') ;
+		if ($maxlenght != 0){
+                    echo $this->shorten_text($des[0]['data'],$maxlenght);
+		} else {
+                    echo $this->html_especial_chars($des[0]['data']);
+		} 
+            }else if($description == "summary") {
+            ?>
+		<span class="title sedici-style"><?php echo __('Summary:'); ?></span>
+		<?php 
+		if ($maxlenght != 0){
+                    echo $this->shorten_text($item->get_description (),$maxlenght);
+		} else {
+                    echo $this->html_especial_chars($item->get_description ());
+		}
+            } 
+            return;
 	}
 	
 	
 	public function description($description,$item,$maxlenght){
-		if($this->is_description($description)){
-			?>
-			<div class="summary">
-			<summary>
-			<?php $this->show_description($description, $item,$maxlenght); ?>
-			</summary>
-			</div>
-		<?php 
-		}
-		return;
+            if($this->is_description($description)){
+            ?>
+		<div class="summary">
+		<summary>
+                    <?php $this->show_description($description, $item,$maxlenght); ?>
+		</summary>
+		</div>
+            <?php 
+            }
+            return;
 	}
 	
 	public function document($item,$a){
 		$link = $item->get_link ();	
 		?>
 		<li><article>
-			<title><?php echo $item->get_title ();?></title>
-			<span class="title sedici-style"><?php echo('T&iacute;tulo:'); ?></span> <a href="<?php echo $link; ?>">
-			<?php echo ($this->html_especial_chars($item->get_title ())); ?> 
-			</a>
-				<?php 
-				if ($a['show_author']){ $this->author($item->get_authors ()); }
-				if ($a['date']) { ?>
-				<br><published><span class="title sedici-style"><?php echo('Fecha:'); ?></span> <?php  echo $item->get_date ( 'Y-m-d' ); ?> </published>
-				<?php } //end if fecha  
-				$this->description($a['description'], $item,$a['max_lenght']);
-				 ?>
+                    <title><?php echo $item->get_title ();?></title>
+                    <span class="title sedici-style"><?php echo __('Title:'); ?></span> 
+                    <a href="<?php echo $link; ?>">
+                        <?php echo ($this->html_especial_chars($item->get_title ())); ?> 
+                    </a>
+                    <?php 
+                    if ($a['show_author']){ $this->author($item->get_authors ()); }
+                    if ($a['date']) { ?>
+			<br><published><span class="title sedici-style"><?php echo __('Date:'); ?></span> <?php  echo $item->get_date ( 'Y-m-d' ); ?> </published>
+                    <?php } //end if fecha  
+                    $this->description($a['description'], $item,$a['max_lenght']); ?>
 		</article></li>
 		<?php 
 		return;
@@ -148,54 +142,53 @@ class View {
 	}
 	
 	public function author_name($type, $name){
-		if ($this->is_author($type)){ ?>
-			 <h2> <?php echo $name;?> </h2>
-		<?php 	 
-		}	 
-		return;
+            if ($this->is_author($type)){ ?>
+		 <h2> <?php echo $name;?> </h2>
+            <?php 	 
+            }	 
+            return;
 	}
 	public function go_to_sedici($type,$url){
-		?> 
-		<span class="go-to"> <a href='<?php echo $url; ?>'><?php echo('Ir a SEDICI'); ?></a></span><br><br>
-		<?php
+            ?> 
+            <span class="go-to"> <a href='<?php echo $url; ?>'><?php echo __('Go to SEDICI'); ?></a></span><br><br>
+            <?php
 	}
 	
 	function publications($feed, $a, $type) {
-		$this->author_name($type, $a['context']);
-		foreach ( $feed as $i ) {
-			?>
-		<h3><?php echo $this->subtype($i ['filter']);?></h3><!-- publication subtype -->
-		<ol class="sedici-style">
-		<?php
-				$list = $i ['view']; $j=0;
-				$totalresults = $this->max_results($a['max_results'], $list);
-				foreach ( $list as $item ) {
-					$this->document($item,$a);
-					$j++;
-					if($j == $totalresults) break;
-				}
-		?>
-		</ol>
-		<?php 
-                    if ($this->is_handle($type))
-			$this->go_to_sedici($type, $i['url']);
-			} 
-		return;
+            $this->author_name($type, $a['context']);
+            foreach ( $feed as $i ) {
+            ?>
+            <h3><?php echo __($this->subtype($i ['filter']));?></h3><!-- publication subtype -->
+            <ol class="sedici-style">
+            <?php
+            $list = $i ['view']; $j=0;
+            $totalresults = $this->max_results($a['max_results'], $list);
+            foreach ( $list as $item ) {
+		$this->document($item,$a);
+		$j++;
+		if($j == $totalresults) break;
+            }
+            ?>
+            </ol>
+            <?php 
+                if ($this->is_handle($type)) $this->go_to_sedici($type, $i['url']);
+            } //End foreach ($feed)
+            return;
 	}
 	
 	function all_publications($groups, $a,$type) {
-		$this->author_name($type, $a['context']);
-		?><ol>
-			<?php 
-			foreach ( $groups as $feed ) {
-				foreach ($feed as $item){
-					$this->document($item, $a);
-					}
-			}
-			?>
-			</ol>
-			<?php 
-			return ;
-				}
+            $this->author_name($type, $a['context']);?>
+            <ol>
+            <?php 
+            foreach ( $groups as $feed ) {
+		foreach ($feed as $item){
+                    $this->document($item, $a);
+		}
+            }
+            ?>
+            </ol>
+            <?php 
+            return ;
+	}
 	
 } // end class

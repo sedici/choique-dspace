@@ -38,7 +38,7 @@ function max_lenght(){
     return (MAX_LENGHT);
 }
 
-function subtypes(){
+function Allsubtypes(){
     return (
            array(
             'article' => 'Articulo',
@@ -48,9 +48,9 @@ function subtypes(){
             'conference_object' => "Objeto de conferencia",
             'revision' => "Revision",
             'work_specialization' => "Trabajo de especializacion",
-            'licentiate'=>"Tesis de grado",
-            'master'=>  "Tesis de maestria",
-            'phd'=>"Tesis de doctorado",
+            'licentiate_thesis'=>"Tesis de grado",
+            'master_thesis'=>  "Tesis de maestria",
+            'phD_thesis'=>"Tesis de doctorado",
             'preprint' => 'Preprint')
             );
 }

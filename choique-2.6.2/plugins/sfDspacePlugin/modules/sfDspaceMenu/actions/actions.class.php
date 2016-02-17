@@ -52,9 +52,9 @@ class sfDspaceMenuActions extends previewActions {
             'conference_object' => $obj->getConferenceObject(),
             'revision' => $obj->getRevision(),
             'work_specialization' => $obj->getWorkSpecialization(),
-            'licentiate' => $obj->getLicentiate(),
-            'master' => $obj->getMaster(),
-            'phd' => $obj->getPhd(),
+            'licentiate_thesis' => $obj->getLicentiate(),
+            'master_thesis' => $obj->getMaster(),
+            'phD_thesis' => $obj->getPhd(),
             'preprint'=>$obj->getPreprint()
         );
         array_push ( $menu, $subtype );
@@ -105,9 +105,9 @@ class sfDspaceMenuActions extends previewActions {
         $conference_object=$this->On($this->getRequestParameter('conference_object'));
         $revision=$this->On($this->getRequestParameter('revision'));
         $work_specialization=$this->On($this->getRequestParameter('work_specialization'));
-        $licentiate = $this->On($this->getRequestParameter('licentiate'));
-        $master = $this->On($this->getRequestParameter('master'));
-        $phd = $this->On($this->getRequestParameter('phd'));
+        $licentiate = $this->On($this->getRequestParameter('licentiate_thesis'));
+        $master = $this->On($this->getRequestParameter('master_thesis'));
+        $phd = $this->On($this->getRequestParameter('phD_thesis'));
         return( array(
             'id' => $this->getRequestParameter('id'),
             'article' => $article,
@@ -158,10 +158,12 @@ class sfDspaceMenuActions extends previewActions {
     
     public function executeIndex()
   {
+    $cultura = $this->getRequest()->getLanguages();
+    $this->getUser()->setCulture($cultura[0]);
     $this->un_dia=  oneDay();
     $this->valores=  cacheDays();
     $this->total_results = totalResults();
-    $this->subtypes = subtypes();
+    $this->subtypes = Allsubtypes();
     $this->st = $this->indexarSubtype();
     $this->value = $this->indexarView();
     $this->cant = modulesView();
