@@ -1,14 +1,13 @@
 <?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of actions
- *
- * @author paw
+ * Plugin Name: Sedici-Plugin
+ * Plugin URI: http://sedici.unlp.edu.ar/
+ * Description: This plugin connects the repository SEDICI in choique, with the purpose of showing the publications of authors or institutions
+ * Version: 1.0
+ * Author: SEDICI - Paula Salamone Lacunza
+ * Author URI: http://sedici.unlp.edu.ar/
+ * Copyright (c) 2016 SEDICI UNLP, http://sedici.unlp.edu.ar
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  */
 
 
@@ -72,6 +71,7 @@ class sfDspaceListarActions extends sfActions {
 	}   
         
     public function typeOfQuery($type,$all){
+        // Return the selected type of query
         if ($type == "handle") {
             if ($all) {
 		return ('queryAllHandle');
@@ -90,6 +90,7 @@ class sfDspaceListarActions extends sfActions {
     }    
         
     function group_subtypes($type, $all, $context, $selected_subtypes, $groups,$cache) {
+        //Groups the entrys by suptypes or by all results
 		$start = 0; 
 		$count = 0;
 		$model = new SimplepieModel1();
@@ -117,35 +118,35 @@ class sfDspaceListarActions extends sfActions {
 	}
         
    public function indexar(){
-        $obj = sediciPeer::retrieveByPK($this->getRequest()->getParameterHolder()->get('id'));
+        $module = sediciPeer::retrieveByPK($this->getRequest()->getParameterHolder()->get('id'));
         return ( array (
-			'type' => $obj->getType(),
-			'context' => $obj->getContext(),
-                        'description' => $obj->getDescription(),
-                        'summary' => $obj->getSummary(),
-                        'all' => $obj->getAllr(),
-                        'cache' => $obj->getCache(),
-                        'limit' => $obj->getLimitt(),
-                        'max_lenght' => $obj->getMaxLenght(),
-                        'date' => $obj->getDate(),
-                        'max_results' => $obj->getMaxResults(),
-			'show_author' => $obj->getShowAuthor()
+			'type' => $module->getType(),
+			'context' => $module->getContext(),
+                        'description' => $module->getDescription(),
+                        'summary' => $module->getSummary(),
+                        'all' => $module->getAllr(),
+                        'cache' => $module->getCache(),
+                        'limit' => $module->getLimitt(),
+                        'max_lenght' => $module->getMaxLenght(),
+                        'date' => $module->getDate(),
+                        'max_results' => $module->getMaxResults(),
+			'show_author' => $module->getShowAuthor()
 	));
     }
     public function subtypes(){
-        $obj = subtiposPeer::retrieveByPK($this->getRequest()->getParameterHolder()->get('id'));
+        $subtypesSelected = subtiposPeer::retrieveByPK($this->getRequest()->getParameterHolder()->get('id'));
         return ( array(
-            'article' => $obj->getArticle(),
-            'book' => $obj->getBook(),
-            'working_paper' =>  $obj->getWorkingPaper(),
-            'technical_report' => $obj->getTechnicalReport(),
-            'conference_object' => $obj->getConferenceObject(),
-            'revision' => $obj->getRevision(),
-            'work_specialization' => $obj->getWorkSpecialization(),
-            'licentiate_thesis'=>$obj->getLicentiate(),
-            'master_thesis'=>  $obj->getMaster(),
-            'phD_thesis'=>$obj->getPhd(),
-            'preprint' => $obj->getPreprint()
+            'article' => $subtypesSelected ->getArticle(),
+            'book' => $subtypesSelected ->getBook(),
+            'working_paper' =>  $subtypesSelected ->getWorkingPaper(),
+            'technical_report' => $subtypesSelected ->getTechnicalReport(),
+            'conference_object' => $subtypesSelected ->getConferenceObject(),
+            'revision' => $subtypesSelected ->getRevision(),
+            'work_specialization' => $subtypesSelected ->getWorkSpecialization(),
+            'licentiate_thesis'=>$subtypesSelected ->getLicentiate(),
+            'master_thesis'=>  $subtypesSelected ->getMaster(),
+            'phD_thesis'=>$subtypesSelected ->getPhd(),
+            'preprint' => $subtypesSelected ->getPreprint()
         ) );
     }
         

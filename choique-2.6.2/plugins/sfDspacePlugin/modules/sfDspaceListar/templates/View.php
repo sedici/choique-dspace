@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Sedici-Plugin
  * Plugin URI: http://sedici.unlp.edu.ar/
- * Description: This plugin connects the repository SEDICI in wordpress, with the purpose of showing the publications of authors or institutions
+ * Description: This plugin connects the repository SEDICI in choique, with the purpose of showing the publications of authors or institutions
  * Version: 1.0
  * Author: SEDICI - Paula Salamone Lacunza
  * Author URI: http://sedici.unlp.edu.ar/
@@ -19,6 +19,7 @@ define ('SEPARATOR', '\|\|\|');
 class View {
 
 	public function subtype($sub){
+            //Return a document subtype without "_" and with the first leter in uppercase
 		return str_replace('_',' ',ucfirst($sub));
 	}
 	public function max_results($cant,$list){
@@ -39,6 +40,7 @@ class View {
 		return implode(CON2, $text);
 	}
 	public function link_author( $author){
+            // Make a link to the section of the author SEDICI
 		$link = URL.FILTER;
 		$fullname = explode ( ",", $author );
 		$lastname = explode(" ", $fullname[0]);
@@ -54,6 +56,7 @@ class View {
 	}
 	
 	public function author($authors){
+            // Write all the Author names for the publication
 	?>			
             <br>
             <span class="title sedici-style"><?php echo __('Author:'); ?></span>
@@ -143,7 +146,7 @@ class View {
 	
 	public function author_name($type, $name){
             if ($this->is_author($type)){ ?>
-		 <h2> <?php echo $name;?> </h2>
+		 <h2> <?php $this->link_author($name);?> </h2>
             <?php 	 
             }	 
             return;

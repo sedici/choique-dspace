@@ -1,6 +1,17 @@
-<?php use_javascript('ds-menu.js') ?>
-
-<?php echo stylesheet_tag('backend/ds-css') ?>
+<?php 
+/**
+ * Plugin Name: Sedici-Plugin
+ * Plugin URI: http://sedici.unlp.edu.ar/
+ * Description: This plugin connects the repository SEDICI in choique, with the purpose of showing the publications of authors or institutions
+ * Version: 1.0
+ * Author: SEDICI - Paula Salamone Lacunza
+ * Author URI: http://sedici.unlp.edu.ar/
+ * Copyright (c) 2016 SEDICI UNLP, http://sedici.unlp.edu.ar
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ */
+?>
+<?php use_javascript('ds-menu.js');
+echo stylesheet_tag('backend/ds-css'); ?>
 
 <div id="menu-selector">
    <ul> 
@@ -20,9 +31,7 @@
 <?php echo form_tag('sfDspaceMenu/save') ?>
 
     <h1><?php echo __('Module ');echo $i; ?></h1>
-   
-
-
+    
 <input type="hidden" name="id" id="id" value="<?php echo $value[$i]['id']; ?>" />
 
 <p id="pshow-author">
@@ -63,7 +72,6 @@
         <input name='max_lenght' type="number" value="<?php echo $value[$i]['max_lenght'];?>"  onKeyPress="return justNumbers(event);"/>
 </p>
 
-
 <p> 
 <?php echo __('Cache days');?><?php echo select_tag('cache', options_for_select($valores, $value[$i]['cache'])) ?>
 </p>
@@ -80,15 +88,13 @@
 </span>
 
 <ul class="subtipos" <?php if($value[$i]['all']) echo ' style="display: none;" '; else  echo ''; ?> >
-<?php foreach ($subtypes as $key => $val){
-?>    
+<?php foreach ($subtypes as $key => $val){ ?>    
 <li>    
 <input type="checkbox" name="<?php echo $key; ?>" id="<?php echo $key; ?>" <?php if ($st[$i][$key]) echo 'checked="checked"';?>  />
 <?php echo __(str_replace('_',' ',ucfirst($key))); ?>
 </li>
 <?php } ?>
 </ul>
-
 
 <?php echo submit_tag(__('Save'), 'class=sf_admin_action_save') ?>
 
@@ -97,7 +103,5 @@
 </div>
 <?php } 
 ?>
-
-
 </div>
 

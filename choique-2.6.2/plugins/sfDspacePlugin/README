@@ -1,0 +1,91 @@
+sfDspacePlugin
+===================
+
+Instalación Manual
+-------------
+
+Para instalarlo, se descomprime el plugin en el directorio plugins/ del proyecto. 
+El plugin contiene un subdirectorio llamado web-backend/ , se copia o se realiza un 
+enlace simbólico a este directorio desde el directorio web-backend/ del proyecto.
+Por último, siempre se debe borrar la cache después de instalar el plugin.
+
+cd Proyecto/plugins
+gzip -d sfDspace.gz
+cd ..
+ln -sf plugins/sfDspacePlugin/web-backend web-backend
+
+php symfony cc
+
+--------
+Instalación por script
+--------
+
+--------
+Activando los módulos de plugin
+--------
+
+Proyecto/apps/backend/config/settings.yml
+all:
+  .settings:
+    enabled_modules:        [default, sfDspaceMenu]
+
+
+Proyecto/apps/frontend/config/settings.yml
+all:
+  .settings:
+    enabled_modules:        [default, sfDspaceListar]
+
+
+--------
+Módulos de configuración 
+--------
+En el ejemplo, la configuración la tendremos en una sección del menu
+
+administracion:
+  title:               Administración
+  credentials:         [ [ reporter_admin, designer_admin] ]
+  submenu:
+    DspacePlugin:
+      title:           DspacePlugin
+      url:         sfDspaceMenu/index
+      credentials:  [admin ]
+      submenu:
+        listado:
+          title:        Configurar
+          url:          sfDspaceMenu/index
+
+Para que la búsqueda sea exitosa es necesario al menos especificar el tipo de consulta:
+Tipo de busqueda handle/autor/libre
+Criterio de busqueda
+
+Ejemplo:
+Handle: 10915/25293
+Autor: De Giusti, Marisa Raquel
+Busqueda libre: "Matematica avanzada"
+
+Luego tenemos mas opciones de configuracion, por ejemplo si se desea mostrar la fecha de publicación, resumen, etc.
+La cache de la consulta, por defecto son 7 días.
+Luego se puede marcar la opcion de todas las publicaciones, o filtrarlas por subtipos de documentos, por ejemplo: Artículos y Libros.
+Si se esta filtrando por subtipos, se puede especificar la cantidad de publiaciones por subtipo a mostrar.
+
+--------
+Listar las publicaciones del modúlo i
+--------
+
+seccion1:  
+  url:   /seccion1
+  param: { module: sfDspaceListar, action: index, id: 1 }
+seccionx:  
+  url:   /seccionx
+  param: { module: sfDspaceListar, action: index, id: x }
+
+
+--------
+Agregar mas módulos de configuración
+--------
+
+El plugin viene por defecto con 5 modulos de configuracion activados, y permite hasta 10.
+En el modulo sfDspaceMenu/config-file.php modificando la constante CANT podemos modificar este numero:
+define ('CANT' , 10);
+
+Si se desean mas de 10 módulos, es necesario primero crear los id en la base de datos de las tablas: subtipos y sedici.

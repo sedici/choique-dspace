@@ -1,15 +1,13 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of actions
- *
- * @author paw
+ * Plugin Name: Sedici-Plugin
+ * Plugin URI: http://sedici.unlp.edu.ar/
+ * Description: This plugin connects the repository SEDICI in choique, with the purpose of showing the publications of authors or institutions
+ * Version: 1.0
+ * Author: SEDICI - Paula Salamone Lacunza
+ * Author URI: http://sedici.unlp.edu.ar/
+ * Copyright (c) 2016 SEDICI UNLP, http://sedici.unlp.edu.ar
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  */
 require_once 'previewActions.class.php';
 require_once 'config-file.php';
@@ -20,20 +18,20 @@ class sfDspaceMenuActions extends previewActions {
         $views= modulesView();
         $menu = array ($views);
         for ($i = 1; $i <= $views; $i++) {
-        $obj = sediciPeer::retrieveByPK($i);
+        $module = sediciPeer::retrieveByPK($i);
         $menu[$i] = array (
-                        'id' => $obj->getId(),
-			'type' => $obj->getType(),
-			'context' => $obj->getContext(),
-                        'description' => $obj->getDescription(),
-                        'summary' => $obj->getSummary(),
-                        'all' => $obj->getAllr(),
-                        'cache' => $obj->getCache(),
-                        'limit' => $obj->getLimitt(),
-                        'max_lenght' => $obj->getMaxLenght(),
-                        'date' => $obj->getDate(),
-                        'max_results' => $obj->getMaxResults(),
-			'show_author' => $obj->getShowAuthor()
+                        'id' => $module->getId(),
+			'type' => $module->getType(),
+			'context' => $module->getContext(),
+                        'description' => $module->getDescription(),
+                        'summary' => $module->getSummary(),
+                        'all' => $module->getAllr(),
+                        'cache' => $module->getCache(),
+                        'limit' => $module->getLimitt(),
+                        'max_lenght' => $module->getMaxLenght(),
+                        'date' => $module->getDate(),
+                        'max_results' => $module->getMaxResults(),
+			'show_author' => $module->getShowAuthor()
 	);
         }
         return($menu);
@@ -42,20 +40,20 @@ class sfDspaceMenuActions extends previewActions {
         $views= modulesView();
         $menu = array ($views);
         for ($i = 1; $i <= $views; $i++) {
-        $obj = subtiposPeer::retrieveByPK($i);
+        $subtypesSelected = subtiposPeer::retrieveByPK($i);
          $subtype = array (
-            'id' => $obj->getId(),
-            'article' => $obj->getArticle(),
-            'book' => $obj->getBook(),
-            'working_paper' => $obj->getWorkingPaper(),
-            'technical_report' => $obj->getTechnicalReport(),
-            'conference_object' => $obj->getConferenceObject(),
-            'revision' => $obj->getRevision(),
-            'work_specialization' => $obj->getWorkSpecialization(),
-            'licentiate_thesis' => $obj->getLicentiate(),
-            'master_thesis' => $obj->getMaster(),
-            'phD_thesis' => $obj->getPhd(),
-            'preprint'=>$obj->getPreprint()
+            'id' => $subtypesSelected->getId(),
+            'article' => $subtypesSelected->getArticle(),
+            'book' => $subtypesSelected->getBook(),
+            'working_paper' => $subtypesSelected->getWorkingPaper(),
+            'technical_report' => $subtypesSelected->getTechnicalReport(),
+            'conference_object' => $subtypesSelected->getConferenceObject(),
+            'revision' => $subtypesSelected->getRevision(),
+            'work_specialization' => $subtypesSelected->getWorkSpecialization(),
+            'licentiate_thesis' => $subtypesSelected->getLicentiate(),
+            'master_thesis' => $subtypesSelected->getMaster(),
+            'phD_thesis' => $subtypesSelected->getPhd(),
+            'preprint'=>$subtypesSelected->getPreprint()
         );
         array_push ( $menu, $subtype );
         }
@@ -125,35 +123,35 @@ class sfDspaceMenuActions extends previewActions {
     }
     
     public function setParametersSt($st){
-        $obj = subtiposPeer::retrieveByPK($st['id']);
-        $obj->setArticle($st['article']);
-        $obj->setBook($st['book']);
-        $obj->setPreprint($st['preprint']);
-        $obj->setWorkingPaper($st['working_paper']);
-        $obj->setTechnicalReport($st['technical_report']);
-        $obj->setConferenceObject($st['conference_object']);
-        $obj->setRevision($st['revision']);
-        $obj->setWorkSpecialization($st['work_specialization']);
-        $obj->setLicentiate($st['licentiate']);
-        $obj->setMaster($st['master']);
-        $obj->setPhd($st['phd']);
-        $obj->save();
+        $subtypes = subtiposPeer::retrieveByPK($st['id']);
+        $subtypes->setArticle($st['article']);
+        $subtypes->setBook($st['book']);
+        $subtypes->setPreprint($st['preprint']);
+        $subtypes->setWorkingPaper($st['working_paper']);
+        $subtypes->setTechnicalReport($st['technical_report']);
+        $subtypes->setConferenceObject($st['conference_object']);
+        $subtypes->setRevision($st['revision']);
+        $subtypes->setWorkSpecialization($st['work_specialization']);
+        $subtypes->setLicentiate($st['licentiate']);
+        $subtypes->setMaster($st['master']);
+        $subtypes->setPhd($st['phd']);
+        $subtypes->save();
     }
     
     public function setParameters($value){
-        $prueba = sediciPeer::retrieveByPK($value['id']);
-        $prueba->setType($value['type']);
-        $prueba->setShowAuthor($value['show_author']);
-        $prueba->setContext($value['context']);
-        $prueba->setDescription($value['description']);
-        $prueba->setSummary($value['summary']);
-        $prueba->setLimitt($value['limit']);
-        $prueba->setMaxLenght($value['max_lenght']);
-        $prueba->setCache($value['cache']);
-        $prueba->setAllr($value['all']);
-        $prueba->setDate($value['date']);
-        $prueba->setMaxResults($value['max_results']);
-        $prueba->save();
+        $module = sediciPeer::retrieveByPK($value['id']);
+        $module->setType($value['type']);
+        $module->setShowAuthor($value['show_author']);
+        $module->setContext($value['context']);
+        $module->setDescription($value['description']);
+        $module->setSummary($value['summary']);
+        $module->setLimitt($value['limit']);
+        $module->setMaxLenght($value['max_lenght']);
+        $module->setCache($value['cache']);
+        $module->setAllr($value['all']);
+        $module->setDate($value['date']);
+        $module->setMaxResults($value['max_results']);
+        $module->save();
     }
     
     public function executeIndex()

@@ -1,4 +1,0 @@
-Primero es necesario crear las tablas desde phpMyAdmin o cualquier otro manejador de BD
-Segundo es necesario agregar las tablas en config/schema.yml del pluguin
-Tercero y por ultimo, hay que correr el comando php symfony propel-build-model
-Limpiar la cache: php symfony cc
