@@ -13,11 +13,23 @@ require_once 'previewActions.class.php';
 require_once 'config-file.php';
 class sfDspaceMenuActions extends previewActions {
     
+    public function ValideteCant(){
+        $views= modulesView();
+        $menu = array ($views);
+        $c = new Criteria();
+        $module = sediciPeer::doSelect($c);
+        $size = count($module);
+        if ($size < $views ) $views=$size;
+        return $views;
+    }
+    
     public function indexarView(){
         $views= modulesView();
         $menu = array ($views);
         $c = new Criteria();
         $module = sediciPeer::doSelect($c);
+        $size = count($module);
+        if ($size < $views ) $views=$size;
         for ($i = 0; $i < $views; $i++) {
         $subtypes = $this->indexarSubtype($module[$i]->getId());  
         $menu[$i] = array (
@@ -162,7 +174,7 @@ class sfDspaceMenuActions extends previewActions {
     $this->total_results = totalResults();
     $this->subtypes = Allsubtypes();
     $this->value = $this->indexarView();
-    $this->cant = modulesView();
+    $this->cant = $this->ValideteCant();
   }
   
  

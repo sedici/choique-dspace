@@ -9,7 +9,7 @@
  * Copyright (c) 2016 SEDICI UNLP, http://sedici.unlp.edu.ar
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  */
-define ('CANT' , 10);
+define ('CANT' , 5);
 define ('ONEDAY' , 86400);
 define ( 'RPP', '100' );
 define ( 'FORMAT', 'atom' );
