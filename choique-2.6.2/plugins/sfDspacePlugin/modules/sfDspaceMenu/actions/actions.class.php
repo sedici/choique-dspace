@@ -14,35 +14,35 @@ require_once 'config-file.php';
 class sfDspaceMenuActions extends previewActions {
     
     public function indexarView(){
-        
         $views= modulesView();
         $menu = array ($views);
-        for ($i = 1; $i <= $views; $i++) {
-        $module = sediciPeer::retrieveByPK($i);
+        $c = new Criteria();
+        $module = sediciPeer::doSelect($c);
+        for ($i = 0; $i < $views; $i++) {
+        $subtypes = $this->indexarSubtype($module[$i]->getId());  
         $menu[$i] = array (
-                        'id' => $module->getId(),
-			'type' => $module->getType(),
-			'context' => $module->getContext(),
-                        'description' => $module->getDescription(),
-                        'summary' => $module->getSummary(),
-                        'all' => $module->getAllr(),
-                        'cache' => $module->getCache(),
-                        'limit' => $module->getLimitt(),
-                        'max_lenght' => $module->getMaxLenght(),
-                        'date' => $module->getDate(),
-                        'max_results' => $module->getMaxResults(),
-			'show_author' => $module->getShowAuthor()
+                        'id' => $module[$i]->getId(),
+			'type' => $module[$i]->getType(),
+			'context' => $module[$i]->getContext(),
+                        'description' => $module[$i]->getDescription(),
+                        'summary' => $module[$i]->getSummary(),
+                        'all' => $module[$i]->getAllResults(),
+                        'cache' => $module[$i]->getCache(),
+                        'limit' => $module[$i]->getLimitText(),
+                        'max_lenght' => $module[$i]->getMaxLenght(),
+                        'date' => $module[$i]->getDate(),
+                        'max_results' => $module[$i]->getMaxResults(),
+			'show_author' => $module[$i]->getShowAuthor(),
+                        'subtypes'=>$subtypes
 	);
         }
         return($menu);
     }
-    public function indexarSubtype(){
-        $views= modulesView();
-        $menu = array ($views);
-        for ($i = 1; $i <= $views; $i++) {
-        $subtypesSelected = subtiposPeer::retrieveByPK($i);
-         $subtype = array (
-            'id' => $subtypesSelected->getId(),
+    public function indexarSubtype($i){        
+        $c = new Criteria();
+        $c->add(subtiposPeer::ID_SEDICI, $i);
+        $subtypesSelected = subtiposPeer::doSelectOne($c);
+        return(array (
             'article' => $subtypesSelected->getArticle(),
             'book' => $subtypesSelected->getBook(),
             'working_paper' => $subtypesSelected->getWorkingPaper(),
@@ -54,10 +54,7 @@ class sfDspaceMenuActions extends previewActions {
             'master_thesis' => $subtypesSelected->getMaster(),
             'phD_thesis' => $subtypesSelected->getPhd(),
             'preprint'=>$subtypesSelected->getPreprint()
-        );
-        array_push ( $menu, $subtype );
-        }
-        return $menu;
+        ));
     }    
         
     public function indexarSave(){
@@ -107,7 +104,7 @@ class sfDspaceMenuActions extends previewActions {
         $master = $this->On($this->getRequestParameter('master_thesis'));
         $phd = $this->On($this->getRequestParameter('phD_thesis'));
         return( array(
-            'id' => $this->getRequestParameter('id'),
+            'id_sedici' => $this->getRequestParameter('id'),
             'article' => $article,
             'book' => $book,
             'working_paper' => $working_paper,
@@ -123,7 +120,9 @@ class sfDspaceMenuActions extends previewActions {
     }
     
     public function setParametersSt($st){
-        $subtypes = subtiposPeer::retrieveByPK($st['id']);
+        $c = new Criteria();
+        $c->add(subtiposPeer::ID_SEDICI, $st['id_sedici']);
+        $subtypes =  subtiposPeer::doSelectOne($c);
         $subtypes->setArticle($st['article']);
         $subtypes->setBook($st['book']);
         $subtypes->setPreprint($st['preprint']);
@@ -145,10 +144,10 @@ class sfDspaceMenuActions extends previewActions {
         $module->setContext($value['context']);
         $module->setDescription($value['description']);
         $module->setSummary($value['summary']);
-        $module->setLimitt($value['limit']);
+        $module->setLimitText($value['limit']);
         $module->setMaxLenght($value['max_lenght']);
         $module->setCache($value['cache']);
-        $module->setAllr($value['all']);
+        $module->setAllResults($value['all']);
         $module->setDate($value['date']);
         $module->setMaxResults($value['max_results']);
         $module->save();
@@ -162,7 +161,6 @@ class sfDspaceMenuActions extends previewActions {
     $this->valores=  cacheDays();
     $this->total_results = totalResults();
     $this->subtypes = Allsubtypes();
-    $this->st = $this->indexarSubtype();
     $this->value = $this->indexarView();
     $this->cant = modulesView();
   }

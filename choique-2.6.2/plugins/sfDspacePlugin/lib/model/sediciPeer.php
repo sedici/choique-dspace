@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Subclass for performing query and update operations on the 'sedici' table.
+ * Subclass for performing query and update operations on the 'ds_sedici' table.
  *
  * 
  *

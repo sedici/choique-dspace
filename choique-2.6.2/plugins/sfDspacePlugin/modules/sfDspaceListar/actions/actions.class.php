@@ -11,7 +11,7 @@
  */
 
 
-require_once(dirname(__FILE__).'/../lib/model/SimplepieModel1.php');
+require_once(dirname(__FILE__).'/../lib/model/SimplepieModelListar.php');
 require_once 'config-file.php';
 
 
@@ -93,7 +93,7 @@ class sfDspaceListarActions extends sfActions {
         //Groups the entrys by suptypes or by all results
 		$start = 0; 
 		$count = 0;
-		$model = new SimplepieModel1();
+		$model = new SimplepieModelListar();
                 $TypeQuery = $this->typeOfQuery($type, $all); 
 		do {
 			$query = $this->$TypeQuery($start , $context , $selected_subtypes  );
@@ -120,21 +120,24 @@ class sfDspaceListarActions extends sfActions {
    public function indexar(){
         $module = sediciPeer::retrieveByPK($this->getRequest()->getParameterHolder()->get('id'));
         return ( array (
+                        'id' => $module->getId(),
 			'type' => $module->getType(),
 			'context' => $module->getContext(),
                         'description' => $module->getDescription(),
                         'summary' => $module->getSummary(),
-                        'all' => $module->getAllr(),
+                        'all' => $module->getAllResults(),
                         'cache' => $module->getCache(),
-                        'limit' => $module->getLimitt(),
+                        'limit' => $module->getLimitText(),
                         'max_lenght' => $module->getMaxLenght(),
                         'date' => $module->getDate(),
                         'max_results' => $module->getMaxResults(),
 			'show_author' => $module->getShowAuthor()
 	));
     }
-    public function subtypes(){
-        $subtypesSelected = subtiposPeer::retrieveByPK($this->getRequest()->getParameterHolder()->get('id'));
+    public function subtypes($i){
+        $c = new Criteria();
+        $c->add(subtiposPeer::ID_SEDICI, $i);
+        $subtypesSelected = subtiposPeer::doSelectOne($c);
         return ( array(
             'article' => $subtypesSelected ->getArticle(),
             'book' => $subtypesSelected ->getBook(),
@@ -190,7 +193,8 @@ class sfDspaceListarActions extends sfActions {
    public function executeIndex()
   {       
     $instance = $this->indexar();
-    $subtypes = $this->subtypes();
+    
+    $subtypes = $this->subtypes($instance['id']);
     If ( $instance ['description']) {
 	if ($instance ['summary']) {
             $description = "summary"; 

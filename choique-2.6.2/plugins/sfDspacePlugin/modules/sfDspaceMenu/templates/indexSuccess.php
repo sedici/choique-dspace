@@ -15,7 +15,7 @@ echo stylesheet_tag('backend/ds-css'); ?>
 
 <div id="menu-selector">
    <ul> 
-   <?php for ($i = 1; $i <= $cant; $i++) { 
+   <?php for ($i = 0; $i < $cant; $i++) { 
        $menu="menu".$i;
        ?> 
    <li><a href="#<?php echo $menu; ?>" title="Opción <?php echo $i; ?>"><?php echo __('Module ');echo $i; ?></a></li>
@@ -23,7 +23,7 @@ echo stylesheet_tag('backend/ds-css'); ?>
    <?php } ?>
    </ul>
 
-<?php for ($i = 1; $i <= $cant; $i++) { 
+<?php for ($i = 0; $i < $cant; $i++) { 
        $menu="menu".$i;
 ?>
 
@@ -90,7 +90,7 @@ echo stylesheet_tag('backend/ds-css'); ?>
 <ul class="subtipos" <?php if($value[$i]['all']) echo ' style="display: none;" '; else  echo ''; ?> >
 <?php foreach ($subtypes as $key => $val){ ?>    
 <li>    
-<input type="checkbox" name="<?php echo $key; ?>" id="<?php echo $key; ?>" <?php if ($st[$i][$key]) echo 'checked="checked"';?>  />
+<input type="checkbox" name="<?php echo $key; ?>" id="<?php echo $key; ?>" <?php if ($value[$i]['subtypes'][$key]) echo 'checked="checked"';?>  />
 <?php echo __(str_replace('_',' ',ucfirst($key))); ?>
 </li>
 <?php } ?>
@@ -99,7 +99,7 @@ echo stylesheet_tag('backend/ds-css'); ?>
 <?php echo submit_tag(__('Save'), 'class=sf_admin_action_save') ?>
 
 </form>
- <span class="tony"> <?php echo (link_to(__('Preview'), 'sfDspaceMenu/preview?modulo='.$i, 'post=true')); ?></span>
+ <span class="tony"> <?php echo (link_to(__('Preview'), 'sfDspaceMenu/preview?modulo='.$value[$i]['id'], 'post=true')); ?></span>
 </div>
 <?php } 
 ?>

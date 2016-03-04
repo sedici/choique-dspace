@@ -9,9 +9,9 @@
  * Copyright (c) 2016 SEDICI UNLP, http://sedici.unlp.edu.ar
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  */
-class SimplepieModel1 {
+class SimplepieModelListar {
 	protected $cache;
-	public function SimplepieModel1(){
+	public function SimplepieModelListar(){
 		$this->cache = "/cache";
 	}
 	public function loadPath($str,$duration) {

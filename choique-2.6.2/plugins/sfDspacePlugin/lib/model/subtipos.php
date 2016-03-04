@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Subclass for representing a row from the 'subtipos' table.
+ * Subclass for representing a row from the 'ds_subtipos' table.
  *
  * 
  *

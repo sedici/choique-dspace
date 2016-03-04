@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Subclass for performing query and update operations on the 'subtipos' table.
+ * Subclass for performing query and update operations on the 'ds_subtipos' table.
  *
  * 
  *

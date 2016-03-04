@@ -3,7 +3,7 @@
 propel:
   _attributes:      { package: plugins.sfDspacePlugin.lib.model }
   
-  sedici:
+  ds_sedici:
     _attributes:    { phpName: sedici }
     id:
     type:    { type: varchar, size: 10, required: true, index: unique }
@@ -15,10 +15,10 @@ propel:
     cache:    { type: integer }
     max_results:    { type: integer }
     date:    { type: boolean }
-    limitt:    { type: boolean }
-    allr:    { type: boolean }
+    limit_text:    { type: boolean }
+    all_results:    { type: boolean }
   
-  subtipos:
+  ds_subtipos:
     _attributes:    { phpName: subtipos }
     id:
     article:    { type: boolean }
@@ -32,4 +32,5 @@ propel:
     phd:    { type: boolean }
     licentiate:    { type: boolean }
     master:    { type: boolean }
+    id_sedici:    { type: integer }
     

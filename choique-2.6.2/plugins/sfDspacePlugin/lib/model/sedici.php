@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Subclass for representing a row from the 'sedici' table.
+ * Subclass for representing a row from the 'ds_sedici' table.
  *
  * 
  *
