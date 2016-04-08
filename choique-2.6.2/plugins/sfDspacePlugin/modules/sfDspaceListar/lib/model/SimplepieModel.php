@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: Sedici-Plugin
  * Plugin URI: http://sedici.unlp.edu.ar/
@@ -9,9 +10,9 @@
  * Copyright (c) 2016 SEDICI UNLP, http://sedici.unlp.edu.ar
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  */
-class SimplepieModelListar {
+class SimplepieModel {
 	protected $cache;
-	public function SimplepieModelListar(){
+	public function SimplepieModel(){
 		$this->cache = "/cache";
 	}
 	public function loadPath($str,$duration) {

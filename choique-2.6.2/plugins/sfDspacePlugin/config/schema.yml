@@ -6,8 +6,9 @@ propel:
   ds_sedici:
     _attributes:    { phpName: sedici }
     id:
-    type:    { type: varchar, size: 10, required: true, index: unique }
-    context:           { type: varchar, size: 255, required: true, index: unique }
+    author:           { type: varchar, size: 255, required: true, index: unique }
+    handle:           { type: varchar, size: 20, required: true, index: unique }    
+    key_words:           { type: varchar, size: 255, required: true, index: unique }
     description:    { type: boolean }
     summary:    { type: boolean }
     show_author:    { type: boolean }

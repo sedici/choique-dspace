@@ -1,197 +1,129 @@
 <?php
-
 /**
  * Plugin Name: Sedici-Plugin
  * Plugin URI: http://sedici.unlp.edu.ar/
- * Description: This plugin connects the repository SEDICI in choique, with the purpose of showing the publications of authors or institutions
+ * Description: This plugin connects the repository SEDICI in wordpress, with the purpose of showing the publications of authors or institutions
  * Version: 1.0
  * Author: SEDICI - Paula Salamone Lacunza
  * Author URI: http://sedici.unlp.edu.ar/
- * Copyright (c) 2016 SEDICI UNLP, http://sedici.unlp.edu.ar
+ * Copyright (c) 2015 SEDICI UNLP, http://sedici.unlp.edu.ar
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  */
-
-define ( 'URL', 'http://sedici.unlp.edu.ar' );
-define ('FILTER' , '/discover?fq=author_filter%3A');
-define ('CON1' , '%2C');
-define ('CON2', '\+');
-define ('SEPARATOR', '\|\|\|');
+?>
+<?php
 class View {
-
 	public function subtype($sub){
-            //Return a document subtype without "_" and with the first leter in uppercase
-		return str_replace('_',' ',ucfirst($sub));
+		return ucfirst($sub);
 	}
-	public function max_results($cant,$list){
-		if ($cant == 0){ return (count($list)); }
-		else return $cant;
-	}
-	
+
 	public function html_especial_chars($texto){
 		return (htmlspecialchars_decode($texto));
 	}
-	public function strtolower_text($text){
-		return strtolower(implode(CON2, $text));
-	}
-	public function ucwords_text($text){
-		$text = implode(" ", $text);
-		$text = ucwords($text);
-		$text = explode ( " ", $text );
-		return implode(CON2, $text);
+	public function remplace($text){
+		return str_replace(" ", S_CONECTOR5, $text);
 	}
 	public function link_author( $author){
-            // Make a link to the section of the author SEDICI
-		$link = URL.FILTER;
-		$fullname = explode ( ",", $author );
-		$lastname = explode(" ", $fullname[0]);
-                if(count($fullname) >1) $name = explode(" ", $fullname[1]);
-                else $name= $lastname;
-		$link .= $this->strtolower_text($lastname).CON1;
-		$link.=$this->strtolower_text($name).SEPARATOR;
-		$link .= $this->ucwords_text($lastname).CON1.$this->ucwords_text($name);
-		?>
-		<a href="<?php echo $link; ?>"> <?php echo $author;?></a>
-		<?php 
-		return;
+		$link = get_protocol_domain().S_FILTER;
+                $name = str_replace(",", S_CONECTOR4, $author);
+                $name = $this->remplace($name);
+                $link .= strtolower($name). S_SEPARATOR . $name;
+		return  ('<a href='.$link.'>'.$author.'</a>') ;
 	}
 	
-	public function author($authors){
-            // Write all the Author names for the publication
-	?>			
+	public function author($authors){ ?>
             <br>
             <span class="title sedici-style"><?php echo __('Author:'); ?></span>
             <?php
-            $count = count($authors); $i = 1;
-            foreach ( $authors as $au ) {
-            ?>
-                <author> <name>	
-                    <?php $this->link_author($au->get_name ());?>
-                </name></author>
-                <?php
-                if ($i != $count) echo " - ";
-                    $i ++;
-            }//end foreach autores
+                $names = array ();
+		foreach ( $authors as $author ) {
+                    array_push ($names, "<author><name>".$this->link_author($author->get_name ())."</name></author>");
+		}//end foreach autores
+            print_r(implode("-", $names));
             return;
 	}
 	public function is_description($des){
-            return  ( ($des == "description" || $des == "summary"  ));
+		return  ( ($des == "description" || $des == "summary"  ));
 	}
-	public function shorten_text($text,$maxlenght){
-            return ($this->html_especial_chars(substr($text, 0, $maxlenght).'...'));
-	}
-	
-	public function show_description ($description,$item,$maxlenght){
-            if ($description == "description") {
-            ?>
-		<span class="title sedici-style"><?php echo __('Abstract:'); ?></span> 
-		<?php
-                $des= $item->get_item_tags(SIMPLEPIE_NAMESPACE_DC_11,'description') ;
-		if ($maxlenght != 0){
-                    echo $this->shorten_text($des[0]['data'],$maxlenght);
-		} else {
-                    echo $this->html_especial_chars($des[0]['data']);
-		} 
-            }else if($description == "summary") {
-            ?>
-		<span class="title sedici-style"><?php echo __('Summary:'); ?></span>
-		<?php 
-		if ($maxlenght != 0){
-                    echo $this->shorten_text($item->get_description (),$maxlenght);
-		} else {
-                    echo $this->html_especial_chars($item->get_description ());
-		}
-            } 
-            return;
-	}
-	
-	
-	public function description($description,$item,$maxlenght){
-            if($this->is_description($description)){
-            ?>
-		<div class="summary">
-		<summary>
-                    <?php $this->show_description($description, $item,$maxlenght); ?>
-		</summary>
-		</div>
-            <?php 
+        
+	public function show_text($text,$maxlenght){
+            if (!is_null($maxlenght)){
+		echo ($this->html_especial_chars(substr($text, 0, $maxlenght).'...'));
+            }
+            else {
+               echo  $this->html_especial_chars($text);
             }
             return;
 	}
 	
-	public function document($item,$a){
+	public function show_description ($description,$item,$maxlenght){
+		if ($description == "description") {
+                        $title = "Abstract:";
+                        $show_text = $item->get_item_tags(SIMPLEPIE_NAMESPACE_DC_11,'description') ;
+                        $show_text = $show_text[0]['data'];
+                } else {
+                        $title = 'Summary:';
+                        $show_text = $item->get_description ();
+                } ?>
+		<span class="title sedici-style"><?php echo __($title); ?></span>
+                <?php 
+                    $this->show_text($show_text,$maxlenght);
+		return;
+	}
+	
+	public function description($description,$item,$maxlenght){
+		if($this->is_description($description)){
+			?>
+			<div class="summary">
+			<summary>
+			<?php $this->show_description($description, $item,$maxlenght); ?>
+			</summary>
+			</div>
+		<?php 
+		}
+		return;
+	}
+	
+	public function document($item,$attributes){
 		$link = $item->get_link ();	
 		?>
 		<li><article>
-                    <title><?php echo $item->get_title ();?></title>
-                    <span class="title sedici-style"><?php echo __('Title:'); ?></span> 
-                    <a href="<?php echo $link; ?>">
-                        <?php echo ($this->html_especial_chars($item->get_title ())); ?> 
-                    </a>
-                    <?php 
-                    if ($a['show_author']){ $this->author($item->get_authors ()); }
-                    if ($a['date']) { ?>
-			<br><published><span class="title sedici-style"><?php echo __('Date:'); ?></span> <?php  echo $item->get_date ( 'Y-m-d' ); ?> </published>
-                    <?php } //end if fecha  
-                    $this->description($a['description'], $item,$a['max_lenght']); ?>
+			<title><?php echo $item->get_title ();?></title>
+			<span class="title sedici-style"><?php echo __('Title:'); ?></span> <a href="<?php echo $link; ?>">
+			<?php echo ($this->html_especial_chars($item->get_title ())); ?> 
+			</a>
+				<?php 
+				if ($attributes['show_author']){ $this->author($item->get_authors ()); }
+				if ($attributes['date']) 
+                                { ?>
+                                    <br><published><span class="title sedici-style"><?php echo __('Date:'); ?> </span> <?php  echo $item->get_date ( 'Y-m-d' ); ?> </published>
+				<?php } //end if fecha  
+				$this->description($attributes['description'], $item,$attributes['max_lenght']);
+				?>
 		</article></li>
 		<?php 
 		return;
 	}
-	public function is_handle($type){
-		return ($type == 'handle');
-	}
-        public function is_author($type){
-		return ($type == 'author');
+	
+	public function publications($groups, $attributes) {
+		 foreach ($groups as $key => $entrys){
+		?>
+                    <h3><?php echo $key;?></h3><!-- publication subtype -->
+		<?php
+                    $this->all_publications($entrys,$attributes);
+                }
+		return;
 	}
 	
-	public function author_name($type, $name){
-            if ($this->is_author($type)){ ?>
-		 <h2> <?php $this->link_author($name);?> </h2>
-            <?php 	 
-            }	 
-            return;
-	}
-	public function go_to_sedici($type,$url){
-            ?> 
-            <span class="go-to"> <a href='<?php echo $url; ?>'><?php echo __('Go to SEDICI'); ?></a></span><br><br>
-            <?php
-	}
-	
-	function publications($feed, $a, $type) {
-            $this->author_name($type, $a['context']);
-            foreach ( $feed as $i ) {
-            ?>
-            <h3><?php echo __($this->subtype($i ['filter']));?></h3><!-- publication subtype -->
+	public function all_publications($groups, $attributes) {
+	?>
             <ol class="sedici-style">
-            <?php
-            $list = $i ['view']; $j=0;
-            $totalresults = $this->max_results($a['max_results'], $list);
-            foreach ( $list as $item ) {
-		$this->document($item,$a);
-		$j++;
-		if($j == $totalresults) break;
-            }
-            ?>
+		<?php 
+			foreach ($groups as $item){
+                            $this->document($item, $attributes);
+			}
+		?>
             </ol>
-            <?php 
-                if ($this->is_handle($type)) $this->go_to_sedici($type, $i['url']);
-            } //End foreach ($feed)
-            return;
-	}
-	
-	function all_publications($groups, $a,$type) {
-            $this->author_name($type, $a['context']);?>
-            <ol>
-            <?php 
-            foreach ( $groups as $feed ) {
-		foreach ($feed as $item){
-                    $this->document($item, $a);
-		}
-            }
-            ?>
-            </ol>
-            <?php 
+        <?php 
             return ;
-	}
-	
+	}	
 } // end class

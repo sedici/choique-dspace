@@ -21,7 +21,7 @@
 }
 h1 { font-size:1.5em;}
 .conditionally-filter, .conditionally-description, .conditionally-limit, #conditionally-author {  padding:0px 10px 0px 23px; margin:0px;}
-#limit, #date, #description, #all, #summary, #pshow_author {  float:left; margin:0px; padding-right:5px; margin-right:5px;}
+#limit, #date, #description, #all, #summary, #pshow_author, #show_author {  float:left; margin:0px; padding-right:5px; margin-right:5px;}
 
 .conditionally-filter input {float:left; display:inline; margin:0px; height:10px; }
 #menu-selector ul.subtipos li{display:block;    }

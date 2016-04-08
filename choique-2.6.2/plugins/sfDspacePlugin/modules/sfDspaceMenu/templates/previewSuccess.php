@@ -9,17 +9,6 @@
  * Copyright (c) 2016 SEDICI UNLP, http://sedici.unlp.edu.ar
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  */
-require_once('View.php');
+
+$util->render ( $all, $groups, $attributes );  
 echo (link_to('Volver', 'sfDspaceMenu/index'));
-$view = new View();
-if ($all) {
-    $view->all_publications ( $groups, $attributes,$type );
-} else {
-    $view-> publications( $groups, $attributes,$type );
-}
-?>
-
-
-
-
-

@@ -33,23 +33,20 @@ echo stylesheet_tag('backend/ds-css'); ?>
     <h1><?php echo __('Module ');echo $i; ?></h1>
     
 <input type="hidden" name="id" id="id" value="<?php echo $value[$i]['id']; ?>" />
-
-<p id="pshow-author">
-<?php echo __('Handle');?><input type="radio" name="type" id="type" value="handle" <?php if ($value[$i]['type']=="handle") echo 'checked="checked"';?>  />
-<?php echo __('Author');?><input type="radio" name="type" id="type" value="author" <?php if ($value[$i]['type']=="author") echo 'checked="checked"';?>  />
-<?php echo __('Free search');?><input type="radio" name="type" id="type" value="free" <?php if ($value[$i]['type']=="free") echo 'checked="checked"';?>  />
-</p>
  
-<p id="conditionally-author"
-       <?php if($value[$i]['type'] == 'author') echo ' '; else  echo ' style="display: none;"'; ?>> 
+<p>
+<?php echo __('Handle');?><input id="context" name='handle' type="text" value="<?php echo $value[$i]['handle'];?>" />
+</p>
+<p>
+<?php echo __('Author');?><input id="context" name='author' type="text" value="<?php echo $value[$i]['author'];?>" />
+</p>
+<p>
+<?php echo __('Free search');?><input id="context" name='key_words' type="text" value="<?php echo $value[$i]['key_words'];?>" />
+</p>
+
+<p> 
        <?php echo __('Show authors');?><input type="checkbox" name="show_author" id="show_author" <?php if ($value[$i]['show_author']) echo 'checked="checked"';?>  />
 </p>
-
-
-<p>
-<?php echo __('Search criteria');?><input id="context" name='context' type="text" required="required" value="<?php echo $value[$i]['context'];?>" />
-</p>
-
 <p>
         <?php echo __('Show date');?><input type="checkbox" name="date" id="date" <?php if ($value[$i]['date']) echo 'checked="checked"';?>  />
 </p>
@@ -73,20 +70,41 @@ echo stylesheet_tag('backend/ds-css'); ?>
 </p>
 
 <p> 
-<?php echo __('Cache days');?><?php echo select_tag('cache', options_for_select($valores, $value[$i]['cache'])) ?>
+<?php
+$duration = $value[$i]['cache'];
+if (empty($duration)) { $duration = $defaultcache;}
+echo __('Cache days');
+?>
+    <select id="cache" name="cache" value="<?php echo $value[$i]['cache'];?>">
+		<?php
+		foreach ($all_days as $day){
+			?>
+			<option value=<?php echo $day * $one_day;?>
+			<?php echo ($duration==($day * $one_day))?'selected':''; ?>>
+                        <?php echo $day;?> <?php echo('días'); ?></option>
+		<?php } //end foreach?>
+    </select>
+    
 </p>
-
+<p>
+<?php 
+$results = $value[$i]['max_results'];
+echo __('Results by subtypes');
+?>
+    <select id="max_results" name="max_results" value="<?php echo $value[$i]['max_results'];?>">
+		<?php
+		foreach ($total_results as $res){
+			?>
+			<option value=<?php echo $res;?>
+			<?php echo ($results==$res)?'selected':''; ?>>
+                        <?php echo $res; ?></option>
+		<?php } //end foreach?>
+    </select>
+</p>    
 <p class="show-filter">
       <?php echo __('All result without filtering by subtypes');?><input type="checkbox" name="all" id="all" 
            <?php if ($value[$i]['all']) echo 'checked="checked"';?>  />
 </p>
-
-<span class="conditionally-filter" 
-    <?php if($value[$i]['all']) echo ' style="display: none;" '; else  echo ''; ?>>    
-<?php echo __('Results by subtypes');?>
-<?php echo select_tag('max_results', options_for_select($total_results, $value[$i]['max_results'])) ?>
-</span>
-
 <ul class="subtipos" <?php if($value[$i]['all']) echo ' style="display: none;" '; else  echo ''; ?> >
 <?php foreach ($subtypes as $key => $val){ ?>    
 <li>    

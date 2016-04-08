@@ -10,21 +10,25 @@
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  */
 require_once 'previewActions.class.php';
-require_once 'config-file.php';
+
+define ( 'S_MODULES', 5 );
 class sfDspaceMenuActions extends previewActions {
     
+    public function modulesView(){
+        return S_MODULES;
+    }
+    
     public function ValideteCant(){
-        $views= modulesView();
-        $menu = array ($views);
+        $views= $this->modulesView();
         $c = new Criteria();
         $module = sediciPeer::doSelect($c);
         $size = count($module);
-        if ($size < $views ) $views=$size;
+        if ($size < $views ) { $views=$size; }
         return $views;
     }
     
     public function indexarView(){
-        $views= modulesView();
+        $views= $this->modulesView();
         $menu = array ($views);
         $c = new Criteria();
         $module = sediciPeer::doSelect($c);
@@ -34,8 +38,9 @@ class sfDspaceMenuActions extends previewActions {
         $subtypes = $this->indexarSubtype($module[$i]->getId());  
         $menu[$i] = array (
                         'id' => $module[$i]->getId(),
-			'type' => $module[$i]->getType(),
-			'context' => $module[$i]->getContext(),
+			'handle' => $module[$i]->getHandle(),
+                        'author' => $module[$i]->getAuthor(),
+                        'key_words' => $module[$i]->getKeyWords(),
                         'description' => $module[$i]->getDescription(),
                         'summary' => $module[$i]->getSummary(),
                         'all' => $module[$i]->getAllResults(),
@@ -85,8 +90,9 @@ class sfDspaceMenuActions extends previewActions {
             $max_results = $this->getRequestParameter('max_results');
             return ( array (
                         'id' => $this->getRequestParameter('id'),
-			'type' => $this->getRequestParameter('type'),
-			'context' => $this->getRequestParameter('context'),
+			'handle' => $this->getRequestParameter('handle'),
+			'author' => $this->getRequestParameter('author'),
+                        'key_words' => $this->getRequestParameter('key_words'),
                         'description' => $description,
                         'summary' => $summary,
                         'date' => $date,
@@ -151,9 +157,10 @@ class sfDspaceMenuActions extends previewActions {
     
     public function setParameters($value){
         $module = sediciPeer::retrieveByPK($value['id']);
-        $module->setType($value['type']);
         $module->setShowAuthor($value['show_author']);
-        $module->setContext($value['context']);
+        $module->setAuthor($value['author']);
+        $module->setHandle($value['handle']);
+        $module->setKeyWords($value['key_words']);
         $module->setDescription($value['description']);
         $module->setSummary($value['summary']);
         $module->setLimitText($value['limit']);
@@ -167,12 +174,14 @@ class sfDspaceMenuActions extends previewActions {
     
     public function executeIndex()
   {
+    $filter = new Filter();
     $cultura = $this->getRequest()->getLanguages();
     $this->getUser()->setCulture($cultura[0]);
-    $this->un_dia=  oneDay();
-    $this->valores=  cacheDays();
-    $this->total_results = totalResults();
-    $this->subtypes = Allsubtypes();
+    $this->one_day=  one_day();
+    $this->all_days=  cache_days();
+    $this->defaultcache = defaultCache();
+    $this->total_results = total_results();
+    $this->subtypes = $filter->subtypes();
     $this->value = $this->indexarView();
     $this->cant = $this->ValideteCant();
   }

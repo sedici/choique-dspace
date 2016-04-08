@@ -69,7 +69,7 @@ Luego se puede marcar la opción de todas las publicaciones, o filtrarlas por su
 Si se esta filtrando por subtipos, se puede especificar la cantidad de publiaciones por subtipo a mostrar.
 
 --------
-Listar las publicaciones del modúlo i
+Listar las publicaciones del modúlo i en apps/frontend/routing.yml
 --------
 
 seccion1:  
