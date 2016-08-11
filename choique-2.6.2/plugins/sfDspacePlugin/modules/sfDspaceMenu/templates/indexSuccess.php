@@ -45,31 +45,6 @@ echo stylesheet_tag('backend/ds-css'); ?>
 </p>
 
 <p> 
-       <?php echo __('Show authors');?><input type="checkbox" name="show_author" id="show_author" <?php if ($value[$i]['show_author']) echo 'checked="checked"';?>  />
-</p>
-<p>
-        <?php echo __('Show date');?><input type="checkbox" name="date" id="date" <?php if ($value[$i]['date']) echo 'checked="checked"';?>  />
-</p>
-
-<p class="description">
-        <?php echo __('Show abstract');?><input type="checkbox" name="description" id="description" <?php if ($value[$i]['description']) echo 'checked="checked"';?>  />
-</p>
-
-
-<p class="conditionally-description"
-    <?php if(!$value[$i]['description']) echo ' style="display: none;" '; else  echo ''; ?>>        
-        <?php echo __('Show summary');?><input type="checkbox" name="summary" id="summary" <?php if ($value[$i]['summary']) echo 'checked="checked"';?>  />
-</p>
-
-<p class='limit'>
-        <?php echo __('Limit text lenght');?><input type="checkbox" name="limit" id="limit" <?php if ($value[$i]['limit']) echo 'checked="checked"';?>  />
-</p>
-<p class="conditionally-limit"
-	<?php if(!$value[$i]['limit']) echo ' style="display: none;" '; else  echo ''; ?>>  
-        <input name='max_lenght' type="number" value="<?php echo $value[$i]['max_lenght'];?>"  onKeyPress="return justNumbers(event);"/>
-</p>
-
-<p> 
 <?php
 $duration = $value[$i]['cache'];
 if (empty($duration)) { $duration = $defaultcache;}
@@ -86,6 +61,41 @@ echo __('Cache days');
     </select>
     
 </p>
+
+<p> 
+       <?php echo __('Show authors');?><input type="checkbox" name="show_author" id="show_author" <?php if ($value[$i]['show_author']) echo 'checked="checked"';?>  />
+</p>
+<p> 
+       <?php echo __('Share in social networks');?><input type="checkbox" name="share" id="share" <?php if ($value[$i]['share']) echo 'checked="checked"';?>  />
+</p>
+<p>
+        <?php echo __('Show date');?><input type="checkbox" name="date" id="date" <?php if ($value[$i]['date']) echo 'checked="checked"';?>  />
+</p>
+
+<p> 
+       <?php echo __('Show document types');?><input type="checkbox" name="show_subtype" id="show_subtype" <?php if ($value[$i]['show_subtype']) echo 'checked="checked"';?>  />
+</p>
+
+<p class="description-ds">
+        <?php echo __('Show abstract');?><input type="checkbox" name="description" id="description" <?php if ($value[$i]['description']) echo 'checked="checked"';?>  />
+</p>
+
+<p class="conditional-summary"
+   <?php if(!$value[$i]['description']) echo ' style="display: none;" '; else echo ''; ?>>
+        <?php echo __('Show summary');?><input type="checkbox" name="summary" id="summary" <?php if ($value[$i]['summary']) echo 'checked="checked"';?>  />
+</p>
+
+<p class="conditionally-description"
+    <?php if(!$value[$i]['description']) echo ' style="display: none;" '; else echo ''; ?>>
+
+<span class='limit'>
+        <?php echo __('Limit text lenght');?><input type="checkbox" name="limit" id="limit" <?php if ($value[$i]['limit']) echo 'checked="checked"';?>  />
+</span>
+<span class="conditionally-limit"
+	<?php if(!$value[$i]['limit']) echo ' style="display: none;" '; else echo ''; ?>>  
+        <input name='max_lenght' type="number" value="<?php echo $value[$i]['max_lenght'];?>"  onKeyPress="return justNumbers(event);"/>
+</span>
+</p>
 <p>
 <?php 
 $results = $value[$i]['max_results'];
@@ -101,6 +111,15 @@ echo __('Results by subtypes');
 		<?php } //end foreach?>
     </select>
 </p>    
+
+
+<p> 
+       <?php echo __('Group by year');?><input type="checkbox" name="group_year" id="group_year" <?php if ($value[$i]['group_year']) echo 'checked="checked"';?>  />
+</p>
+<p> 
+       <?php echo __('Group by document subtype');?><input type="checkbox" name="group_subtype" id="group_subtype" <?php if ($value[$i]['group_subtype']) echo 'checked="checked"';?>  />
+</p>
+
 <p class="show-filter">
       <?php echo __('All result without filtering by subtypes');?><input type="checkbox" name="all" id="all" 
            <?php if ($value[$i]['all']) echo 'checked="checked"';?>  />

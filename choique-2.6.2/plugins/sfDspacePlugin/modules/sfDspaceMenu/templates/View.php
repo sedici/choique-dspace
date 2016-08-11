@@ -1,16 +1,4 @@
 <?php
-/**
- * Plugin Name: Sedici-Plugin
- * Plugin URI: http://sedici.unlp.edu.ar/
- * Description: This plugin connects the repository SEDICI in wordpress, with the purpose of showing the publications of authors or institutions
- * Version: 1.0
- * Author: SEDICI - Paula Salamone Lacunza
- * Author URI: http://sedici.unlp.edu.ar/
- * Copyright (c) 2015 SEDICI UNLP, http://sedici.unlp.edu.ar
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- */
-?>
-<?php
 class View {
 	public function subtype($sub){
 		return ucfirst($sub);
@@ -27,18 +15,20 @@ class View {
                 $name = str_replace(",", S_CONECTOR4, $author);
                 $name = $this->remplace($name);
                 $link .= strtolower($name). S_SEPARATOR . $name;
-		return  ('<a href='.$link.'>'.$author.'</a>') ;
+		return  ('<a href='.$link.' target="_blank">'.$author.'</a>') ;
 	}
 	
 	public function author($authors){ ?>
-            <br>
-            <span class="title sedici-style"><?php echo __('Author:'); ?></span>
+            <div id="sedici-title"><?php __('Autores:'); ?>
             <?php
                 $names = array ();
 		foreach ( $authors as $author ) {
                     array_push ($names, "<author><name>".$this->link_author($author->get_name ())."</name></author>");
 		}//end foreach autores
             print_r(implode("-", $names));
+            ?>
+            </div>
+            <?php
             return;
 	}
 	public function is_description($des){
@@ -56,74 +46,141 @@ class View {
 	}
 	
 	public function show_description ($description,$item,$maxlenght){
-		if ($description == "description") {
-                        $title = "Abstract:";
+		if ($description == "description") { ?>
+                      <div id="sedici-title"><?php __("Resumen:");  
                         $show_text = $item->get_item_tags(SIMPLEPIE_NAMESPACE_DC_11,'description') ;
                         $show_text = $show_text[0]['data'];
-                } else {
-                        $title = 'Summary:';
+                } else {  ?>
+                     <div id="sedici-title"><?php __('Sumario:'); 
                         $show_text = $item->get_description ();
                 } ?>
-		<span class="title sedici-style"><?php echo __($title); ?></span>
+                <span class="sedici-content">
                 <?php 
                     $this->show_text($show_text,$maxlenght);
+                    ?>
+                </span></div>
+                <?php
 		return;
 	}
 	
+        public function dctype($entry){
+		//return subtype document
+		$description = $entry->get_description();
+		$dctype = explode ( "\n", $description );
+		return ($dctype[0]);
+	}
+        
 	public function description($description,$item,$maxlenght){
 		if($this->is_description($description)){
 			?>
-			<div class="summary">
 			<summary>
 			<?php $this->show_description($description, $item,$maxlenght); ?>
 			</summary>
-			</div>
 		<?php 
 		}
 		return;
 	}
-	
+        function share($link,$title){
+        ?>
+        <div class="a_unline">
+            Compartir: 
+             <a href="https://www.facebook.com/sharer/sharer.php?p[title]=<?php echo $title;?>&p[url]=<?php echo $link;?>" target="_blank">
+                 <?php echo '<img src="' . plugins_url( 'img/share-facebook.png', dirname(__FILE__) ) . '" alt="Facebook logo" title="Compartir en Facebook">';?>
+             </a>
+             <a href="https://twitter.com/?status=<?php echo $title," ",$link," via @sedici_unlp";?>" target="_blank">
+                  <?php echo '<img src="' . plugins_url( 'img/share-twitter.png', dirname(__FILE__) ) . '" alt="Twitter logo" title="Compartir en Twitter">';?>
+             </a>
+             <a href="https://plus.google.com/share?url=<?php echo $link;?>" target="_blank">
+                  <?php echo '<img src="' . plugins_url( 'img/share-plus.png', dirname(__FILE__) ) . '" alt="Google+ logo" title="Compartir en Google+">';?>
+             </a>
+             <a href="http://www.linkedin.com/shareArticle?url=<?php echo $link;?>" target="_blank">
+                  <?php echo '<img src="' . plugins_url( 'img/share-linkedin.png', dirname(__FILE__) ) . '" alt="Linkedin logo" title="Compartir en Linkedin">';?>
+             </a>
+        </div>    
+        <?php    
+        }
 	public function document($item,$attributes){
 		$link = $item->get_link ();	
 		?>
-		<li><article>
+		<article>
 			<title><?php echo $item->get_title ();?></title>
-			<span class="title sedici-style"><?php echo __('Title:'); ?></span> <a href="<?php echo $link; ?>">
-			<?php echo ($this->html_especial_chars($item->get_title ())); ?> 
-			</a>
+                        <div id="sedici-title">
+                            <li><a href="<?php echo $link; ?>" target="_blank">
+                            <?php echo ($this->html_especial_chars($item->get_title ())); ?> 
+                            </a></li>
+                        </div>  
 				<?php 
 				if ($attributes['show_author']){ $this->author($item->get_authors ()); }
 				if ($attributes['date']) 
                                 { ?>
-                                    <br><published><span class="title sedici-style"><?php echo __('Date:'); ?> </span> <?php  echo $item->get_date ( 'Y-m-d' ); ?> </published>
+                                    <published>
+                                        <div id="sedici-title"><?php __('Fecha:'); ?> 
+                                        <span class="sedici-content"><?php  echo $item->get_date ( 'Y-m-d' ); ?></span></div>
+                                    </published>
 				<?php } //end if fecha  
+                                if ($attributes['show_subtypes']) 
+                                { ?>
+                                    <dc:type>
+                                        <div id="sedici-title"><?php __('Tipo de documento:'); ?> 
+                                            <span class="sedici-content"><?php  echo $this->dctype($item); ?></span></div>
+                                    </dc:type>
+				<?php } //end if fecha
 				$this->description($attributes['description'], $item,$attributes['max_lenght']);
+                                if ($attributes['share']){ $this->share($link,$item->get_title ()); }
 				?>
-		</article></li>
+		</article>
 		<?php 
 		return;
 	}
 	
-	public function publications($groups, $attributes) {
-		 foreach ($groups as $key => $entrys){
-		?>
-                    <h3><?php echo $key;?></h3><!-- publication subtype -->
-		<?php
-                    $this->all_publications($entrys,$attributes);
-                }
-		return;
-	}
-	
-	public function all_publications($groups, $attributes) {
-	?>
-            <ol class="sedici-style">
-		<?php 
-			foreach ($groups as $item){
+	public function publicationsByDateSubtype($entrys, $attributes) {
+                    $date="";$subtype="";
+                    ?><ul><?php
+			foreach ($entrys as $item){
+                            $date2=$date;
+                            $date=$item->get_date ( 'Y' );
+                            $subtype2=$subtype;
+                            $subtype= $this->dctype($item);
+                            if($date != $date2) { echo "<h2>".$date."</h2>";
+                            $subtype2="";
+                            }
+                            if($subtype != $subtype2) { echo "<h3>".$subtype."</h3>";}
                             $this->document($item, $attributes);
 			}
-		?>
-            </ol>
-        <?php 
+                    ?></ul><?php    
             return ;
-	}	
+	}
+        public function group($item,$group){
+            if ($group == "date") {
+                return $item->get_date ( 'Y' );
+            } else if ( $group == "subtype") {
+                return $this->dctype($item);
+            }
+        }
+        
+        public function publicationsByGroup($entrys, $attributes, $group) {
+                    $order="";
+                    ?><ul><?php
+			foreach ($entrys as $item){
+                            $value=$order;
+                            $order= $this->group($item, $group);
+                             if($value != $order) {
+                                 ?><h2><?php echo $order; ?></h2><?php
+                             }
+                            $this->document($item, $attributes);
+			}
+                    ?></ul><?php    
+            return ;
+	}
+        
+        
+        public function allPublications($entrys, $attributes) {
+            ?><ul><?php
+			foreach ($entrys as $item){
+                            $this->document($item, $attributes);
+			}
+            ?></ul><?php            
+            return ;
+	}
+        
 } // end class

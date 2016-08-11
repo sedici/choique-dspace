@@ -4,9 +4,6 @@ homepage:
 sedici:  
   url:   /sedici
   param: { module: sfDspaceListar, action: index, id: 1 }
-hola:  
-  url:   /hola
-  param: { module: sfDspaceListar, action: index, id: 2 }
 sitemap_xml:
   url:   /sitemap_index.xml
   param: { module: sitemap, action: xmlIndex }

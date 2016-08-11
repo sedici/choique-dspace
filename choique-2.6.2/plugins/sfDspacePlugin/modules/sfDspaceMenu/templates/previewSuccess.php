@@ -10,5 +10,5 @@
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  */
 
-$util->render ( $all, $groups, $attributes );  
+$util->render($results, $attributes, true, false); 
 echo (link_to('Volver', 'sfDspaceMenu/index'));

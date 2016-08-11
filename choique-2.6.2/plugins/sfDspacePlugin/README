@@ -54,16 +54,16 @@ administracion:
           title:        Configurar
           url:          sfDspaceMenu/index
 
-Para que la búsqueda sea exitosa es necesario al menos especificar:
-Tipo de busqueda handle/autor/libre
-Criterio de busqueda
+Para que la búsqueda sea exitosa es necesario al menos especificar uno de los campos handle/autor/libre.
 
 Ejemplo:
 Handle: 10915/25293
-Autor: De Giusti, Marisa Raquel
-Busqueda libre: "Matematica avanzada"
+Autor: Frangi, Jorge L.;Goya, Juan F.
+Busqueda libre: Matematica avanzada;Otro criterio
 
-Luego tenemos mas opciones de configuracion, por ejemplo si se desea mostrar la fecha de publicación, resumen, etc.
+Se puede filtrar por mas de un autor separandolos por ";" sin especios entre un nombre de autor y el otro, lo mísmo para las palabras claves.
+
+Luego tenemos más opciones de configuración, por ejemplo si se desea mostrar la fecha de publicación, resumen, etc.
 La cache de la consulta, por defecto son 7 días.
 Luego se puede marcar la opción de todas las publicaciones, o filtrarlas por subtipos de documentos, por ejemplo: Artículos y Libros.
 Si se esta filtrando por subtipos, se puede especificar la cantidad de publiaciones por subtipo a mostrar.

@@ -81,7 +81,7 @@ class previewActions extends sfActions {
 			}
                 return $groups;
              }
-            else { return; }   
+            return false;
         }
         
    public function executePreview()
@@ -97,16 +97,14 @@ class previewActions extends sfActions {
         $subtypes = $this->querySubtypes($selected_subtypes,$instance['all']);
         
         $queryStandar = $util->standarQuery($instance['handle'], $instance['author'], $instance['key_words'], $instance['max_results']);
-        $groups = $util->getPublications($instance['all'], $queryStandar, $instance['cache'], $subtypes);
-        $attributes = $util->group_attributes ( $description, $instance['date'], $instance['show_author'], $maxlenght);
-        
+        $groups = $util->getPublications($instance['all'], $queryStandar, $instance['cache'], $subtypes ,false,false);
+        $attributes = $util->group_attributes( $description, $instance['date'], $instance['show_author'], $maxlenght, false,false);
         $cultura = $this->getRequest()->getLanguages();
         $this->getUser()->setCulture($cultura[0]);
         
         $this->util=$util;
         $this->attributes=$attributes;
-        $this->groups=$groups;
-        $this->all=$instance['all']; 
+        $this->results=$groups;
     }
   }  
 }

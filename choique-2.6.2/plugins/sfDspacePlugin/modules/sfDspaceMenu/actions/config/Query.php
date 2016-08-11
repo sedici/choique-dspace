@@ -48,16 +48,7 @@ class Query {
             } 
             else { return true; }
         }
-        public function querySubtype ($query , $type) {
-            if (strpos($query, Q_QUERY) === false) {
-                $query .= "&". Q_QUERY."=";
-            }
-            else {
-                $query .= '%20AND%20';
-            }
-            return  $query."(".SQ_SUBTYPE."\"" .$type ."\"".")";
-        }
-        
+           
         public function splitImputs($imput){
             return explode(';',$imput);
         }
@@ -78,55 +69,110 @@ class Query {
                 return $queryEstandar;
         }
         
-        function createQuery($query ,$cache) {
+        function executeQuery($query ,$cache) {
 		$model = $this->get_model();
 		$xpath = $model->loadPath ( $query, $cache );
-		$entry = $model->entry ( $xpath ); //all documents
-		return $entry;
+		$entrys = $model->entry ( $xpath ); //all documents
+		return $entrys;
 	}
         
-        function entrys ($queryStandar,$subtype,$cache,$groups){
+        public function querySubtype ($query , $type) {
+            if (strpos($query, Q_QUERY) === false) {
+                $query .= "&". Q_QUERY."=";
+            }
+            else {
+                $query .= '%20AND%20';
+            }
+            return  $query."(".SQ_SUBTYPE."\"" .$type ."\"".")";
+        }
+        
+        function entrysBySubtype ($queryStandar,$subtype,$cache){
              $query = $this->querySubtype($queryStandar,$subtype);
-             $entrys =  $this->createQuery( $query,  $cache);
-             if (!empty($entrys)) { 
-                $groups[$subtype]=array ();
-                $groups[$subtype] = $entrys;
-            }
-            return $groups;
+             $entrys =  $this->executeQuery( $query,  $cache);
+             return $entrys;
         }
-        function concatenarSubtypes($subtypes,$cache,$queryStandar){
-            $groups = Array ();
+        function executeQueryBySubtypes($subtypes,$cache,$queryStandar){
+            $results = Array ();
             foreach ( $subtypes as $type ) {
-            //compares the user marked subtypes, if ON, save the subtype.
-                $groups = $this->entrys($queryStandar,$type,$cache,$groups);  
+                $entrys = $this->entrysBySubtype($queryStandar,$type,$cache);
+                $results=array_merge($results,$entrys);
             }
-            return $groups;
+            return $results;
+        }
+
+        function cmpDate($a, $b)
+        {
+            $model = $this->get_model();
+            if ($model->date($b) == $model->date($a)){
+                return strcmp($model->type($a), $model->type($b));}
+            else {
+            return strcmp($model->date($b), $model->date($a));}
+        } 
+        
+        function cmpSubtype($a, $b)
+        {
+            $model = $this->get_model();
+            if ($model->type($b) == $model->type($a)){
+                return strcmp($model->date($b), $model->date($a));}
+            else {
+                return strcmp($model->type($a), $model->type($b));}
         }
         
-        function getPublications($all, $queryStandar, $cache, $subtypes = ""){
-            if(!$all) {
-                $groups = $this->concatenarSubtypes($subtypes,$cache,$queryStandar);
-            }
-            else { 
-                $groups =$this->createQuery( $queryStandar,  $cache);
-            }
-            return $groups;
+        function cmpDateSubtype($a, $b)
+        {
+            $model = $this->get_model();
+            if ($model->year($b) == $model->year($a)){
+                return $this->cmpSubtype($a, $b);}
+            else {
+            return strcmp($model->year($b), $model->year($a));}
         }
         
-	function group_attributes($description, $date, $show_author, $maxlenght) {
+        function group($group_year,$group_subtype,$results){
+            if ($group_year && $group_subtype){
+               usort($results,  array($this,"cmpDateSubtype"));
+               return $results;
+            }
+            if($group_year){
+              usort($results,  array($this,"cmpDate"));
+              return $results;
+            }
+            if($group_subtype){
+              usort($results,  array($this,"cmpSubtype"));
+              return $results;
+            }
+            return $results;
+        }  
+        
+        function getPublications($all, $queryStandar, $cache, $subtypes_selected ,$group_subtype,$group_year){
+            if($all){
+                $results = $this->executeQuery($queryStandar, $cache);
+            } else {
+                $results = $this->executeQueryBySubtypes($subtypes_selected, $cache, $queryStandar);
+            }
+            return $this->group($group_year, $group_subtype, $results);
+        }
+        
+	function group_attributes($description, $date, $show_author, $maxlenght,$show_subtypes,$share) {
 		return ( array (
 				'description' => $description,
 				'show_author' => $show_author,
 				'max_lenght' => $maxlenght,
+                                'show_subtypes' => $show_subtypes,
+                                'share'=> $share,
 				'date' => $date 
 		));
 	}
-	function render($all, $groups, $attributes) {
+	function render ($results,$attributes,$group_subtype,$group_date){
 		$view = new View();
-		if ($all) {
-                    return ($view->all_publications ( $groups, $attributes));
-		} else {
-                    return ($view->publications( $groups, $attributes ));
-			}
+                if ($group_date && $group_subtype) {
+                    return ($view->publicationsByDateSubtype ( $results, $attributes));
+                }
+                if ($group_date){
+                     return ($view->publicationsByGroup( $results, $attributes,"date"));
+                }
+                if ($group_subtype){
+                     return ($view->publicationsByGroup( $results, $attributes,"subtype"));
+                }
+                return $view->allPublications($results, $attributes);
 	}
 }
